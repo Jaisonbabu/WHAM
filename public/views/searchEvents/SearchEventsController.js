@@ -1,7 +1,17 @@
 app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService){
 	
 	$scope.searchEvents = function(){
-		EventsService.fetchEventsByLocation('11.23', function(response){
+//		var latitude 
+//		var longitude
+//		if textbox empty then get current
+//		else get lat long from city textbox
+//		
+		var map = new Map();
+		map.set("location.latitude", "36.56");
+		map.set("location.longitude", "-121.95");
+		map.set("q" , "Concerts");
+		
+		EventsService.fetchEventsByLocation(map, function(response){
 			$scope.events = response.events;
 			console.log(response.events);
 			// Map code starts here	
