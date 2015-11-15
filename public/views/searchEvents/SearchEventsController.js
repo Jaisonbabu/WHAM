@@ -10,7 +10,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}
 		if (location!=null && location.val()!=""){
 			
-<<<<<<< HEAD
 			/*dummy values for now*/
 			//var initialLat = 42.12;
 			//var initialLon = -71.05;
@@ -19,10 +18,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			var address = '360 Huntington avenue';
 			var postalCode = '21058';
 			/*dummy values for now*/
-=======
 		}
 		else{
->>>>>>> 8464dd7f3075f5e8075d363be705e9a4f57c8f4a
 			
 		}		
 		$scope.searchEvents(params);
@@ -31,7 +28,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var searchEventsResponseHandler = function(response){
 		$scope.events = response.events;
 		console.log(response.events);
-		// Map code starts here	
+		
 		var events = [];
 		var lat, long;
 		
@@ -65,7 +62,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 		    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-<<<<<<< HEAD
 			    $scope.markers = [];
 			    
 			    var infoWindow = new google.maps.InfoWindow();
@@ -95,7 +91,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			    for (i = 0; i < events.length; i++){
 			        createMarker(events[i]);
 			    }
-=======
 		    $scope.markers = [];
 		    
 		    var infoWindow = new google.maps.InfoWindow();
@@ -125,7 +120,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		    for (i = 0; i < events.length; i++){
 		        createMarker(events[i]);
 		    }
->>>>>>> 8464dd7f3075f5e8075d363be705e9a4f57c8f4a
 
 		    $scope.openInfoWindow = function(e, selectedMarker){
 		        e.preventDefault();
