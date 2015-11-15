@@ -350,13 +350,12 @@ ul.rating {
 }
 
 .topPadding{
-	padding-top : 50px;
+	padding-top : 20px;
 }
 
 .linePadding{
 	padding-top : 20px;
 }
-
 
 .centerAlign{
 	text-align: center;
@@ -444,11 +443,16 @@ h1{
 }
 
 #map {
-    height:1000px;
+    height:600px;
     width:100%;
 }
 .infoWindowContent {
     font-size:  14px !important;
     border-top: 1px solid #ccc;
     padding-top: 10px;
+}
+
+.scrollit {
+    overflow:scroll;
+    max-height:600px;
 }

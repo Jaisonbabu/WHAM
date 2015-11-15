@@ -9,8 +9,10 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			var lat, long;
 			
 			/*dummy values for now*/
-			var initialLat = 42.12;
-			var initialLon = -71.05;
+			//var initialLat = 42.12;
+			//var initialLon = -71.05;
+			var initialLat = 51.5;
+			var initialLon = -0.1914;
 			var address = '360 Huntington avenue';
 			var postalCode = '21058';
 			/*dummy values for now*/
@@ -55,7 +57,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			        });
 			        marker.content = '<div class="infoWindowContent">' + info.address + "\n"+ info.city+"\n"+ info.fullPostalCode + '</div>';
 			        
-			        google.maps.event.addListener(marker, 'click', function(){
+			        google.maps.event.addListener(marker, 'mouseover', function(){
 			            infoWindow.setContent('<h3>' + marker.name + '</h3>'+ marker.content);
 			            infoWindow.open($scope.map, marker);
 			        });
