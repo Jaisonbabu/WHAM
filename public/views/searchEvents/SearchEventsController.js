@@ -8,6 +8,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			"timezone": "America/New_York",
 			"utc": utcTime
 	};
+
 	/*var timeZone = {start_date:{
 		range_start :{}
 	}};
@@ -39,7 +40,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		$scope.searchEvents(params);
 	});
 
-	var searchEventsResponseHandler = function(response){
+	var searchEventsResponseHandler = function(response) {
 		$scope.events = response.events;
 		console.log(response.events);
 
@@ -69,6 +70,9 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			events.push(event);
 		}
+
+		//lat = pos.lat;
+		//long = pos.lng;
 
 		var mapOptions = {
 				zoom: 10,
@@ -146,14 +150,46 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			createMarker(events[i]);
 		}
 
-		$scope.openInfoWindow = function(e, selectedMarker){
+		$scope.openInfoWindow = function(e, selectedMarker) {
 			e.preventDefault();
 			google.maps.event.trigger(selectedMarker, 'mouseover');
 		}
 	};
 
 	$scope.searchEvents = function(params){
-		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler);
+		var pos = {};
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+				};
+				console.log('pos = '+ pos.lat);
+				params["location.latitude"] = pos.lat;
+				params["location.longitude"] = pos.lng;
+
+				//infoWindow.setPosition(pos);
+				//infoWindow.setContent('Location found.');
+				//map.setCenter(pos);
+				console.log(pos.lat+'---'+pos.lng);
+				console.log('params ='+params['location.latitude']);
+				EventsService.fetchEventsByLocation(params, searchEventsResponseHandler);
+			}, function() {
+				handleLocationError(true, infoWindow, map.getCenter());
+			});
+		} else {
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
+
+		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+			infoWindow.setPosition(pos);
+			infoWindow.setContent(browserHasGeolocation ?
+					'Error: The Geolocation service failed.' :
+			'Error: Your browser doesn\'t support geolocation.');
+		}
+
 	};
 
 	$scope.searchEvents(params);
