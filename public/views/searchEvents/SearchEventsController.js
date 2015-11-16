@@ -24,14 +24,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}
 		if (location!=null && location.val()!=""){
 
-			/*dummy values for now*/
-			//var initialLat = 42.12;
-			//var initialLon = -71.05;
-			var initialLat = 51.5;
-			var initialLon = -0.1914;
-			var address = '360 Huntington avenue';
-			var postalCode = '21058';
-			/*dummy values for now*/
 		}
 		else{
 
@@ -70,9 +62,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			events.push(event);
 		}
-
-		//lat = pos.lat;
-		//long = pos.lng;
 
 		var mapOptions = {
 				zoom: 10,
@@ -165,15 +154,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 						lat: position.coords.latitude,
 						lng: position.coords.longitude
 				};
-				console.log('pos = '+ pos.lat);
 				params["location.latitude"] = pos.lat;
 				params["location.longitude"] = pos.lng;
-
-				//infoWindow.setPosition(pos);
-				//infoWindow.setContent('Location found.');
-				//map.setCenter(pos);
-				console.log(pos.lat+'---'+pos.lng);
-				console.log('params ='+params['location.latitude']);
 				EventsService.fetchEventsByLocation(params, searchEventsResponseHandler);
 			}, function() {
 				handleLocationError(true, infoWindow, map.getCenter());
