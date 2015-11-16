@@ -37,6 +37,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(lat, long));
 		};
 		
+		//TODO: Add enter key press listener
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
 		var location = $("#txtLocation");		
