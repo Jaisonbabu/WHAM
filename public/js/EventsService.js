@@ -6,7 +6,7 @@
 			query += "&" + key + "=" + param_map[key];
 		}
 		
-		$http.get("https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json" + query)
+		$http.get("https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue" + query)
 		.success(responseHandler);
 	}
 

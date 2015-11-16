@@ -78,12 +78,6 @@ h2 {
     padding-left:15%;
 }
 
-.prdtimg{
-    vertical-align:middle;
-    display:box;
-    box-align:center;
-}
-
 .row{
     padding-left:50px;
     padding-right:50px;
@@ -455,4 +449,13 @@ h1{
 .scrollit {
     overflow:scroll;
     max-height:600px;
+}
+
+.eventimg{
+    display:box;
+    box-align:center;
+    height : 50px;
+    width : 50px;
+    float:left;
+    padding-right: 5px;
 }
