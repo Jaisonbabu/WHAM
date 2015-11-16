@@ -65,16 +65,13 @@
 								</ul>
 							</li>
 						</ul>
-						<ul class="nav navbar-nav">
-							<li><input type="text" placeholder="Write event type..." id="txtQuery" /></li>
-							<li><input type="text" placeholder="eg. Boston..." id="txtLocation" /></li>
+						<ul class="nav navbar-nav" style="padding-top:15px; padding-left:100px">
+							<li style="padding-right:8px"><input type="text" placeholder="Write event type..." id="txtQuery" style="width:250px"/></li>
+							<li style="padding-right:8px"><input type="text" placeholder="eg. Boston..." id="txtLocation"  style="width:250px"/></li>
 							<li><button type="button" id="btnSearch">Search</button></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="currentuser">
 							<li><a href="#/profile/user"> <span class="welcome"> Hello {{user.firstname}}</span></a></li>
-							<li role="presentation"><a href="#/profile/cart"> <span class="menucolor"> <span
-										class="glyphicon glyphicon-shopping-cart"></span>
-								</span> <span class="badge">{{cartCount}}</span></a></li>
 							<li><a href="#/logout" ng-click="logout()"> <span class="menucolor"> Logout </span></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="!currentuser">
