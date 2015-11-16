@@ -454,8 +454,8 @@ h1{
 .eventimg{
     display:box;
     box-align:center;
-    height : 50px;
-    width : 50px;
+    height : 80px;
+    width : 80px;
     float:left;
     padding-right: 5px;
 }

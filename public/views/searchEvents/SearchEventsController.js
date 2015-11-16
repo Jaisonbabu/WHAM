@@ -1,6 +1,19 @@
 app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService){	
 
 	var params = {};
+	var d = new Date();
+	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
+
+	var time = {
+			"timezone": "America/New_York",
+			"utc": utcTime
+	};
+	/*var timeZone = {start_date:{
+		range_start :{}
+	}};
+	timeZone.start_date.range_start=time;*/
+
+	//params.start_date.range_start = time;
 
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
@@ -21,7 +34,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}
 		else{
 
-		}		
+		}
+
 		$scope.searchEvents(params);
 	});
 
@@ -33,7 +47,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		var lat, long;
 
 		for(var i in $scope.events){
-			console.log(i);
 			var event = {
 					name : $scope.events[i].name.text, 
 					imageUrl : '',
@@ -49,6 +62,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				event.city = $scope.events[i].venue.address.city+',';
 				event.state = $scope.events[i].venue.address.region;
 				event.fullPostalCode =  $scope.events[i].venue.address.postal_code;
+				event.startTimestamp = $scope.events[i].start.local;
 				lat = $scope.events[i].venue.latitude;
 				long = $scope.events[i].venue.longitude;
 			}
@@ -78,9 +92,12 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				address : info.address,
 				city : info.city,
 				fullPostalCode : info.fullPostalCode,
-				state : info.state
+				state : info.state,
+				startTimestamp : info.startTimestamp
 			});
-			marker.content = '<div class="infoWindowContent">' + info.address + "\n,"+ info.city+"\n,"+ info.state + '</div>';
+
+			var date = new Date(info.startTimestamp);
+			marker.content = '<div class="infoWindowContent">' + info.address + "\n,"+ info.city+"\n,"+ info.state + '<br/>'+date.format('M jS, Y - g:i A')+'</div>';
 
 			google.maps.event.addListener(marker, 'mouseover', function(){
 				infoWindow.setContent('<h3>' + marker.name + '</h3>'+ marker.content);
@@ -109,11 +126,14 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				city : info.city,
 				state : info.state,
 				fullPostalCode : info.fullPostalCode,
-				imageUrl : info.imageUrl
+				imageUrl : info.imageUrl,
+				startTimestamp : info.startTimestamp
 			});
-			marker.content = '<div class="infoWindowContent">' + info.address + "\n"+ info.city+"\n"+ info.state + '</div>';
 
-			google.maps.event.addListener(marker, 'click', function(){
+			var date = new Date(info.startTimestamp);
+			marker.content = '<div class="infoWindowContent">' + info.address + "\n"+ info.city+"\n"+ info.state + '<br/>'+date.format('M jS, Y - g:i A')+'</div>';
+
+			google.maps.event.addListener(marker, 'mouseover', function(){
 				infoWindow.setContent('<h3>' + marker.name + '</h3>'+ marker.content);
 				infoWindow.open($scope.map, marker);
 			});
@@ -128,11 +148,9 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 		$scope.openInfoWindow = function(e, selectedMarker){
 			e.preventDefault();
-			google.maps.event.trigger(selectedMarker, 'click');
+			google.maps.event.trigger(selectedMarker, 'mouseover');
 		}
 	};
-
-	//params = {"location.latitude": "36.56", "location.longitude": "-121.95"};
 
 	$scope.searchEvents = function(params){
 		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler);
