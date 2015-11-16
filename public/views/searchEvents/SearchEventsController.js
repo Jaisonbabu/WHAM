@@ -64,7 +64,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}
 
 		var mapOptions = {
-				zoom: 10,
+				zoom: 12,
 				center: new google.maps.LatLng(lat, long),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
@@ -98,7 +98,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			});
 
 			$scope.markers.push(marker);
-
 		}  
 
 		for (i = 0; i < events.length; i++){
@@ -156,6 +155,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				};
 				params["location.latitude"] = pos.lat;
 				params["location.longitude"] = pos.lng;
+				params["location.within"] = 5+'mi';
 				EventsService.fetchEventsByLocation(params, searchEventsResponseHandler);
 			}, function() {
 				handleLocationError(true, infoWindow, map.getCenter());
