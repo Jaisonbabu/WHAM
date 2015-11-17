@@ -64,7 +64,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}
 
 		var mapOptions = {
-				zoom: 12,
+				zoom: 13,
 				center: new google.maps.LatLng(lat, long),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
@@ -112,7 +112,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			var marker = new google.maps.Marker({
 				map: $scope.map,
 				position: new google.maps.LatLng(info.lat, info.long),
-				zoom : 12,
+				zoom : 13,
 				name : info.name,
 				address : info.address,
 				city : info.city,
