@@ -61,18 +61,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			var events = [];		
 
 			for(var i in $scope.events){
-				var event = {
-						name : $scope.events[i].name.text, 
-						imageUrl : '',
-						lat : 0,
-						long : 0,
-						venue_name : '',
-						address : '',
-						city : '',
-						state : '',
-						startTimestamp : ''
-
-				};
+				var event = new Event();
 				if($scope.events[i].logo){
 					event.imageUrl = $scope.events[i].logo.url;
 				}
@@ -87,25 +76,25 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					event.startTimestamp = $scope.events[i].start.local;				
 				}*/
 				if($scope.events[i].venue.latitude) {
-					event.lat = $scope.events[i].venue.latitude;
+					event.venue.latitude = $scope.events[i].venue.latitude;
 				}
 				if($scope.events[i].venue.longitude) {
-					event.long = $scope.events[i].venue.longitude;
+					event.venue.longitude = $scope.events[i].venue.longitude;
 				}
 				if($scope.events[i].venue.name) {
-					event.venue_name = $scope.events[i].venue.name;
+					event.venue.name = $scope.events[i].venue.name;
 				}
 				if($scope.events[i].venue.address.address_1) {
-					event.address = $scope.events[i].venue.address.address_1;
+					event.location.addressLine1 = $scope.events[i].venue.address.address_1;
 				}
 				if($scope.events[i].venue.address.city) {
-					event.city = $scope.events[i].venue.address.city;
+					event.location.city = $scope.events[i].venue.address.city;
 				}
 				if($scope.events[i].venue.address.region) {
-					event.region = $scope.events[i].venue.address.region;
+					event.location.state = $scope.events[i].venue.address.region;
 				}
 				if($scope.events[i].start.local) {
-					event.startTimestamp = $scope.events[i].start.local;
+					event.startTime = $scope.events[i].start.local;
 				}
 
 				events.push(event);
