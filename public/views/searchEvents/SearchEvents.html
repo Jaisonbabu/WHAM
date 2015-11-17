@@ -46,7 +46,7 @@
 							<span>
 							<a href="#map"
 								scroll-on-click>{{marker.name}}</a>
-								<div ng-mouseover="openInfoWindow($event, marker);" >{{marker.address}}
+								<div ng-mouseover="openInfoWindow($event, marker);" >{{marker.venue_name}} <br/>{{marker.address}}
 									&nbsp;{{marker.city}} &nbsp;{{marker.state}}</br>
 									{{marker.startTimestamp | date:'EEE, MMM d - h:mm a'}}
 									</div>

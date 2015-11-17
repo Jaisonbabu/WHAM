@@ -35,8 +35,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		params["location.longitude"] = long = position.coords.longitude;
 		params["location.within"] = 5+'mi';
 		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(lat, long));
-		};
-		
+	};
+
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
 		var location = $("#txtLocation");		
@@ -50,90 +50,119 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			$scope.searchEventsCurrentLoc();
 		}		
 	});
-	
+
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
-		//TODO: handle response status
-		$scope.events = response.events;
-		console.log(response.events);
+			//TODO: handle response status
+			$scope.events = response.events;
+			console.log(response.events);
 
-		var events = [];		
+			var events = [];		
 
-		for(var i in $scope.events){
-			var event = {
-					name : $scope.events[i].name.text, 
-					imageUrl : '',
+			for(var i in $scope.events){
+				var event = {
+						name : $scope.events[i].name.text, 
+						imageUrl : '',
+						lat : 0,
+						long : 0,
+						venue_name : '',
+						address : '',
+						city : '',
+						state : '',
+						startTimestamp : ''
+
+				};
+				if($scope.events[i].logo){
+					event.imageUrl = $scope.events[i].logo.url;
+				}
+
+				//TODO: handle nulls
+				/*if($scope.events[i].venue) {
+					event.lat = $scope.events[i].venue.latitude;
+					event.long = $scope.events[i].venue.longitude;
+					event.address = $scope.events[i].venue.address.address_1+',';
+					event.city = $scope.events[i].venue.address.city+',';
+					event.state = $scope.events[i].venue.address.region;
+					event.startTimestamp = $scope.events[i].start.local;				
+				}*/
+				if($scope.events[i].venue.latitude) {
+					event.lat = $scope.events[i].venue.latitude;
+				}
+				if($scope.events[i].venue.longitude) {
+					event.long = $scope.events[i].venue.longitude;
+				}
+				if($scope.events[i].venue.name) {
+					event.venue_name = $scope.events[i].venue.name;
+				}
+				if($scope.events[i].venue.address.address_1) {
+					event.address = $scope.events[i].venue.address.address_1;
+				}
+				if($scope.events[i].venue.address.city) {
+					event.city = $scope.events[i].venue.address.city;
+				}
+				if($scope.events[i].venue.address.region) {
+					event.region = $scope.events[i].venue.address.region;
+				}
+				if($scope.events[i].start.local) {
+					event.startTimestamp = $scope.events[i].start.local;
+				}
+
+				events.push(event);
+			}
+
+			var mapOptions = {
+					zoom: 12,
+					center: new google.maps.LatLng(lt, lg),
+					mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
-			if($scope.events[i].logo){
-				event.imageUrl = $scope.events[i].logo.url;
+
+			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+			$scope.markers = [];
+
+			var infoWindow = new google.maps.InfoWindow();
+
+			var createMarker = function (info){
+
+				var marker = new google.maps.Marker({
+					map: $scope.map,
+					position: new google.maps.LatLng(info.lat, info.long),
+					zoom : 12,
+					name : info.name,
+					venue_name : info.venue_name,
+					address : info.address,
+					city : info.city,
+					fullPostalCode : info.fullPostalCode,
+					state : info.state,
+					startTimestamp : info.startTimestamp,
+					imageUrl : info.imageUrl
+				});
+
+				var date = new Date(info.startTimestamp);
+				marker.content = '<div class="infoWindowContent">'+ info.venue_name+"<br/>"+ info.address + "\n,"+ info.city+"\n,"+ info.state + '<br/>'+date.format('M jS, Y - g:i A')+'</div>';
+
+				google.maps.event.addListener(marker, 'mouseover', function(){
+					infoWindow.setContent('<h3>' + marker.name + '</h3>'+ marker.content);
+					infoWindow.open($scope.map, marker);
+				});
+
+				$scope.markers.push(marker);
+			};  
+
+			for (i = 0; i < events.length; i++){
+				createMarker(events[i]);
 			}
-
-			//TODO: handle nulls
-			if($scope.events[i].venue) {
-				event.lat = $scope.events[i].venue.latitude;
-				event.long = $scope.events[i].venue.longitude;
-				event.address = $scope.events[i].venue.address.address_1+',';
-				event.city = $scope.events[i].venue.address.city+',';
-				event.state = $scope.events[i].venue.address.region;
-				event.fullPostalCode =  $scope.events[i].venue.address.postal_code;
-				event.startTimestamp = $scope.events[i].start.local;				
-			}
-
-			events.push(event);
-		}
-
-		var mapOptions = {
-				zoom: 12,
-				center: new google.maps.LatLng(lt, lg),
-				mapTypeId: google.maps.MapTypeId.ROADMAP
+			$scope.openInfoWindow = function(e, selectedMarker) {
+				e.preventDefault();
+				google.maps.event.trigger(selectedMarker, 'mouseover');
+			};
 		};
-
-		$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-		$scope.markers = [];
-
-		var infoWindow = new google.maps.InfoWindow();
-
-		var createMarker = function (info){
-
-			var marker = new google.maps.Marker({
-				map: $scope.map,
-				position: new google.maps.LatLng(info.lat, info.long),
-				zoom : 12,
-				name : info.name,
-				address : info.address,
-				city : info.city,
-				fullPostalCode : info.fullPostalCode,
-				state : info.state,
-				startTimestamp : info.startTimestamp,
-				imageUrl : info.imageUrl
-			});
-
-			var date = new Date(info.startTimestamp);
-			marker.content = '<div class="infoWindowContent">' + info.address + "\n,"+ info.city+"\n,"+ info.state + '<br/>'+date.format('M jS, Y - g:i A')+'</div>';
-
-			google.maps.event.addListener(marker, 'mouseover', function(){
-				infoWindow.setContent('<h3>' + marker.name + '</h3>'+ marker.content);
-				infoWindow.open($scope.map, marker);
-			});
-
-			$scope.markers.push(marker);
-		};  
-
-		for (i = 0; i < events.length; i++){
-			createMarker(events[i]);
-		}
-		$scope.openInfoWindow = function(e, selectedMarker) {
-			e.preventDefault();
-			google.maps.event.trigger(selectedMarker, 'mouseover');
-		};
-	};
 	};
 
 	$scope.searchEventsCurrentLoc = function(){
 		MapService.getUserLocation(getUserLocationResponseHandler);		
 	};
-	
+
 	$scope.searchEventsCurrentLoc();
-	
+
 });
