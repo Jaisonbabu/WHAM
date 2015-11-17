@@ -1,8 +1,8 @@
 app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService, MapService){	
 
 	var params = {};
-	var d = new Date();
-	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
+	//var d = new Date();
+	//var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
 	/*var time = {
 			"timezone": "America/New_York",
 			"utc": utcTime
@@ -16,25 +16,30 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	//params.start_date.range_start = time;
 
 	var getLocationResponseHandler = function(response){
-		//TODO: handle response status
+		//TODO: handle response statuses
 		//if (response!=null && response)
-		//TODO: handle empty results
 		if (response.results.length > 0){
-			params["location.latitude"] = lat = response.results[0].geometry.location.lat;
-			params["location.longitude"] = long = response.results[0].geometry.location.lng;
-			params["location.within"] = 5+'mi';
-			EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(lat, long));
+			var location = new Location();
+			location.setLatLong(
+					response.results[0].geometry.location.lat,
+					response.results[0].geometry.location.lng);
+			params = location.getParamsForSearch(params);
+			EventsService.fetchEventsByLocation(param_map, 
+					searchEventsResponseHandler(location.latitude, location.longitude));
 		}
 		else{
+			//TODO: handle empty results
 			console.log("no results for location");
 		}
 	};
 
 	var getUserLocationResponseHandler = function(position) {
-		params["location.latitude"] = lat = position.coords.latitude;
-		params["location.longitude"] = long = position.coords.longitude;
-		params["location.within"] = 5+'mi';
-		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(lat, long));
+		var location = new Location();
+		location.setLatLong(
+				response.results[0].geometry.location.lat,
+				response.results[0].geometry.location.lng);
+		params = location.getParamsForSearch(params);
+		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
 		//TODO: Add enter key press listener
