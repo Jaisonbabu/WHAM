@@ -76,25 +76,25 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					event.startTimestamp = $scope.events[i].start.local;				
 				}*/
 				if($scope.events[i].venue.latitude) {
-					event.venue.latitude = $scope.events[i].venue.latitude;
+					event.venue.location.latitude = $scope.events[i].venue.latitude;
 				}
 				if($scope.events[i].venue.longitude) {
-					event.venue.longitude = $scope.events[i].venue.longitude;
+					event.venue.location.longitude = $scope.events[i].venue.longitude;
 				}
 				if($scope.events[i].venue.name) {
 					event.venue.name = $scope.events[i].venue.name;
 				}
 				if($scope.events[i].venue.address.address_1) {
-					event.location.addressLine1 = $scope.events[i].venue.address.address_1;
+					event.venue.location.addressLine1 = $scope.events[i].venue.address.address_1;
 				}
 				if($scope.events[i].venue.address.city) {
-					event.location.city = $scope.events[i].venue.address.city;
+					event.venue.location.city = $scope.events[i].venue.address.city;
 				}
 				if($scope.events[i].venue.address.region) {
-					event.location.state = $scope.events[i].venue.address.region;
+					event.venue.location.state = $scope.events[i].venue.address.region;
 				}
 				if($scope.events[i].start.local) {
-					event.startTime = $scope.events[i].start.local;
+					event.venue.location.startTime = $scope.events[i].start.local;
 				}
 
 				events.push(event);
