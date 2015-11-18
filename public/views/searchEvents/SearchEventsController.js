@@ -3,17 +3,11 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var params = {};
 	var d = new Date();
 	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
+	
 	/*var time = {
 			"timezone": "America/New_York",
 			"utc": utcTime
 	};*/
-
-	/*var timeZone = {start_date:{
-		range_start :{}
-	}};
-	timeZone.start_date.range_start=time;*/
-
-	//params.start_date.range_start = time;
 
 	var getLocationResponseHandler = function(response){
 		//TODO: handle response status
@@ -56,8 +50,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		return function(response){
 			//TODO: handle response status
 			$scope.events = response.events;
-			console.log(response.events);
-
 			var events = [];		
 
 			for(var i in $scope.events){
@@ -73,19 +65,10 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 						startTimestamp : ''
 
 				};
+				//TODO: handle nulls
 				if($scope.events[i].logo){
 					event.imageUrl = $scope.events[i].logo.url;
 				}
-
-				//TODO: handle nulls
-				/*if($scope.events[i].venue) {
-					event.lat = $scope.events[i].venue.latitude;
-					event.long = $scope.events[i].venue.longitude;
-					event.address = $scope.events[i].venue.address.address_1+',';
-					event.city = $scope.events[i].venue.address.city+',';
-					event.state = $scope.events[i].venue.address.region;
-					event.startTimestamp = $scope.events[i].start.local;				
-				}*/
 				if($scope.events[i].venue.latitude) {
 					event.lat = $scope.events[i].venue.latitude;
 				}
