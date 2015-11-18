@@ -38,6 +38,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		
 		//TODO: Add enter key press listener
 	$("#btnSearch").on("click", function(){
+		//$scope.markers = [];
 		var query = $("#txtQuery");
 		var location = $("#txtLocation");		
 		if (query!=null && query.val()!=""){
@@ -58,24 +59,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			var events = [];		
 
 			for(var i in $scope.events){
-<<<<<<< HEAD
-				var event = {
-						name : $scope.events[i].name.text, 
-						imageUrl : '',
-						lat : 0,
-						long : 0,
-						venue_name : '',
-						address : '',
-						city : '',
-						state : '',
-						startTimestamp : ''
 
-				};
-				//TODO: handle nulls
-				if($scope.events[i].logo){
-					event.imageUrl = $scope.events[i].logo.url;
-				}
-=======
 				var event = new Event();
 				if($scope.events[i].logo && $scope.events[i].logo.url){
 					event.imageUrl = $scope.events[i].logo.url;
@@ -87,8 +71,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				if($scope.events[i].start.local) {
 					event.startTime = $scope.events[i].start.local;
 				}
-				
->>>>>>> origin/master
 				if($scope.events[i].venue.latitude) {
 					event.venue.location.latitude = $scope.events[i].venue.latitude;
 				}
@@ -125,7 +107,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 			$scope.markers = [];
-
+			
 			for (i = 0; i < events.length; i++){
 				var marker = new Marker(events[i], $scope.map).marker;
 				/*var infoWindow = new google.maps.InfoWindow();

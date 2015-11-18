@@ -1,3 +1,4 @@
+var infoWindow = new google.maps.InfoWindow();
 function Marker(event, mapObj){
 	this.date = new Date(event.startTime);
 	this.marker = new google.maps.Marker({
@@ -24,7 +25,6 @@ function Marker(event, mapObj){
 }
 
 Marker.prototype.addListener = function(marker, mapObj) {
-	var infoWindow = new google.maps.InfoWindow();
 	google.maps.event.addListener(marker, 'mouseover', function() {
 		infoWindow.setContent('<h3>' + marker.name + '</h3>' + marker.content);
 		infoWindow.open(mapObj, marker);
