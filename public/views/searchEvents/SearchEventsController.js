@@ -38,7 +38,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		
 		//TODO: Add enter key press listener
 	$("#btnSearch").on("click", function(){
-		//$scope.markers = [];
 		var query = $("#txtQuery");
 		var location = $("#txtLocation");		
 		if (query!=null && query.val()!=""){
@@ -106,15 +105,10 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-			$scope.markers = [];
+			//$scope.markers = [];
 			
-			for (i = 0; i < events.length; i++){
+			for (i = 0; i < events.length; i++) {
 				var marker = new Marker(events[i], $scope.map).marker;
-				/*var infoWindow = new google.maps.InfoWindow();
-				google.maps.event.addListener(marker, 'mouseover', function() {
-					infoWindow.setContent('<h3>' + marker.name + '</h3>' + marker.content);
-					infoWindow.open($scope.map, marker);
-				});*/
 				$scope.markers.push(marker);
 			}
 			
@@ -126,6 +120,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	};
 
 	$scope.searchEventsCurrentLoc = function(){
+		$scope.markers = [];
 		MapService.getUserLocation(getUserLocationResponseHandler);		
 	};
 
