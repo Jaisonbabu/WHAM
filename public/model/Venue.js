@@ -1,7 +1,7 @@
 function Venue()  {
  
 	this.name = "";
-	this.Description = "";
+	this.description = "";
 	this.location = new Location();
 }
 

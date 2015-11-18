@@ -24,7 +24,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					response.results[0].geometry.location.lat,
 					response.results[0].geometry.location.lng);
 			params = location.getParamsForSearch(params);
-			EventsService.fetchEventsByLocation(param_map, 
+			EventsService.fetchEventsByLocation(params, 
 					searchEventsResponseHandler(location.latitude, location.longitude));
 		}
 		else{
@@ -36,8 +36,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var getUserLocationResponseHandler = function(position) {
 		var location = new Location();
 		location.setLatLong(
-				response.results[0].geometry.location.lat,
-				response.results[0].geometry.location.lng);
+				position.coords.latitude,
+				position.coords.longitude);
 		params = location.getParamsForSearch(params);
 		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
@@ -67,19 +67,17 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			for(var i in $scope.events){
 				var event = new Event();
-				if($scope.events[i].logo){
+				if($scope.events[i].logo && $scope.events[i].logo.url){
 					event.imageUrl = $scope.events[i].logo.url;
 				}
-
-				//TODO: handle nulls
-				/*if($scope.events[i].venue) {
-					event.lat = $scope.events[i].venue.latitude;
-					event.long = $scope.events[i].venue.longitude;
-					event.address = $scope.events[i].venue.address.address_1+',';
-					event.city = $scope.events[i].venue.address.city+',';
-					event.state = $scope.events[i].venue.address.region;
-					event.startTimestamp = $scope.events[i].start.local;				
-				}*/
+				if($scope.events[i].name && $scope.events[i].name.text){
+					event.name = $scope.events[i].name.text;
+				}
+				//TODO: get utc and convert time to local
+				if($scope.events[i].start.local) {
+					event.startTime = $scope.events[i].start.local;
+				}
+				
 				if($scope.events[i].venue.latitude) {
 					event.venue.location.latitude = $scope.events[i].venue.latitude;
 				}
@@ -92,16 +90,18 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				if($scope.events[i].venue.address.address_1) {
 					event.venue.location.addressLine1 = $scope.events[i].venue.address.address_1;
 				}
+				if($scope.events[i].venue.address.address_2) {
+					event.venue.location.addressLine2 = $scope.events[i].venue.address.address_2;
+				}
 				if($scope.events[i].venue.address.city) {
 					event.venue.location.city = $scope.events[i].venue.address.city;
 				}
 				if($scope.events[i].venue.address.region) {
 					event.venue.location.state = $scope.events[i].venue.address.region;
+				}				
+				if($scope.events[i].venue.address.postal_code) {
+					event.venue.location.postal = $scope.events[i].venue.address.postal_code;
 				}
-				if($scope.events[i].start.local) {
-					event.venue.location.startTime = $scope.events[i].start.local;
-				}
-
 				events.push(event);
 			}
 
@@ -115,38 +115,16 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			$scope.markers = [];
 
-			var infoWindow = new google.maps.InfoWindow();
-
-			var createMarker = function (info){
-
-				var marker = new google.maps.Marker({
-					map: $scope.map,
-					position: new google.maps.LatLng(info.lat, info.long),
-					zoom : 12,
-					name : info.name,
-					venue_name : info.venue_name,
-					address : info.address,
-					city : info.city,
-					fullPostalCode : info.fullPostalCode,
-					state : info.state,
-					startTimestamp : info.startTimestamp,
-					imageUrl : info.imageUrl
-				});
-
-				var date = new Date(info.startTimestamp);
-				marker.content = '<div class="infoWindowContent">'+ info.venue_name+"<br/>"+ info.address + "\n,"+ info.city+"\n,"+ info.state + '<br/>'+date.format('M jS, Y - g:i A')+'</div>';
-
-				google.maps.event.addListener(marker, 'mouseover', function(){
-					infoWindow.setContent('<h3>' + marker.name + '</h3>'+ marker.content);
-					infoWindow.open($scope.map, marker);
-				});
-
-				$scope.markers.push(marker);
-			};  
-
 			for (i = 0; i < events.length; i++){
-				createMarker(events[i]);
+				var marker = new Marker(events[i], $scope.map).marker;
+				/*var infoWindow = new google.maps.InfoWindow();
+				google.maps.event.addListener(marker, 'mouseover', function() {
+					infoWindow.setContent('<h3>' + marker.name + '</h3>' + marker.content);
+					infoWindow.open($scope.map, marker);
+				});*/
+				$scope.markers.push(marker);
 			}
+			
 			$scope.openInfoWindow = function(e, selectedMarker) {
 				e.preventDefault();
 				google.maps.event.trigger(selectedMarker, 'mouseover');
