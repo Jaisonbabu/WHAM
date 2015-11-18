@@ -3,7 +3,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var params = {};
 	var d = new Date();
 	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
-
+	
 	/*var time = {
 			"timezone": "America/New_York",
 			"utc": utcTime
@@ -18,7 +18,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					response.results[0].geometry.location.lat,
 					response.results[0].geometry.location.lng);
 			params = location.getParamsForSearch(params);
-			EventsService.fetchEventsByLocation(params, 
+			EventsService.fetchEvents(params, 
 					searchEventsResponseHandler(location.latitude, location.longitude));
 		}
 		else{
@@ -33,7 +33,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		EventsService.fetchEventsByLocation(params, searchEventsResponseHandler(location.latitude, location.longitude));
+		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
 		//TODO: Add enter key press listener
@@ -105,7 +105,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-			//$scope.markers = [];
+			$scope.markers = [];
 			
 			for (i = 0; i < events.length; i++) {
 				var marker = new Marker(events[i], $scope.map).marker;
@@ -119,8 +119,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		};
 	};
 
-	$scope.searchEventsCurrentLoc = function(){
-		$scope.markers = [];
+	$scope.searchEventsCurrentLoc = function(){		
 		MapService.getUserLocation(getUserLocationResponseHandler);		
 	};
 

@@ -1,6 +1,6 @@
 ﻿app.factory("EventsService", function ($http) {
 
-	var fetchEventsByLocation = function(param_map, responseHandler){
+	var fetchEvents = function(param_map, responseHandler){
 		var query = "";
 		for(key in param_map){
 			query += "&" + key + "=" + param_map[key];
@@ -10,6 +10,6 @@
 	};
 	
 	return {	
-		fetchEventsByLocation : fetchEventsByLocation
+		fetchEvents : fetchEvents
 	};
 });
