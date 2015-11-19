@@ -44,7 +44,10 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			params["q"] = query.val();
 		}
 		if (location!=null && location.val()!=""){
-			MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
+			if (isNaN(location.val()))
+			    MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
+			else
+				alert(" Please enter a valid location");
 		}
 		else{
 			$scope.searchEventsCurrentLoc();
@@ -64,6 +67,14 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			};
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+			
+			var locationInput = document.getElementById('txtLocation');
+			autocomplete = new google.maps.places.Autocomplete(locationInput);
+			autocomplete.bindTo('bounds', $scope.map);
+			
+			autocomplete.addListener('place_changed', function() {
+				var place = autocomplete.getPlace();
+			});
 
 			$scope.markers = [];
 			
