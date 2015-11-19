@@ -46,13 +46,13 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			if (isNaN(location.val()))
 			    MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
 			else
-				alert(" Please enter a valid location");
+				alert("Please enter a valid location");
 		}
 		else{
 			$scope.searchEventsCurrentLoc();
 		}		
 	});
-
+	
 	$("#txtQuery").keypress(function(e){
 		if(e.which == 13){
 			$("#btnSearch").click();

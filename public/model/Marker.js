@@ -16,9 +16,9 @@ function Marker(event, mapObj){
 				+ "<br/>" + event.venue.location.addressLine1 + "\n,"
 				+ event.venue.location.city + "\n,"
 				+ event.venue.location.state + '<br/>'
-				+ new Date(event.startTime).format('M jS, Y - g:i A') + '</div>'//convert to local time from utc
+				+ new Date(event.startTime).format('M jS, Y - g:i A') + '</div>'
 	});
-	addListener(mapObj);
+	addListener(this.marker, mapObj);
 }
 
 var infoWindow = new google.maps.InfoWindow();
