@@ -36,7 +36,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
-		//TODO: Add enter key press listener
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
 		var location = $("#txtLocation");		
@@ -54,6 +53,18 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}		
 	});
 
+	$("#txtQuery").keypress(function(e){
+		if(e.which == 13){
+			$("#btnSearch").click();
+		}
+	});
+	
+	$("#txtLocation").keypress(function(e){
+		if(e.which == 13){
+			$("#btnSearch").click();
+		}
+	});
+	
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
 			//TODO: handle response status
