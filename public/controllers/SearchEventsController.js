@@ -54,49 +54,9 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
 			//TODO: handle response status
-			$scope.events = response.events;
-			var events = [];		
-
-			for(var i in $scope.events){
-
-				var event = new Event();
-				if($scope.events[i].logo && $scope.events[i].logo.url){
-					event.imageUrl = $scope.events[i].logo.url;
-				}
-				if($scope.events[i].name && $scope.events[i].name.text){
-					event.name = $scope.events[i].name.text;
-				}
-				//TODO: get utc and convert time to local
-				if($scope.events[i].start.local) {
-					event.startTime = $scope.events[i].start.local;
-				}
-				if($scope.events[i].venue.latitude) {
-					event.venue.location.latitude = $scope.events[i].venue.latitude;
-				}
-				if($scope.events[i].venue.longitude) {
-					event.venue.location.longitude = $scope.events[i].venue.longitude;
-				}
-				if($scope.events[i].venue.name) {
-					event.venue.name = $scope.events[i].venue.name;
-				}
-				if($scope.events[i].venue.address.address_1) {
-					event.venue.location.addressLine1 = $scope.events[i].venue.address.address_1;
-				}
-				if($scope.events[i].venue.address.address_2) {
-					event.venue.location.addressLine2 = $scope.events[i].venue.address.address_2;
-				}
-				if($scope.events[i].venue.address.city) {
-					event.venue.location.city = $scope.events[i].venue.address.city;
-				}
-				if($scope.events[i].venue.address.region) {
-					event.venue.location.state = $scope.events[i].venue.address.region;
-				}				
-				if($scope.events[i].venue.address.postal_code) {
-					event.venue.location.postal = $scope.events[i].venue.address.postal_code;
-				}
-				events.push(event);
-			}
-
+			var events = getEvents(response.events);		
+			$scope.events = events;
+			
 			var mapOptions = {
 					zoom: 12,
 					center: new google.maps.LatLng(lt, lg),

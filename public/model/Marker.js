@@ -1,6 +1,4 @@
-var infoWindow = new google.maps.InfoWindow();
 function Marker(event, mapObj){
-	this.date = new Date(event.startTime);
 	this.marker = new google.maps.Marker({
 		map : mapObj,
 		position : new google.maps.LatLng(event.venue.location.latitude,
@@ -18,13 +16,14 @@ function Marker(event, mapObj){
 				+ "<br/>" + event.venue.location.addressLine1 + "\n,"
 				+ event.venue.location.city + "\n,"
 				+ event.venue.location.state + '<br/>'
-				+ this.date.format('M jS, Y - g:i A') + '</div>'
-	});	
-	
-	this.addListener(this.marker, mapObj);
+				+ new Date(event.startTime).format('M jS, Y - g:i A') + '</div>'//convert to local time from utc
+	});
+	addListener(mapObj);
 }
 
-Marker.prototype.addListener = function(marker, mapObj) {
+var infoWindow = new google.maps.InfoWindow();
+
+var addListener = function(marker, mapObj) {	
 	google.maps.event.addListener(marker, 'mouseover', function() {
 		infoWindow.setContent('<h3>' + marker.name + '</h3>' + marker.content);
 		infoWindow.open(mapObj, marker);

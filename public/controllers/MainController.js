@@ -134,7 +134,7 @@ app.directive('match', [function () {
 app.config(function ($routeProvider, $httpProvider) {
 	$routeProvider
 	.when('/home', {
-		templateUrl: 'views/searchEvents/SearchEvents.html',
+		templateUrl: '../views/SearchEvents.html',
 		controller: 'SearchEventsController'
 	})
 
@@ -161,3 +161,15 @@ app.config(function ($routeProvider, $httpProvider) {
 			});
 
 });
+
+var getStringObjectIfAvailable = function (obj){
+	if (obj != null && obj != undefined)
+		return obj;
+	return "";
+};
+
+var getObjectIfAvailable = function (obj){
+	if (obj != null && obj != undefined)
+		return obj;
+	return null;
+};
