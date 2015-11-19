@@ -161,5 +161,3 @@ app.config(function ($routeProvider, $httpProvider) {
 			});
 
 });
-
-

@@ -1,15 +1,3 @@
-/*var resp;
-$.getJSON("response.json",{}, function( data ){ 
-		  resp = data; 
-		});*/
-var getResponse = function() {
-	$.get("../response/response.json", function(response) {
-	//return jQuery.parseJSON(response);
-		return JSON.parse(response);
-	});
-	
-};
-
 describe("searchEventsService mocks", function (service) {
     beforeEach(function(){module('AngularApp')});
 
@@ -18,11 +6,11 @@ describe("searchEventsService mocks", function (service) {
         angular.mock.inject(function ($injector) {
             service = $injector.get('EventsService');
             $httpBackend = $injector.get('$httpBackend');
-        })
+        });
     });
 
     describe('searchEventsService mocks', function () {
-    	var resp = window.getJSONFixture('../../../response.json');
+    	var resp = window.getJSONFixture('../../../../response.json');
         
     	it("fetchEvents calls api", inject(function () {
         	var map = {};        	
