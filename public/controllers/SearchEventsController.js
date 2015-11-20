@@ -36,20 +36,11 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
-    select = document.getElementById( 'categories' );
-    for( category in $scope.categories ) {
-		select.add( new Option( category, $scope.categories[category]) );
-	};	
-	
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
-		var location = $("#txtLocation");
-		var category  = $("#categories");
+		var location = $("#txtLocation");		
 		if (query!=null && query.val()!=""){
 			params["q"] = query.val();
-		}
-		if (category!=null && category.val()!="" && category.val()!="Select Category"){
-			params["categories"] = category.val();
 		}
 		if (location!=null && location.val()!=""){
 			if (isNaN(location.val()))
@@ -98,7 +89,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
 			);
 
-			userMarker = new new RichMarker({
+			userMarker = new MarkerWithLabel({
 				flat: true,
 				icon: image,
 				map: $scope.map,
