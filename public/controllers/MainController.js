@@ -4,6 +4,7 @@ var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location) {
 
 	$rootScope.user = {};
+	$rootScope.categories = {'Food' : '110', 'Film and Arts': '104,105', 'Music' : '103','Holidays': '116','Sports': '107,108,109', 'Science and business':'101,102,115'};
 
 	/*$scope.logout = function()
 	{
@@ -138,9 +139,9 @@ app.config(function ($routeProvider, $httpProvider) {
 		controller: 'SearchEventsController'
 	})
 
-	.otherwise({
+	/*.otherwise({
 		redirectTo: '/home'
-	})
+	})*/
 
 	$httpProvider
 	.interceptors

@@ -36,11 +36,20 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
+    select = document.getElementById( 'categories' );
+    for( category in $scope.categories ) {
+		select.add( new Option( category, $scope.categories[category]) );
+	};	
+	
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
-		var location = $("#txtLocation");		
+		var location = $("#txtLocation");
+		var category  = $("#categories");
 		if (query!=null && query.val()!=""){
 			params["q"] = query.val();
+		}
+		if (category!=null && category.val()!="" && category.val()!="Select Category"){
+			params["categories"] = category.val();
 		}
 		if (location!=null && location.val()!=""){
 			if (isNaN(location.val()))
