@@ -66,11 +66,11 @@
 							<li style="padding-right:8px"><input type="text" placeholder="eg. Boston..." id="txtLocation"  style="width:250px"/></li>
 							<li><button type="button" id="btnSearch">Search</button></li>
 						</ul>
-						<ul class="nav navbar-nav navbar-right" ng-show="currentuser">
-							<li><a href="#/profile/user"> <span class="welcome"> Hello {{user.firstname}}</span></a></li>
+						<ul class="nav navbar-nav navbar-right" ng-show="currentUser">
+							<li><a href="#/profile/user"> <span class="welcome"> Hello {{currentUser}}</span></a></li>
 							<li><a href="#/logout" ng-click="logout()"> <span class="menucolor"> Logout </span></a></li>
 						</ul>
-						<ul class="nav navbar-nav navbar-right" ng-show="!currentuser">
+						<ul class="nav navbar-nav navbar-right" ng-show="!currentUser">
 							<li id="registerlink"><a href="#/register"><span class="menucolor">Sign up</span></a></li>
 							<li id="loginlink"><a href="#/login"><span class="menucolor"><span class="glyphicon glyphicon-user"> </span>&nbsp;Login</span></a></li>
 						</ul>
