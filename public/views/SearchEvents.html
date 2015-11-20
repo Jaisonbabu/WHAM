@@ -1,66 +1,72 @@
 <div class="homePage" ng-app="AngularApp">
 
-	<div class="row">
-		<div class="col-sm-5"></div>
-		<div class="col-sm-7">
-			<!-- <div ng-show="markers.length == 0">
+	<div ng-show="eventResponse==0" class="tablediv row">
+
+		<div class="row">
+			<div class="col-sm-5"></div>
+			<div class="col-sm-7">
+				<!-- <div ng-show="markers.length == 0">
 				<span class="instructions topPadding"> Sorry you don't have
 					any events nearby your place :-(</span>
 			</div>  -->
 
-			<div class="instructions linePadding" ng-show="markers.length>0">
-				Events within 5 miles of your location</div>
-		</div>
-	</div>
-
-	<div ng-hide="markers.length>0" class="tablediv row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-8">
-			<h3>
-				<span class="glyphicon glyphicon-hourglass"> Loading
-					events...</span>
-			</h3>
-		</div>
-	</div>
-
-	<div class="row topPadding" ng-show="markers.length>0">
-		<div class="col-sm-4">
-			<table
-				class="table table-striped table-hover table-bordered table-responsive linePadding">
-				<thead>
-					<tr>
-						<th align="center">Events</th>
-					</tr>
-				</thead>
-			</table>
-			<div class="scrollit">
-				<table class="table table-striped table-hover table-bordered table-responsive linePadding">
-					<tbody>
-						<tr ng-repeat="marker in markers">
-							<td>
-							<span><img class="eventimg" ng-src="{{marker.imageUrl}}" alt="Image currently unavailable">
-							</span>
-							<span>
-							<a href="#map"
-								scroll-on-click>{{marker.name}}</a>
-								<div ng-mouseover="openInfoWindow($event, marker);" >{{marker.venue_name}} <br/>{{marker.address}}
-									&nbsp;{{marker.city}} &nbsp;{{marker.state}}</br>
-									{{marker.startTimestamp | date:'EEE, MMM d - h:mm a'}}
-									</div>
-									
-							</span>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="instructions linePadding" ng-show="markers.length>0">
+					Events within 5 miles of your location</div>
 			</div>
 		</div>
 
-		<div class="col-sm-8">
-			<div id="map"></div>
+		<div ng-hide="events.length>0" class="tablediv row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8">
+				<h3>
+					<span class="glyphicon glyphicon-hourglass"> Loading
+						events...</span>
+				</h3>
+			</div>
 		</div>
+
+		<div class="row topPadding" ng-show="markers.length>0">
+			<div class="col-sm-4">
+				<table
+					class="table table-striped table-hover table-bordered table-responsive linePadding">
+					<thead>
+						<tr>
+							<th align="center">Events</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="scrollit">
+					<table
+						class="table table-striped table-hover table-bordered table-responsive linePadding">
+						<tbody>
+							<tr ng-repeat="marker in markers">
+								<td><span><img class="eventimg"
+										ng-src="{{marker.imageUrl}}" alt="Image currently unavailable">
+								</span> <span> <a href="#map" scroll-on-click>{{marker.name}}</a>
+										<div ng-mouseover="openInfoWindow($event, marker);">
+											{{marker.venue_name}} <br />{{marker.address}}
+											&nbsp;{{marker.city}} &nbsp;{{marker.state}}</br>
+											{{marker.startTimestamp | date:'EEE, MMM d - h:mm a'}}
+										</div>
+
+								</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="col-sm-8">
+				<div id="map"></div>
+			</div>
+		</div>
+
 	</div>
 
+	<div ng-show="eventResponse==1" class="tablediv row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-8">
+			<h3>No events to display. Please try new search</h3>
+		</div>
+	</div>
 </div>
-
-

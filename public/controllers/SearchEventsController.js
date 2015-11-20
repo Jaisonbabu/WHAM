@@ -3,7 +3,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var params = {};
 	var d = new Date();
 	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
-	
+	$scope.eventResponse = 0;
 	/*var time = {
 			"timezone": "America/New_York",
 			"utc": utcTime
@@ -80,6 +80,13 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			var events = getEvents(response.events);		
 			$scope.events = events;
 			
+			if($scope.events.length == 0){
+				$scope.eventResponse = 1;
+			}
+			else{
+				$scope.eventResponse = 0;
+			}
+			
 			var mapOptions = {
 					zoom: 12,
 					center: new google.maps.LatLng(lt, lg),
@@ -120,10 +127,14 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			
 			$scope.markers= [];
 			
-			for (i = 0; i < events.length; i++) {
-				var marker = new Marker(events[i], $scope.map).marker;
-				$scope.markers.push(marker);
-			}
+		
+				
+				for (i = 0; i < events.length; i++) {
+					var marker = new Marker(events[i], $scope.map).marker;
+					$scope.markers.push(marker);
+				}
+		
+		
 			
 			$scope.openInfoWindow = function(e, selectedMarker) {
 				e.preventDefault();
