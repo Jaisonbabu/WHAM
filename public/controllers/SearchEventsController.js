@@ -88,32 +88,6 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 			
-			$scope.userLoc = new google.maps.LatLng(lt, lg);
-			
-			var image = new google.maps.MarkerImage(
-					'http://plebeosaur.us/etc/map/bluedot_retina.png',
-					null, // size
-					null, // origin
-					new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
-					new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
-			);
-
-			userMarker = new new RichMarker({
-				flat: true,
-				icon: image,
-				map: $scope.map,
-				optimized: false,
-				position: $scope.userLoc,
-				title: 'You are here',
-				visible: true,
-				//labelClass: "userLoc", -- Uncomment for pulse CSS
-			});
-			
-			$scope.map.setCenter( $scope.userLoc );
-			
-			userMarker.setAnimation(google.maps.Animation.BOUNCE);
-			
-			
 			var locationInput = document.getElementById('txtLocation');
 			autocomplete = new google.maps.places.Autocomplete(locationInput);
 			autocomplete.bindTo('bounds', $scope.map);

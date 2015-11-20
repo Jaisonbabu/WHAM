@@ -438,9 +438,8 @@ h1{
 
 #map {
     height:600px;
-    width:100%; 
+    width:100%;
 }
-
 .infoWindowContent {
     font-size:  14px !important;
     border-top: 1px solid #ccc;
@@ -460,51 +459,3 @@ h1{
     float:left;
     padding-right: 5px;
 }
-
-.userLoc {
-  box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
-  border: 1pt solid #fff;
-  height: 51px !important;
-  width: 51px !important;
-  border-radius: 51px;	
-  -moz-animation: pulsate 1.5s ease-in-out infinite;
-  -webkit-animation: pulsate 1.5s ease-in-out infinite;
-  
-	/* multiply the shadows, inside and outside the circle */
-  -moz-box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
- -webkit-box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
- 
-	/* set the ring's new dimension and re-center it */
-  animation: pulsate 1.5s ease-in-out infinite;
-}
-
-
-your custom CSS \
-	@-moz-keyframes pulsate {
-		from {
-			-moz-transform: scale(0.25);
-			opacity: 1.0;
-		}
-		95% {
-			-moz-transform: scale(1.3);
-			opacity: 0;
-		}
-		to {
-			-moz-transform: scale(0.3);
-			opacity: 0;
-		}
-	}
-	@-webkit-keyframes pulsate {
-		from {
-			-webkit-transform: scale(0.25);
-			opacity: 1.0;
-		}
-		95% {
-			-webkit-transform: scale(1.3);
-			opacity: 0;
-		}
-		to {
-			-webkit-transform: scale(0.3);
-			opacity: 0;
-		}
-	}
