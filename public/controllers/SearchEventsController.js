@@ -3,7 +3,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var params = {};
 	var d = new Date();
 	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
-	
+	$scope.eventResponse = 0;
 	/*var time = {
 			"timezone": "America/New_York",
 			"utc": utcTime
@@ -18,8 +18,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					response.results[0].geometry.location.lat,
 					response.results[0].geometry.location.lng);
 			params = location.getParamsForSearch(params);
-			EventsService.fetchEvents(params, 
-					searchEventsResponseHandler(location.latitude, location.longitude));
+			EventsService.fetchEvents(params,searchEventsResponseHandler(location.latitude, location.longitude));
 		}
 		else{
 			//TODO: handle empty results
@@ -33,70 +32,61 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
+		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
-		//TODO: Add enter key press listener
+    select = document.getElementById( 'categories' );
+    for( category in $scope.categories ) {
+		select.add( new Option( category, $scope.categories[category]) );
+	};	
+	
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
-		var location = $("#txtLocation");		
+		var location = $("#txtLocation");
+		var category  = $("#categories");
 		if (query!=null && query.val()!=""){
 			params["q"] = query.val();
 		}
+		if (category!=null && category.val()!="" && category.val()!="Select Category"){
+			params["categories"] = category.val();
+		}
 		if (location!=null && location.val()!=""){
-			MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
+			if (isNaN(location.val()))
+			    MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
+			else
+				alert("Please enter a valid location");
 		}
 		else{
 			$scope.searchEventsCurrentLoc();
 		}		
 	});
-
+	
+	$("#txtQuery").keypress(function(e){
+		if(e.which == 13){
+			$("#btnSearch").click();
+		}
+	});
+	
+	$("#txtLocation").keypress(function(e){
+		if(e.which == 13){
+			$("#btnSearch").click();
+		}
+	});
+	
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
 			//TODO: handle response status
-			$scope.events = response.events;
-			var events = [];		
-
-			for(var i in $scope.events){
-
-				var event = new Event();
-				if($scope.events[i].logo && $scope.events[i].logo.url){
-					event.imageUrl = $scope.events[i].logo.url;
-				}
-				if($scope.events[i].name && $scope.events[i].name.text){
-					event.name = $scope.events[i].name.text;
-				}
-				//TODO: get utc and convert time to local
-				if($scope.events[i].start.local) {
-					event.startTime = $scope.events[i].start.local;
-				}
-				if($scope.events[i].venue.latitude) {
-					event.venue.location.latitude = $scope.events[i].venue.latitude;
-				}
-				if($scope.events[i].venue.longitude) {
-					event.venue.location.longitude = $scope.events[i].venue.longitude;
-				}
-				if($scope.events[i].venue.name) {
-					event.venue.name = $scope.events[i].venue.name;
-				}
-				if($scope.events[i].venue.address.address_1) {
-					event.venue.location.addressLine1 = $scope.events[i].venue.address.address_1;
-				}
-				if($scope.events[i].venue.address.address_2) {
-					event.venue.location.addressLine2 = $scope.events[i].venue.address.address_2;
-				}
-				if($scope.events[i].venue.address.city) {
-					event.venue.location.city = $scope.events[i].venue.address.city;
-				}
-				if($scope.events[i].venue.address.region) {
-					event.venue.location.state = $scope.events[i].venue.address.region;
-				}				
-				if($scope.events[i].venue.address.postal_code) {
-					event.venue.location.postal = $scope.events[i].venue.address.postal_code;
-				}
-				events.push(event);
+			var events = getEvents(response.events);		
+			$scope.events = events;
+			
+			if($scope.events.length == 0){
+				$scope.eventResponse = 1;
 			}
-
+			else{
+				$scope.eventResponse = 0;
+			}
+			
 			var mapOptions = {
 					zoom: 12,
 					center: new google.maps.LatLng(lt, lg),
@@ -104,13 +94,47 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			};
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-			$scope.markers = [];
+				
+			var image = new google.maps.MarkerImage(
+					'http://plebeosaur.us/etc/map/bluedot_retina.png',
+					null, // size
+					null, // origin
+					new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
+					new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
+			);
 			
-			for (i = 0; i < events.length; i++) {
-				var marker = new Marker(events[i], $scope.map).marker;
-				$scope.markers.push(marker);
-			}
+			
+			userMarker = new MarkerWithLabel({
+				flat: true,
+				icon: image,
+				map: $scope.map,
+				optimized: true,
+				position: $scope.userLoc,
+				title: 'You are here',
+				visible: true,
+				//labelClass: "userLoc",
+			});
+			
+			userMarker.setAnimation(google.maps.Animation.BOUNCE);
+			
+			var locationInput = document.getElementById('txtLocation');
+			autocomplete = new google.maps.places.Autocomplete(locationInput);
+			autocomplete.bindTo('bounds', $scope.map);
+			
+			autocomplete.addListener('place_changed', function() {
+				var place = autocomplete.getPlace();
+			});
+			
+			$scope.markers= [];
+			
+		
+				
+				for (i = 0; i < events.length; i++) {
+					var marker = new Marker(events[i], $scope.map).marker;
+					$scope.markers.push(marker);
+				}
+		
+		
 			
 			$scope.openInfoWindow = function(event, selectedMarker) {
 				event.preventDefault();
@@ -118,6 +142,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			};
 		};
 	};
+	
+	
 
 	$scope.searchEventsCurrentLoc = function(){		
 		MapService.getUserLocation(getUserLocationResponseHandler);		
