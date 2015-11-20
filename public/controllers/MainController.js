@@ -15,7 +15,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 			$location.path('/login');
 				});
 	}*/
-	
+
 });
 
 app.filter('offset', function () {
@@ -26,22 +26,22 @@ app.filter('offset', function () {
 });
 
 app.directive('scrollOnClick', function() {
-	  return {
-	    restrict: 'A',
-	    link: function(scope, $elm, attrs) {
-	      var idToScroll = attrs.href;
-	      $elm.on('click', function() {
-	        var $target;
-	        if (idToScroll) {
-	          $target = $(idToScroll);
-	        } else {
-	          $target = $elm;
-	        }
-	        $("body").animate({scrollTop: $target.offset().top}, "slow");
-	      });
-	    }
-	  }
-	});
+	return {
+		restrict: 'A',
+		link: function(scope, $elm, attrs) {
+			var idToScroll = attrs.href;
+			$elm.on('click', function() {
+				var $target;
+				if (idToScroll) {
+					$target = $(idToScroll);
+				} else {
+					$target = $elm;
+				}
+				$("body").animate({scrollTop: $target.offset().top}, "slow");
+			});
+		}
+	}
+});
 
 app.directive('uniqueUsername', ['$http', function($http, $timeout) {  
 	return {
@@ -134,10 +134,14 @@ app.directive('match', [function () {
 app.config(function ($routeProvider, $httpProvider) {
 	$routeProvider
 	.when('/home', {
-		templateUrl: 'views/searchEvents/SearchEvents.html',
+		templateUrl: '../views/SearchEvents.html',
 		controller: 'SearchEventsController'
 	})
-
+	.when('/login', {
+		templateUrl: '../views/Login.htm',
+		controller: 'LoginController'
+	})
+	
 	.otherwise({
 		redirectTo: '/home'
 	})

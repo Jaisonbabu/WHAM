@@ -112,8 +112,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				$scope.markers.push(marker);
 			}
 			
-			$scope.openInfoWindow = function(e, selectedMarker) {
-				e.preventDefault();
+			$scope.openInfoWindow = function(event, selectedMarker) {
+				event.preventDefault();
 				google.maps.event.trigger(selectedMarker, 'mouseover');
 			};
 		};
