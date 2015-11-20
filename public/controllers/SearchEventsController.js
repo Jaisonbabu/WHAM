@@ -18,8 +18,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					response.results[0].geometry.location.lat,
 					response.results[0].geometry.location.lng);
 			params = location.getParamsForSearch(params);
-			EventsService.fetchEvents(params, 
-					searchEventsResponseHandler(location.latitude, location.longitude));
+			EventsService.fetchEvents(params,searchEventsResponseHandler(location.latitude, location.longitude));
 		}
 		else{
 			//TODO: handle empty results
@@ -33,6 +32,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
+		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 		};
 		
@@ -87,6 +87,28 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			};
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+				
+			var image = new google.maps.MarkerImage(
+					'http://plebeosaur.us/etc/map/bluedot_retina.png',
+					null, // size
+					null, // origin
+					new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
+					new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
+			);
+			
+			
+			userMarker = new MarkerWithLabel({
+				flat: true,
+				icon: image,
+				map: $scope.map,
+				optimized: true,
+				position: $scope.userLoc,
+				title: 'You are here',
+				visible: true,
+				//labelClass: "userLoc",
+			});
+			
+			userMarker.setAnimation(google.maps.Animation.BOUNCE);
 			
 			var locationInput = document.getElementById('txtLocation');
 			autocomplete = new google.maps.places.Autocomplete(locationInput);
@@ -95,8 +117,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			autocomplete.addListener('place_changed', function() {
 				var place = autocomplete.getPlace();
 			});
-
-			$scope.markers = [];
+			
+			$scope.markers= [];
 			
 			for (i = 0; i < events.length; i++) {
 				var marker = new Marker(events[i], $scope.map).marker;
@@ -109,6 +131,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			};
 		};
 	};
+	
+	
 
 	$scope.searchEventsCurrentLoc = function(){		
 		MapService.getUserLocation(getUserLocationResponseHandler);		
