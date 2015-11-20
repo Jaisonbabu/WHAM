@@ -1,5 +1,5 @@
 
-var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap']);
+var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
 
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location) {
 
@@ -138,13 +138,16 @@ app.config(function ($routeProvider, $httpProvider) {
 		templateUrl: '../views/SearchEvents.html',
 		controller: 'SearchEventsController'
 	})
+	.when('/register', {
+		templateUrl: '../views/registration.html',
+		controller: 'RegistrationController'
+	})
 
 	.when('/login', {
 		templateUrl: '../views/Login.htm',
 		controller: 'LoginController'
 	})
 	
-
 	.otherwise({
 		redirectTo: '/home'
 	})
