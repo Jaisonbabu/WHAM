@@ -96,6 +96,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				}
 				else{
 					$scope.eventResponse = 0;
+					$scope.locationResponse = 0;
 				}
 
 				var mapOptions = {
