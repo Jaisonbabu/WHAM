@@ -23,11 +23,11 @@ function Marker(event, mapObj){
 	addListener(this.marker, mapObj);
 }
 
-var infoWindow = new google.maps.InfoWindow();
+var infoWindow = new google.maps.InfoWindow({ maxWidth: 250 });
 
 var addListener = function(marker, mapObj) {	
 	google.maps.event.addListener(marker, 'mouseover', function() {
-		infoWindow.setContent('<h3>' + marker.name + '</h3>' + marker.content);
+		infoWindow.setContent('<h4>' + marker.name + '</h4>' + marker.content);
 		infoWindow.open(mapObj, marker);
 	});
 };

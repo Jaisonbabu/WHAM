@@ -421,9 +421,13 @@ h1{
     width:100%;
 }
 .infoWindowContent {
-    font-size:  14px !important;
+    font-size:  12px !important;
     border-top: 1px solid #ccc;
-    padding-top: 10px;
+    padding-top: 5px;
+}
+
+#infoWindow {
+    width: 150px;
 }
 
 .scrollit {
