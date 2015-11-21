@@ -1,7 +1,6 @@
 <div class="homePage" ng-app="AngularApp">
 
-	<div ng-show="eventResponse==0 "
-		class="tablediv row">
+	<div ng-show="eventResponse==0 && apiResponse==0" class="tablediv row">
 
 		<div class="row">
 			<div class="col-sm-5"></div>
@@ -68,6 +67,13 @@
 		<div class="col-sm-4"></div>
 		<div class="col-sm-8">
 			<h3>No events to display. Please try new search</h3>
+		</div>
+	</div>
+	
+	<div ng-show="apiResponse==1" class="tablediv row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-8">
+			<h3>Cannot proceed with your request</h3>
 		</div>
 	</div>
 

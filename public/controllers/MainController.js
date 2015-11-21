@@ -159,7 +159,7 @@ app.config(function ($routeProvider, $httpProvider) {
 			responseError: function(response)
 			{
 				if (response.status === 401)
-					$location.url('/login');
+					$location.url('/home');
 				return $q.reject(response);
 			}
 		};
