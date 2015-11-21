@@ -1,4 +1,5 @@
 function Event(){
+	this.id;
 	this.name;
 	this.imageUrl;
 	this.description;
@@ -18,6 +19,9 @@ var getMappedEventFromEventbriteResponse = function(event){
 	var eventObj = new Event();
 	if(getObjectIfAvailable(event.logo)){
 		eventObj.imageUrl = getStringObjectIfAvailable(event.logo.url);
+	}
+	if(getObjectIfAvailable(event.id)){
+		eventObj.id = getStringObjectIfAvailable(event.id);
 	}
 	if(getObjectIfAvailable(event.name)){
 		eventObj.name = getStringObjectIfAvailable(event.name.text);

@@ -33,6 +33,7 @@
 <script type="text/javascript" src="controllers/SearchEventsController.js"></script>
 <script type="text/javascript" src="controllers/LoginController.js"></script>
 <script type="text/javascript" src="controllers/RegistrationController.js"></script>
+<script type="text/javascript" src="controllers/EventDetailsController.js"></script>
 <script type="text/javascript" src="model/Marker.js"></script>
 <script type="text/javascript" src="model/Location.js"></script>
 <script type="text/javascript" src="model/Venue.js"></script>
@@ -41,7 +42,7 @@
 <body ng-app="AngularApp">
 	<div class="main-wrapper">
 		<div class="container" ng-controller="MainController">
-			<nav class="navbar navbar-inverse noMargin">
+			<nav class="navbar navbar-default noMargin">
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -59,12 +60,12 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav" style="padding-top:15px; padding-left:100px">
-									<li style="padding-right:8px"><select id ="categories" style="width:200px"  >	
+									<li style="padding-right:8px"><select class="form-control" id ="categories" style="width:200px"  >	
 									<option selected="true" style="display:none;">Select Category</option>
 									</select> 
-							<li style="padding-right:8px"><input type="text" placeholder="Write event type..." id="txtQuery" style="width:250px"/></li>
-							<li style="padding-right:8px"><input type="text" placeholder="eg. Boston..." id="txtLocation"  style="width:250px"/></li>
-							<li><button type="button" id="btnSearch">Search</button></li>
+							<li style="padding-right:8px"><input type="text" class ="form-control" placeholder="Write event type..." id="txtQuery" style="width:200px"/></li>
+							<li style="padding-right:8px"><input type="text" class ="form-control" placeholder="eg. Boston..." id="txtLocation"  style="width:250px"/></li>
+							<li><button class="btn btn-primary" type="button" id="btnSearch">Search</button></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="currentUser">
 							<li><a href="#/profile/user"> <span class="welcome"> Hello {{currentUser}}</span></a></li>

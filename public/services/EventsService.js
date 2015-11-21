@@ -9,7 +9,13 @@
 		$http.get(url + query).success(responseHandler);
 	};
 	
+	var fetchEventById = function(eventId, responseHandler){
+		var url = "https://www.eventbriteapi.com/v3/events/"+eventId+"/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue";
+		$http.get(url).success(responseHandler);
+	};
+	
 	return {	
-		fetchEvents : fetchEvents
+		fetchEvents : fetchEvents,
+		fetchEventById : fetchEventById
 	};
 });

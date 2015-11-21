@@ -1,0 +1,59 @@
+<body ng-controller="LoginController">
+	<div class="container">
+		<div class="tablediv row">
+			<div class="col-sm-8">
+
+				<div class="tablediv row">
+					<div class="col-sm-12">
+						<h2>{{event.name}}</h2>
+						<hr>
+						<table class="table-responsive" style="width: 100%">
+							<tbody>
+								<tr>
+									<td width="20%" style="padding-top: 25px"><span> <img
+											style="width: 300px; height: 250px"
+											ng-src="{{event.imageUrl}}" alt="Image currently unavailable">
+									</span></td>
+									<td
+										style="vertical-align: top; padding-left: 40px; margin-top: 0px;">
+										<b><h3>{{event.venue.name}}</h3></b>
+										<h4>{{event.venue.location.addressLine1}}&nbsp;
+											{{event.venue.location.city}} &nbsp;
+											{{event.venue.location.state}}</h4> <br /> <b><h4>{{event.startTime
+												| date:'MMM d, yyyy'}}</h4> </b>
+										<h5>{{event.startTime | date:'EEE, h:mm a - '}}
+											{{event.endTime | date:'h:mm a'}}</h5>
+										<button class="btn btn-success" style="margin-top: 20px"
+											type="button" id="btnSearch" ng-click="#">Buy
+											Tickets</button>
+										<div style="margin-top: 20px">
+											<a href="#"><img
+												style="width: 25px; height: 25px; margin-right: 30px;"
+												src="../images/like_img.png"> </a> <a href="#"><img
+												style="width: 50px; height: 25px; margin-top: 15px;"
+												src="../images/dislike_img.jpeg"> </a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-sm-12" style="margin-top: 10px">
+						<h3>Event details</h3>
+						<hr>
+						<span>{{event.description}}</span>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-sm-4">
+				<div id="map" style="height: 300px; margin-top: 65px"></div>
+				<div style="margin-top: 25px; margin-left: 100px;">
+					<a href="#"><img class="icon" src="../images/facebook.png">
+					</a>&nbsp;&nbsp; <a href="#"><img class="icon"
+						src="../images/twitter.jpeg"> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

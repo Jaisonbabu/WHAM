@@ -4,6 +4,7 @@ function Marker(event, mapObj){
 		position : new google.maps.LatLng(event.venue.location.latitude,
 				event.venue.location.longitude),
 		zoom : 12,
+		id : event.id,
 		name : event.name,
 		venue_name : event.venue.name,
 		address : event.venue.location.addressLine1,
@@ -11,6 +12,7 @@ function Marker(event, mapObj){
 		fullPostalCode : event.venue.location.postal,
 		state : event.state,
 		startTimestamp : event.startTime,
+		endTimeStamp : event.endTime,
 		imageUrl : event.imageUrl,
 		content : '<div class="infoWindowContent">' + event.venue.name
 				+ "<br/>" + event.venue.location.addressLine1 + "\n,"

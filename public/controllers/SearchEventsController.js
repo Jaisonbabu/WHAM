@@ -1,13 +1,7 @@
 app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService, MapService){	
 
 	var params = {};
-	var d = new Date();
-	var utcTime = d.getUTCFullYear()+'-'+d.getUTCMonth()+'-'+d.getUTCDate()+'T'+d.getUTCHours()+':'+d.getUTCMinutes()+':'+d.getUTCSeconds()+'Z';
 	$scope.eventResponse = 0;
-	/*var time = {
-			"timezone": "America/New_York",
-			"utc": utcTime
-	};*/
 
 	var getLocationResponseHandler = function(response){
 		//TODO: handle response statuses
@@ -32,7 +26,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		//$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
@@ -109,7 +103,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				icon: image,
 				map: $scope.map,
 				optimized: true,
-				position: $scope.userLoc,
+				position: mapOptions.center,
 				title: 'You are here',
 				visible: true,
 				//labelClass: "userLoc",

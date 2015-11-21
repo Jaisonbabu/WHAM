@@ -14,31 +14,6 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	}
 });
 
-app.filter('offset', function () {
-	return function (input, start) {
-		start = parseInt(start, 10);
-		return input.slice(start);
-	};
-});
-
-app.directive('scrollOnClick', function() {
-	return {
-		restrict: 'A',
-		link: function(scope, $elm, attrs) {
-			var idToScroll = attrs.href;
-			$elm.on('click', function() {
-				var $target;
-				if (idToScroll) {
-					$target = $(idToScroll);
-				} else {
-					$target = $elm;
-				}
-				$("body").animate({scrollTop: $target.offset().top}, "slow");
-			});
-		}
-	}
-});
-
 app.directive('uniqueUsername', ['$http', function($http, $timeout) {  
 	return {
 		require: 'ngModel',
@@ -133,6 +108,7 @@ app.config(function ($routeProvider, $httpProvider) {
 		templateUrl: '../views/SearchEvents.html',
 		controller: 'SearchEventsController'
 	})
+	
 	.when('/register', {
 		templateUrl: '../views/registration.html',
 		controller: 'RegistrationController'
@@ -141,6 +117,11 @@ app.config(function ($routeProvider, $httpProvider) {
 	.when('/login', {
 		templateUrl: '../views/Login.htm',
 		controller: 'LoginController'
+	})
+	
+	.when('/eventDetails/:eventId', {
+		templateUrl: '../views/EventDetails.htm',
+		controller: 'EventDetailsController'
 	})
 
 	.otherwise({
