@@ -34,13 +34,13 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		params = location.getParamsForSearch(params);
 		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
-		};
-		
-    select = document.getElementById( 'categories' );
-    for( category in $scope.categories ) {
+	};
+
+	select = document.getElementById( 'categories' );
+	for( category in $scope.categories ) {
 		select.add( new Option( category, $scope.categories[category]) );
 	};	
-	
+
 	$("#btnSearch").on("click", function(){
 		var query = $("#txtQuery");
 		var location = $("#txtLocation");
@@ -53,7 +53,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		}
 		if (location!=null && location.val()!=""){
 			if (isNaN(location.val()))
-			    MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
+				MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
 			else
 				alert("Please enter a valid location");
 		}
@@ -61,32 +61,32 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			$scope.searchEventsCurrentLoc();
 		}		
 	});
-	
+
 	$("#txtQuery").keypress(function(e){
 		if(e.which == 13){
 			$("#btnSearch").click();
 		}
 	});
-	
+
 	$("#txtLocation").keypress(function(e){
 		if(e.which == 13){
 			$("#btnSearch").click();
 		}
 	});
-	
+
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
 			//TODO: handle response status
 			var events = getEvents(response.events);		
 			$scope.events = events;
-			
+
 			if($scope.events.length == 0){
 				$scope.eventResponse = 1;
 			}
 			else{
 				$scope.eventResponse = 0;
 			}
-			
+
 			var mapOptions = {
 					zoom: 12,
 					center: new google.maps.LatLng(lt, lg),
@@ -94,7 +94,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			};
 
 			$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-				
+
 			var image = new google.maps.MarkerImage(
 					'http://plebeosaur.us/etc/map/bluedot_retina.png',
 					null, // size
@@ -102,8 +102,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
 					new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
 			);
-			
-			
+
+
 			userMarker = new MarkerWithLabel({
 				flat: true,
 				icon: image,
@@ -114,36 +114,29 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				visible: true,
 				//labelClass: "userLoc",
 			});
-			
+
 			userMarker.setAnimation(google.maps.Animation.BOUNCE);
-			
+
 			var locationInput = document.getElementById('txtLocation');
 			autocomplete = new google.maps.places.Autocomplete(locationInput);
 			autocomplete.bindTo('bounds', $scope.map);
-			
+
 			autocomplete.addListener('place_changed', function() {
 				var place = autocomplete.getPlace();
 			});
-			
+
 			$scope.markers= [];
-			
-		
-				
-				for (i = 0; i < events.length; i++) {
-					var marker = new Marker(events[i], $scope.map).marker;
-					$scope.markers.push(marker);
-				}
-		
-		
-			
+			for (i = 0; i < events.length; i++) {
+				var marker = new Marker(events[i], $scope.map).marker;
+				$scope.markers.push(marker);
+			}
+
 			$scope.openInfoWindow = function(event, selectedMarker) {
 				event.preventDefault();
 				google.maps.event.trigger(selectedMarker, 'mouseover');
 			};
 		};
 	};
-	
-	
 
 	$scope.searchEventsCurrentLoc = function(){		
 		MapService.getUserLocation(getUserLocationResponseHandler);		

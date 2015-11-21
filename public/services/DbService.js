@@ -4,8 +4,15 @@ app.factory("DbService", function ($http) {
 		$http.post('/login', userCredentials)
 		.success(responseHandler);
 	};
+	
+	var logout = function(responseHandler)
+	{
+		$http.post('/logout')
+		.success(responseHandler);
+	};
 
 	return {	
-		login : login
+		login : login,
+		logout : logout
 	};
 })

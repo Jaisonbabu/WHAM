@@ -1,22 +1,17 @@
 
 var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
 
-app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location) {
-
-	$rootScope.user = {};
+app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService) {
+	
 	$rootScope.categories = {'Food' : '110', 'Film and Arts': '104,105', 'Music' : '103','Holidays': '116','Sports': '107,108,109', 'Science and business':'101,102,115'};
-
-	/*$scope.logout = function()
+	$scope.logout = function()
 	{
-		UserService.logout(function(response)
+		DbService.logout(function(response)
 				{
-			$rootScope.currentuser = null;	
-			$rootScope.userId = null;
-			$rootScope.user = null;
-			$location.path('/login');
+			$rootScope.currentUser = null;	
+			$location.path('/home');
 				});
-	}*/
-
+	}
 });
 
 app.filter('offset', function () {
@@ -147,7 +142,7 @@ app.config(function ($routeProvider, $httpProvider) {
 		templateUrl: '../views/Login.htm',
 		controller: 'LoginController'
 	})
-	
+
 	.otherwise({
 		redirectTo: '/home'
 	})
