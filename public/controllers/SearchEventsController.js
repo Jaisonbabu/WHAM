@@ -2,6 +2,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 	var params = {};
 	$scope.eventResponse = 0;
+	$scope.apiResponse = 0;
 
 	var getLocationResponseHandler = function(response){
 		//TODO: handle response statuses
@@ -71,7 +72,11 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
 			//TODO: handle response status
-			var events = getEvents(response.events);		
+			
+			var status = response.status; 
+			if(status == 200) {
+				
+			var events = getEvents(response.data.events);
 			$scope.events = events;
 
 			if($scope.events.length == 0){
@@ -128,6 +133,10 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			$scope.openInfoWindow = function(event, selectedMarker) {
 				event.preventDefault();
 				google.maps.event.trigger(selectedMarker, 'mouseover');
+			};
+			}
+			else{
+				$scope.apiResponse = 1;
 			};
 		};
 	};
