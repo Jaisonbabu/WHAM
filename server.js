@@ -83,7 +83,8 @@ app.post('/logout', function(req, res)
 
 app.post('/getUserDetails', function(req, res)
 		{
-	res.send(req);
+		console.log(req.body.uname);
+		res.json(req.body);
 		});
 
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';

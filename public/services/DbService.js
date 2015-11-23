@@ -12,8 +12,11 @@ app.factory("DbService", function ($http) {
 	};
 
 	var getUserDetails = function(uname, responseHandler){
+		uname = {'Username':'aaa'};
 		$http.post('/getUserDetails', uname)
-		.success(responseHandler);
+		.success(function(response){
+			console.log(response);
+		});
 	};
 	
 	return {	
