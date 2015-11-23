@@ -11,8 +11,14 @@ app.factory("DbService", function ($http) {
 		.success(responseHandler);
 	};
 
+	var getUserDetails = function(uname, responseHandler){
+		$http.post('/getUserDetails', uname)
+		.success(responseHandler);
+	};
+	
 	return {	
 		login : login,
-		logout : logout
+		logout : logout,
+		getUserDetails : getUserDetails
 	};
 })

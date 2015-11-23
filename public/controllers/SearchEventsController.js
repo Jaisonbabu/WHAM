@@ -1,4 +1,4 @@
-app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService, MapService){	
+app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService, MapService, DbService){	
 
 	var params = {};
 	$scope.eventResponse = 0;
@@ -170,4 +170,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	// Initial call to display home page
 	$scope.searchEventsCurrentLoc();
 
+	DbService.getUserDetails('username', function(e, r){
+		console.log(r);
+	});
 });

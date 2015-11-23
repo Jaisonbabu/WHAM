@@ -27,13 +27,17 @@ var LoginSchema = new mongoose.Schema(
 		}, 
 		{ collection: 'UserCredentials' });
 
+var LoginDetail = mongoose.model("UserCredentials", LoginSchema);
+
 var UserSchema = new mongoose.Schema(
 		{ 
-			firstname: String, lastname: String, email: String, phone: Number, address: String, 
+			firstname: String, lastname: String, email: String, address_1: String,
+			address_2: String, city: String, state: String, postal: String,
 			country: String, username: String
-		});
+		},
+		{ collection: 'UserDetails' });
 
-var LoginDetail = mongoose.model("UserCredentials", LoginSchema);
+var UserDetail = mongoose.model("UserDetails", UserSchema);
 
 passport.use('login', new LocalStrategy(
 		function(username, password, done)
@@ -75,6 +79,11 @@ app.post('/logout', function(req, res)
 		{
 	req.logOut();
 	res.sendStatus(200);
+		});
+
+app.post('/getUserDetails', function(req, res)
+		{
+	res.send(req);
 		});
 
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
