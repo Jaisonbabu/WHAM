@@ -81,10 +81,11 @@ app.post('/logout', function(req, res)
 	res.sendStatus(200);
 		});
 
-app.post('/getUserDetails', function(req, res)
-		{
-	res.send(req);
-		});
+app.get('/details/:username', function(req,res){
+	UserDetail.findOne({username: req.params.username}, function(err,user){
+		res.json(user);		
+	});
+});
 
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
