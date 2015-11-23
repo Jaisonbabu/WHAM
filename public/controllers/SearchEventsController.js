@@ -6,19 +6,19 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	$scope.locationResponse = 0;
 
 	var getLocationResponseHandler = function(response){
-		//TODO: handle response statuses
-		//if (response!=null && response)
-		if(response.status = 200){
-			if (response.results.length > 0){
+		response = getObjectIfAvailable(response);
+		if(response && response.status == 200){
+			results = getObjectIfAvailable(response.results);
+			if (results && results.length > 0 && 
+					getObjectIfAvailable(results[0].geometry.location)){
 				var location = new Location();
 				location.setLatLong(
-						response.results[0].geometry.location.lat,
-						response.results[0].geometry.location.lng);
+						results[0].geometry.location.lat,
+						results[0].geometry.location.lng);
 				params = location.getParamsForSearch(params);
 				EventsService.fetchEvents(params,searchEventsResponseHandler(location.latitude, location.longitude));
 			}
 			else{
-				
 				$scope.eventResponse = 0;
 				$scope.locationResponse = 1;
 			}
@@ -48,20 +48,23 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 		var location = $("#txtLocation");
 		var category  = $("#categories");
 
-		// To delete q from the params if q already exists in params
+		// To delete old q from the params
 		if(query.val()=="")
 			delete params["q"];
 
 		if (query!=null && query.val()!=""){
 			params["q"] = query.val();
 		}
+		
 		if (category!=null && category.val()!="" && category.val()!="Select Category"){
 			params["categories"] = category.val();
 		}
+		// To delete old categories from the params
+		if(category.val()=="")
+			delete params["categories"];
+		
 		if (location!=null && location.val()!=""){
-
 			MapService.getLocationForAddress(location.val(), getLocationResponseHandler);
-
 		}
 		else{
 			$scope.searchEventsCurrentLoc();
@@ -82,22 +85,28 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
-			//TODO: handle response status
+			response = getObjectIfAvailable(response); 
+			if(response && response.status == 200) {
 
-			var status = response.status; 
-			if(status == 200) {
-
-				var events = getEvents(response.data.events);
-				$scope.events = events;
-
-				if($scope.events.length == 0){
+				$scope.locationResponse = 0;
+				
+				var data = getObjectIfAvailable(response.data);
+				if (!data){
+					$scope.eventResponse = 1;					
+					return;
+				}
+				
+				var events = getObjectIfAvailable(data.events); 
+				if(events.length == 0){
 					$scope.eventResponse = 1;
-					$scope.locationResponse = 0;
+					return;
 				}
 				else{
 					$scope.eventResponse = 0;
-					$scope.locationResponse = 0;
 				}
+
+				events = getEvents(events);
+				$scope.events = events;
 
 				var mapOptions = {
 						zoom: 12,
