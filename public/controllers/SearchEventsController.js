@@ -8,7 +8,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var getLocationResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
 		if(response && response.status == 200){
-			results = getObjectIfAvailable(response.results);
+			results = getObjectIfAvailable(response.data.results);
 			if (results && results.length > 0 && 
 					getObjectIfAvailable(results[0].geometry.location)){
 				var location = new Location();

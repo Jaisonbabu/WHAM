@@ -28,7 +28,7 @@ app.factory("MapService", function ($http) {
 
 	var getLocationForAddress = function(address, responseHandler){
 		var url = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-		$http.get(url + address).success(responseHandler);
+		$http.get(url + address).then(responseHandler,responseHandler);
 	};
 	
 	return {
