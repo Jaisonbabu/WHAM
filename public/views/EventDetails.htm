@@ -1,7 +1,7 @@
 <body ng-controller="LoginController">
 	<div class="container">
-		<div class="tablediv row">
-			<div class="col-sm-8">
+		<div class="tablediv row pageMarginPadding">
+			<div class="col-sm-7">
 
 				<div class="tablediv row">
 					<div class="col-sm-12">
@@ -22,16 +22,17 @@
 											{{event.venue.location.state}}</h4> <br /> <b><h4>{{event.startTime
 												| date:'MMM d, yyyy'}}</h4> </b>
 										<h5>{{event.startTime | date:'EEE, h:mm a - '}}
-											{{event.endTime | date:'h:mm a'}}</h5>
-										<button class="btn btn-success" style="margin-top: 20px"
-											type="button" id="btnSearch" ng-click="#">Buy
-											Tickets</button>
+											{{event.endTime | date:'h:mm a'}}</h5> <a
+										ng-href="{{event.eventUrl}}" class="btn btn-success"
+										target="blank">Buy Tickets</a>
 										<div style="margin-top: 20px">
 											<a href="#"><img
 												style="width: 25px; height: 25px; margin-right: 30px;"
-												src="../images/like_img.png" title="Like this event"> </a> <a href="#"><img
+												src="../images/like_img.png" title="Like this event">
+											</a> <a href="#"><img
 												style="width: 50px; height: 25px; margin-top: 15px;"
-												src="../images/dislike_img.jpeg" title="Unlike this event"> </a>
+												src="../images/dislike_img.jpeg" title="Unlike this event">
+											</a>
 										</div>
 									</td>
 								</tr>
@@ -46,13 +47,36 @@
 				</div>
 
 			</div>
-			<div class="col-sm-4">
-				<div id="map" style="height: 300px; margin-top: 65px"></div>
-				<div style="margin-top: 25px;margin-left: 80px;"><a href="#">Directions to the event</a></div>
-				<div style="margin-top: 25px; margin-left: 100px;">
-					<a href="#"><img class="icon" src="../images/facebook.png" title="Share this event on facebook">
-					</a>&nbsp;&nbsp; <a href="#"><img class="icon"
-						src="../images/twitter.jpeg" title="Share this event on twitter"> </a>
+			<div class="col-sm-5">
+				<div class="row pageMarginPadding">
+					<div id="map" class="col-sm-12"
+						style="height: 300px; margin-top: 65px"></div>
+				</div>
+				<div class="row">
+					<div style="margin-top: 25px; margin-left: 150px;" class="col-sm-4">
+						<a href="#" class="btn btn-primary">Directions to the event</a>
+					</div>
+					<div class="col-sm-4"></div>
+				</div>
+				<div class="row"
+					style="padding-top: 30px; margin-left: 0px; margin-right: 0px;">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-5 ">
+					<div class="panel panel-info">
+							<div class="panel-heading" style="padding-left:0px">
+								<div class="panel-title" style="text-align: center;">Share</div>
+							</div>
+							<div style="padding-top: 10px;" class="panel-body">
+								<!-- <div style="margin-top: 25px; margin-left: 100px;">  -->
+								<a href="#"><img class="icon" style="float: right"
+									src="../images/facebook.png"
+									title="Share this event on facebook"> </a>&nbsp;&nbsp; <a
+									href="#"><img class="icon" src="../images/twitter.jpeg"
+									title="Share this event on twitter"> </a>
+							</div>
+					</div>
+					</div>
+					<div class="col-sm-4"></div>
 				</div>
 			</div>
 		</div>

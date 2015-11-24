@@ -14,6 +14,7 @@ function Marker(event, mapObj){
 		startTimestamp : event.startTime,
 		endTimeStamp : event.endTime,
 		imageUrl : event.imageUrl,
+		eventUrl : event.eventUrl,
 		content : '<div class="infoWindowContent">' + event.venue.name
 				+ "<br/>" + event.venue.location.addressLine1 + "\n,"
 				+ event.venue.location.city + "\n,"
