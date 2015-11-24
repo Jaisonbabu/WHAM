@@ -34,7 +34,8 @@ var UserSchema = new mongoose.Schema(
 			firstname: String, lastname: String, email: String, address_1: String,
 			address_2: String, city: String, state: String, postal: String,
 			country: String, liked_categories: String, disliked_venues: String, 
-			username: String
+			security_question: String, security_answer: String,
+			username: String 
 		},
 		{ collection: 'UserDetails' });
 
@@ -127,5 +128,7 @@ var mapUserInfoToObj = function(user, body){
 	user.country = body.country;
 	user.liked_categories = body.liked_categories;
 	user.disliked_venues = body.disliked_venues; 
+	user.security_question = body.security_question;
+	user.security_answer = body.security_answer;
 	return user;
 };
