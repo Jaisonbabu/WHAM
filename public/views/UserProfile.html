@@ -1,0 +1,440 @@
+<body ng-controller="LoginController">
+	<div class="row">
+		<div class="col-sm-1" ng-show="!user">
+			<span class="instructions"> Sorry the user's profile is
+				currently unavailable :-(</span>
+		</div>
+		<div class="col-sm-11"></div>
+	</div>
+	<div class="row">
+		<div class=" col-sm-5"></div>
+		<div class="col-sm-7">
+			<h3>{{user.firstname}}'s profile</h3>
+		</div>
+	</div>
+	<div class="tablediv row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10">
+			<tabset justified="true"> <tab class="cursor"
+				heading="User Information" active="userActive">
+			<div class="row topPadding">
+				<div class="col-sm-3">
+
+					<div class="linePadding">
+						<button class="btn btn-primary"
+							ng-click="updProfile=false; profile=true; updPswd=false">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View
+							Profile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+					</div>
+
+					<div class="linePadding">
+						<button class="btn btn-primary"
+							ng-click="profile=false; updProfile=false; updPswd=true">Change
+							Password</button>
+					</div>
+
+					<div class="linePadding">
+						<button class="btn btn-primary"
+							ng-click="updProfile=true; profile=false; updPswd=false">Update
+							Profile&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</button>
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<table
+						class="table table-striped table-hover table-bordered table-responsive"
+						ng-show="profile">
+						<tbody>
+							<tr>
+								<td><b>First Name </b></td>
+								<td>{{user.firstname}}</td>
+							</tr>
+							<tr>
+								<td><b>Last Name </b></td>
+								<td>{{user.lastname}}</td>
+							</tr>
+							<tr>
+								<td><b>Email </b></td>
+								<td>{{user.email}}</td>
+							</tr>
+							<tr>
+								<td><b>Address </b></td>
+								<td>{{user.address}}</td>
+							</tr>
+							<tr>
+								<td><b>Country </b></td>
+								<td>{{user.country}}</td>
+							</tr>
+							<tr>
+								<td><b>Phone </b></td>
+								<td>{{user.phone}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<form class="form-horizontal" name="myForm1" novalidate=""
+						ng-submit="updatePassword(user.newPassword)">
+						<table class="table  table-responsive" ng-show="updPswd">
+							<tbody>
+								<tr>
+									<td>
+
+										<div class="form-group">
+											<label for="username"
+												class="col-sm-4 control-label left-align">Old
+												password &nbsp;&nbsp; *</label>
+											<div class="col-sm-8">
+												<input type="password" class="form-control"
+													ng-model="user.oldPassword" name="OldPassword"
+													placeholder="Old password" check-password required
+													ng-model-options="{ updateOn: 'blur' }"> <span
+													ng-show="myForm1.OldPassword.$dirty && myForm1.OldPassword.$error.required"
+													class="error">* Old password is required.</span> <span
+													ng-show="busy" style="color: green">checking....</span> <span
+													ng-if="myForm1.$error.noMatch" class="error">*
+													Password doesn't match the old password</span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="pwd" class="col-sm-4 control-label left-align">New
+												Password&nbsp;&nbsp; *</label>
+											<div class="col-sm-8">
+												<input type="password" class="form-control"
+													ng-model="user.newPassword" name="pwd"
+													placeholder="Password" match="verification" required>
+												<span
+													ng-show="myForm1.pwd.$dirty && myForm1.pwd.$error.required"
+													class="error">Password is required.</span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="pwd" class="col-sm-4 control-label left-align">Re-enter
+												Password&nbsp;&nbsp; *</label>
+											<div class="col-sm-8">
+												<input type="password" class="form-control"
+													name="verification" id="verification"
+													ng-model="verification" match="user.newPassword"
+													placeholder="Re-enter Password" required> <span
+													ng-show="myForm1.verification.$dirty && myForm1.verification.$error.required"
+													class="error">Password is required.</span> <span
+													ng-show="myForm1.verification.$dirty && myForm1.verification.$error.match && !myForm1.verification.$error.required"
+													class="error"> Passwords don't match. </span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-offset-3 col-sm-8 center-align">
+												<button type="submit"
+													class="btn btn-lg btn-primary btn-block"
+													ng-disabled="myForm1.$invalid" ng-click="profile=!profile">Submit
+													changes</button>
+											</div>
+										</div>
+
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+
+					<form class="form-horizontal" name="myForm" novalidate=""
+						ng-submit="updateProfile()">
+						<table class="table table-responsive" ng-show="updProfile">
+							<tbody>
+								<tr>
+									<td>
+
+										<div class="form-group">
+											<label for="firstname"
+												class="col-sm-3 control-label left-align">First
+												Name&nbsp;&nbsp;*</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control"
+													ng-model="user.firstname" name="firstname"
+													placeholder="Firstname" required autofocus> <span
+													class="error"
+													ng-show="myForm.firstname.$dirty && myForm.firstname.$error.required">
+													* First Name is required. </span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="lastname"
+												class="col-sm-3 control-label left-align">Last Name
+												&nbsp;&nbsp; </label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control"
+													ng-model="user.lastname" name="lastname"
+													placeholder="Lastname">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="email" class="col-sm-3 control-label left-align">Email&nbsp;&nbsp;
+												*</label>
+											<div class="col-sm-8">
+												<input type="email" class="form-control"
+													ng-model="user.email" name="email"
+													placeholder="example@domain.com" required> <span
+													style="color: red"
+													ng-show="myForm.email.$dirty && myForm.email.$invalid">
+													<span ng-show="myForm.email.$error.required" class="error">*
+														Email is required.</span> <span
+													ng-show="myForm.email.$error.email" class="error">*
+														Invalid email address.</span>
+												</span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="addres" class="col-sm-3 control-label left-align">Address</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control"
+													ng-model="user.address" id="address">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="phone" class="col-sm-3 control-label left-align">Phone
+												Number</label>
+											<div class="col-sm-8">
+												<input type="text" maxlength=10 class="form-control"
+													ng-model="user.phone" id="phone">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-offset-3 col-sm-8 center-align">
+												<button type="submit"
+													class="btn btn-lg btn-primary btn-block"
+													ng-disabled="myForm.$invalid"
+													ng-click="profile=true; updProfile=false; updPswd=false">Submit
+													changes</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<div class="extendMargin"></div>
+				</div>
+
+			</div>
+			</tab> <tab class="cursor" heading="Favorites" active="favActive"
+				ng-click="redirectToFav()">
+			<div ng-show="favoriteProducts.length == 0">
+				<br /> <br /> <span class="instructions taberror"> Sorry
+					you don't have any products in your favorites :-(</span>
+			</div>
+			<table
+				class="table table-striped table-hover table-bordered table-responsive"
+				ng-show="favoriteProducts.length>0">
+
+				<thead>
+					<tr>
+						<th>Product Image</th>
+						<th>Product description</th>
+						<th>Price details</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="product in favoriteProducts">
+						<td width="20%" class="prdtimg text-center"><img
+							class="centeredImg" ng-src="{{product.image}}"
+							alt="Image currently unavailable"></td>
+						<td width="60%"><a href="#/viewDetails/{{product.sku}}">
+								<h4>
+									<b>{{product.name}}</b>
+								</h4>
+						</a>
+							<p>
+								<b>Product Id: </b>{{product.sku}}
+							</p>
+							<p>
+								<b>Short Description:</b> {{product.shortDescription}}
+							</p>
+							<p ng-show="product.customerReviewAverage">
+								<b>Customer rating :</b> {{product.customerReviewAverage}} out
+								of 5
+							</p>
+							<div>
+								<a class="pointer" ng-click="removeFromFavorite(product,$index)">
+									<span class="glyphicon glyphicon-remove">Remove</span>
+								</a>
+							</div></td>
+						<td width="30%" class="priceDetails">
+							<button ng-click="addToCart(product.sku)"
+								class=" btn btn-success">
+								<span class="glyphicon glyphicon-shopping-cart"></span> Add to
+								cart
+							</button>
+							<div class="salePrice">${{product.salePrice | number : 2}}</div>
+							<div ng-if="(product.regularPrice - product.salePrice) > 0">ON
+								SALE</div>
+							<div class="regularPrice">(Reg. price:
+								${{product.regularPrice | number : 2}})</div>
+							<div ng-if="(product.regularPrice - product.salePrice) > 0">
+								<div class="savings">You save ${{(product.regularPrice -
+									product.salePrice) | number : 2}}!!</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+			<div class="extendMargin"></div>
+			</tab> <tab class="cursor" heading="Cart" active="cartActive">
+			<div ng-show="cartProducts.length == 0">
+				<br /> <br /> <span class="instructions taberror"> Sorry
+					you don't have any products in your cart :-(</span>
+			</div>
+
+			<table
+				class="table table-striped table-hover table-bordered table-responsive"
+				ng-show="cartProducts.length > 0">
+				<thead>
+					<tr>
+						<th>Product Image</th>
+						<th>Product description</th>
+						<th>Price details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="product in cartProducts">
+						<td width="20%" class="prdtimg text-center"><img
+							class="centeredImg" ng-src="{{product.image}}"
+							alt="Image currently unavailable"></td>
+						<td width="60%"><a href="#/viewDetails/{{product.sku}}">
+								<h4>
+									<b>{{product.name}}</b>
+								</h4>
+						</a>
+							<p>
+								<b>Product Id: </b>{{product.sku}}
+							</p>
+							<p>
+								<b>Short Description:</b> {{product.shortDescription}}
+							</p>
+							<p ng-show="product.customerReviewAverage">
+								<b>Customer rating :</b> {{product.customerReviewAverage}} out
+								of 5
+							</p>
+							<div>
+								<a class="pointer" ng-click="removeFromCart(product,$index)">
+									<span class="glyphicon glyphicon-remove">Remove </span>
+								</a>
+							</div></td>
+						<td width="30%" class="priceDetails">
+							<div class="salePrice">${{product.salePrice}}</div>
+							<div ng-if="(product.regularPrice - product.salePrice) > 0">ON
+								SALE</div>
+							<div class="regularPrice">(Reg. price:
+								${{product.regularPrice}})</div>
+							<div ng-if="(product.regularPrice - product.salePrice) > 0">
+								<div class="savings">You save ${{(product.regularPrice -
+									product.salePrice)|number : 2}}!!</div>
+							</div>
+							<div ng-show="showEdit">
+								<b>Count : </b>{{product.count}}
+							</div>
+							<div ng-hide="showEdit">
+								<b>Count : </b> <input type="text" ng-model="product.count"
+									size="4">
+							</div>
+							<div ng-show="showEdit">
+								<a ng-click="showEdit=!showEdit" class="pointer"> Edit Count
+								</a>
+							</div>
+							<div ng-hide="showEdit">
+								<a ng-click="updateCount(product,$index);showEdit=!showEdit">
+									<span class="cursor">Update </span>
+								</a>
+							</div>
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="cartPrice" ng-show="cartProducts.length > 0">
+				<b>Total Price :</b> ${{totalPrice | number : 2}}
+			</div>
+			<div class="extendMargin"></div>
+
+			</tab> <tab class="cursor" heading="Reviews" active="reviewActive">
+			<div ng-show="reviewedProducts.length == 0">
+				<br /> <br /> <span class="instructions taberror"> Sorry
+					you have not reviewed any products :-(</span>
+			</div>
+
+			<table
+				class="table table-striped table-hover table-bordered table-responsive"
+				ng-show="reviewedProducts.length>0">
+				<tbody>
+					<tr ng-repeat="product in reviewedProducts">
+						<td><span class="reviewImg userReview"><img
+								class="centeredImg prdtimg" ng-src="{{product.image}}"
+								alt="Image currently unavailable"> </span> <a
+							href="#/viewDetails/{{product.sku}}">
+								<h4>
+									<b>{{product.name}}</b>
+								</h4>
+						</a>
+
+							<h4>{{product.userReview.title}}</h4>
+							<h6>{{product.userReview.comment}}</h6> My rating : <span>{{product.userReview.rating}}
+								out of 5
+								<div star-rating rating-value="product.userReview.rating" max=5></div>
+								<div>
+									<a class="pointer" ng-click="removeReview(product,$index)">
+										<span class="glyphicon glyphicon-remove">Delete </span>
+									</a>
+								</div></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="extendMargin"></div>
+			</tab> <tab class="cursor" heading="Your Network" active="networkActive">
+			<label class="checkbox"> <input type="checkbox"
+				ng-model="oneAtATime"> Open only one at a time
+			</label> <accordion close-others="oneAtATime"> <accordion-group>
+			<accordion-heading> <span class="cursor">
+				People you follow </span> <i class="pull-right glyphicon"
+				ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+			</accordion-heading> <span class="instructions" ng-if="user.follows.length == 0">
+				You are not following any user for now</span>
+			<ul ng-show="user.follows">
+				<li ng-repeat="following in user.follows">
+					<h5>
+						<span class="glyphicon glyphicon-user"></span> &nbsp; &nbsp; <a
+							href="#/showUserDetails/{{following.username}}"> <b>{{following.username}}</b></a>
+					</h5>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="" ng-click="unfollowUser(following.username)"> <span
+						class="glyphicon glyphicon-thumbs-up"></span> &nbsp; Unfollow this
+						user
+				</a>
+				</li>
+			</ul>
+			</accordion-group> <accordion-group> <accordion-heading>
+			<span class="cursor"> People who follow you </span> <i
+				class="pull-right glyphicon"
+				ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+			</accordion-heading> <span class="instructions" ng-if="user.followedBy.length == 0">
+				You are not being followed any user for now</span>
+			<ul ng-show="user.followedBy">
+				<li ng-repeat="isFollowedBy in user.followedBy">
+					<h5>
+						<span class="glyphicon glyphicon-user"></span> &nbsp; &nbsp; <a
+							href="#/showUserDetails/{{isFollowedBy.username}}"> <b>{{isFollowedBy.username}}</b></a>
+					</h5>
+				</li>
+			</ul>
+			</accordion-group> </accordion>
+			<div class="extendMargin"></div>
+			</tab> </tabset>
+		</div>
+		<div class="col-sm-1"></div>
+	</div>
+</body>

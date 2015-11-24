@@ -32,6 +32,7 @@
 <script type="text/javascript" src="controllers/LoginController.js"></script>
 <script type="text/javascript" src="controllers/RegistrationController.js"></script>
 <script type="text/javascript" src="controllers/EventDetailsController.js"></script>
+<script type="text/javascript" src="controllers/UserProfileController.js"></script>
 <script type="text/javascript" src="services/EventsService.js"></script>
 <script type="text/javascript" src="services/DbService.js"></script>
 <script type="text/javascript" src="services/MapService.js"></script>
@@ -65,7 +66,7 @@
 							<li><button class="btn btn-primary" type="button" id="btnSearch">Search</button></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="currentUser">
-							<li><a href="#/profile/user"> <span class="welcome"> Hello {{currentUser}}</span></a></li>
+							<li><a href="#/profile/user/{{currentUser}}"> <span class="welcome"> Hello {{currentUser}}</span></a></li>
 							<li><a href="#/logout" ng-click="logout()"> <span class="menucolor"> Logout </span></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="!currentUser">

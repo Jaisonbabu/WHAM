@@ -11,7 +11,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 			$rootScope.currentUser = null;	
 			$location.path('/home');
 				});
-	}
+	};
 });
 
 app.directive('uniqueUsername', ['$http', function($http, $timeout) {  
@@ -47,9 +47,9 @@ app.directive('uniqueUsername', ['$http', function($http, $timeout) {
 					}
 					scope.busy = false;
 				});
-			})
+			});
 		}
-	}
+	};
 }]);
 
 app.directive('checkPassword', ['$http', function($http, $timeout) {  
@@ -85,9 +85,9 @@ app.directive('checkPassword', ['$http', function($http, $timeout) {
 					}
 					scope.busy = false;
 				});
-			})
+			});
 		}
-	}
+	};
 }]);
 
 
@@ -99,7 +99,7 @@ app.directive('match', [function () {
 				ctrl.$setValidity('match', value[0] === value[1] );
 			}, true);
 		}
-	}
+	};
 }]);
 
 app.config(function ($routeProvider, $httpProvider) {
@@ -124,9 +124,14 @@ app.config(function ($routeProvider, $httpProvider) {
 		controller: 'EventDetailsController'
 	})
 
+	.when('/profile/user/:username', {
+		templateUrl: '../views/UserProfile.html',
+		controller: 'UserProfileController'
+	})//TODO: check logged in
+
 	.otherwise({
 		redirectTo: '/home'
-	})
+	});
 
 	$httpProvider
 	.interceptors

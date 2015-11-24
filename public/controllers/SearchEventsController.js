@@ -107,7 +107,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 				events = getEvents(events);
 				$scope.events = events;
-				console.log($scope.events);
+
 				var mapOptions = {
 						zoom: 12,
 						center: new google.maps.LatLng(lt, lg),
