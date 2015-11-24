@@ -17,7 +17,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
-var connectionString = 'mongodb://localhost/WHAM';
+var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/WHAM';
 mongoose.connect(connectionString);
 
 var LoginSchema = new mongoose.Schema(

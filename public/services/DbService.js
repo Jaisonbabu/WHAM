@@ -17,6 +17,7 @@ app.factory("DbService", function ($http) {
 		.success(function(response){
 			console.log(response);
 		});
+	}
 	
 	return {	
 		login : login,
