@@ -56,7 +56,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 			params["q"] = query.val();
 		}
 		
-		if (category!=null && category.val()!="" && category.val()!="Select Category"){
+		if (category!=null && category.val()!="" && category.val()!="All Categories"){
 			params["categories"] = category.val();
 		}
 		// To delete old categories from the params
