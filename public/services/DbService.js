@@ -25,7 +25,7 @@ app.factory("DbService", function ($http) {
 		$http.post('/user/updatePassword', JSON.stringify(userCredentials))
 		.success(responseHandler);
 	};
-	
+
 	return {	
 		login : login,
 		logout : logout,
