@@ -12,13 +12,25 @@ app.factory("DbService", function ($http) {
 	};
 
 	var getUserDetails = function(username, responseHandler){
-		$http.get('/details/'+ username)
+		$http.post('/user/details', {'username' : username})
+		.success(responseHandler);
+	};
+	
+	var updateUserDetails = function(userObj, responseHandler){
+		$http.put('/user/updateDetails', JSON.stringify(userObj))
+		.success(responseHandler);
+	};
+	
+	var updatePassword = function(userCredentials, responseHandler){
+		$http.post('/user/updatePassword', JSON.stringify(userCredentials))
 		.success(responseHandler);
 	};
 	
 	return {	
 		login : login,
 		logout : logout,
-		getUserDetails : getUserDetails
+		getUserDetails : getUserDetails,
+		updateUserDetails : updateUserDetails,
+		updatePassword : updatePassword
 	};
 });
