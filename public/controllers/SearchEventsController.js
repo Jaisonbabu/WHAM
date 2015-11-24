@@ -8,7 +8,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	var getLocationResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
 		if(response && response.status == 200){
-			results = getObjectIfAvailable(response.results);
+			results = getObjectIfAvailable(response.data.results);
 			if (results && results.length > 0 && 
 					getObjectIfAvailable(results[0].geometry.location)){
 				var location = new Location();
@@ -147,7 +147,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				});
 
 				$scope.markers= [];
-				for (i = 0; i < events.length; i++) {
+				for (var i = 0; i < events.length; i++) {
 					var marker = new Marker(events[i], $scope.map).marker;
 					$scope.markers.push(marker);
 				}
@@ -170,7 +170,9 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	// Initial call to display home page
 	$scope.searchEventsCurrentLoc();
 
-	DbService.getUserDetails('username', function(e, r){
-		console.log(r);
-	});
+//	var user = new UserCredential();
+//	user.setCredentials('username','password2');
+//	DbService.updatePassword(user, function(obj, stat){		
+//		console.log("updatePass "+JSON.stringify(obj));
+//	});
 });
