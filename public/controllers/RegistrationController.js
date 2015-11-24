@@ -1,4 +1,12 @@
-app.controller('RegistrationController',function($scope){
-  
-  
+app.controller('RegistrationController',function($scope, $rootScope){
+	
+	$scope.register = function(user) {
+
+        // check to make sure the form is completely valid
+//        if ($scope.signupform) {
+            alert('our form is amazing');
+       
+
+    };
+	
 });

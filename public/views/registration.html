@@ -8,22 +8,23 @@
                         <div class="panel-body" >
                             <form id="signupform" class="form-horizontal" role="form">
                                 
-                                <div id="signupalert" style="display:none" class="alert alert-danger">
+                                <!-- <div id="signupalert" style="display:none" class="alert alert-danger">
                                     <p>Error:</p>
                                     <span></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" class="col-md-3 control-label">Email</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="email" placeholder="Email Address">
-                                    </div>
-                                </div>
+                                </div> -->
+                                
                                 <div class="form-group">
                                     <label for="firstname" class="col-md-3 control-label">First Name*</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="firstname" placeholder="First Name">
-                                    </div>
+                                        <input type="text" ng-model="data.firstname" class="form-control" name="firstname" placeholder="First Name" required>
+                                   
+                                    <div ng-messages="signupform.firstname.$error" style="color:maroon">
+									<div ng-message="required">You did not enter a field</div>	
+								 </div>
+								</div>
                                 </div>
+                                
+									
                                 <div class="form-group">
                                     <label for="lastname" class="col-md-3 control-label">Last Name</label>
                                     <div class="col-md-9">
@@ -99,7 +100,7 @@
                                 <div class="form-group">
                                     <!-- Button -->                                        
                                     <div class="col-md-offset-3 col-md-9">
-                                        <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button> 
+                                        <button id="btn-signup" type="button" class="btn btn-success" ng-click="register(user)">&nbsp Sign Up</button> 
                                     </div>
                                 </div>
                                                                 

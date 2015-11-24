@@ -1,5 +1,5 @@
 
-var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
+var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngMessages']);
 
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService) {
 	

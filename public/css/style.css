@@ -57,7 +57,10 @@
     font-size: 20px;
 }
 
-
+input:required {
+  box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);
+}
+ 
 .code {
     background-color: lightgray;
     border: 1px solid black;
