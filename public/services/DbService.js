@@ -18,7 +18,7 @@ app.factory("DbService", function ($http) {
 
 	var getUserDetails = function(username, responseHandler){
 		$http.post('/user/details', {'username' : username})
-		.success(responseHandler);
+		.then(responseHandler, responseHandler);
 	};
 
 	var updateUserDetails = function(userObj, responseHandler){
