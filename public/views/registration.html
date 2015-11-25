@@ -8,8 +8,7 @@
 				<div class="panel-title">Sign Up</div>
 				<div
 					style="float: right; font-size: 85%; position: relative; top: -10px">
-					<a id="signinlink" href="#"
-						onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign
+					<a id="signinlink" href="#/login">Sign
 						In</a>
 				</div>
 			</div>
@@ -17,8 +16,7 @@
 				<form class="form-horizontal" name="myForm" novalidate>
 
 					<div style="margin-bottom: 8px; margin-left: 50px"
-						class="col-sm-12 error" ng-show="registrationError">Sorry
-						Registration failed. Please try again.</div>
+						class="col-sm-12 successMsg">{{registrationStatus}}</div>
 
 					<div class="form-group">
 						<label for="firstname" class="col-md-4 control-label">First
@@ -45,7 +43,7 @@
 							Id *</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" name="emailid"
-								ng-model="user.emailid" placeholder="Email Id" required>
+								ng-model="user.email" placeholder="Email Id" required>
 							<span class="error"
 								ng-show="myForm.emailid.$dirty && myForm.emailid.$error.required">
 								* Email id is required. </span>
@@ -94,9 +92,9 @@
 					<div class="form-group">
 						<label for="gender" class="col-md-4 control-label">Gender</label>
 						<div class="col-md-8">
-							<label><input type="radio" name="gender" value="male">
+							<label><input type="radio" name="gender" value="M" ng-model="user.gender">
 								Male</label><br> <label><input type="radio" name="gender"
-								value="female"> Female</label>
+								value="F" ng-model="user.gender"> Female</label>
 						</div>
 					</div>
 
@@ -104,24 +102,11 @@
 						<label for="dob" class="col-md-4 control-label">Date of
 							Birth</label>
 						<div class="col-md-8">
-
-							<!-- ui.bootstrap.datetimepicker (Dropdown Datetime with input box) -->
-							<div class="dropdown">
-								<a class="dropdown-toggle" id="dropdown2" role="button"
-									data-toggle="dropdown" data-target="#">
-									<div class="input-group">
-										<input type="text" class="form-control"
-											data-ng-model="data.date"> <span
-											class="input-group-addon"><i
-											class="glyphicon glyphicon-calendar"></i></span>
-									</div>
-								</a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-									<datepicker data-ng-model="data.date"
-										data-datepicker-config="{ dropdownSelector: '#dropdown2' }">
-									</datepicker>
-								</ul>
-							</div>
+							<input type="date" class="form-control" uib-datepicker-popup
+								ng-model="user.dob" is-open="status.opened" min-date="minDate"
+								max-date="maxDate" datepicker-options="dateOptions"
+								date-disabled="disabled(date, mode)"
+								close-text="Close" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -134,7 +119,6 @@
 									ng-click="toggleSelection(category)"> {{category.name}}
 								</label>
 							</div>
-
 						</div>
 					</div>
 
@@ -154,8 +138,8 @@
 						<div class="col-md-8">
 							<input type="text" class="form-control" name="secAnswer"
 								placeholder="Answer the Security Question"
-								ng-model="user.security_answer" required ng-change="display()"> <span
-								class="error"
+								ng-model="user.security_answer" required ng-change="display()">
+							<span class="error"
 								ng-show="myForm.secAnswer.$dirty && myForm.secAnswer.$error.required">
 								* Answer to the security question is required. </span>
 

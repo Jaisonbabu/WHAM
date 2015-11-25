@@ -33,9 +33,9 @@ var UserSchema = new mongoose.Schema(
 		{ 
 			firstname: String, lastname: String, email: String, address_1: String,
 			address_2: String, city: String, state: String, postal: String,
-			country: String, liked_categories: String, disliked_venues: String, 
+			country: String, liked_categories: [], disliked_venues: String, 
 			security_question: String, security_answer: String,
-			username: String 
+			username: String, dob : Date, gender : String
 		},
 		{ collection: 'UserDetails' });
 
@@ -117,18 +117,19 @@ app.post('/user/addNewDetails', function(req,res){
 	obj = mapUserObjToDbObj(obj, req.body);	
 	UserDetail.findOne({username: req.body.username}, function(err,getobj){
 		if(getobj == null || getobj == undefined){			
-		obj.save(function (err) {
-		  if (err) return function(){ console.log("Error while adding new user to UserDetails: " + err); };
-		  UserDetail.findById(obj, function (err, doc) {
-		    if (err) return function(){ console.log("Error while retrieving newly added user from UserDetails: " + err); };
-		    console.log(doc);
-		  });
-		});
+			obj.save(function (err) {
+				if (err) return function(){ console.log("Error while adding new user to UserDetails: " + err); };
+				UserDetail.findById(obj, function (err, doc) {
+					if (err) return function(){ console.log("Error while retrieving newly added user from UserDetails: " + err); };
+					console.log(doc);
+					res.json(doc);
+				});
+			});
 		}
-		else{
+		else {
 			res.json(getobj);
 		}
-		});
+	});
 });
 
 app.post('/user/addNewLogin', function(req,res){
@@ -137,13 +138,14 @@ app.post('/user/addNewLogin', function(req,res){
 	obj.password = req.body.password;	
 	LoginDetail.findOne({username: req.body.username}, function(err,getobj){
 		if(getobj == null || getobj == undefined){
-		obj.save(function (err) {
-		  if (err) return function(){ console.log("Error while adding new user to UserCredentials: " + err); };
-		  LoginDetail.findById(obj, function (err, doc) {
-		    if (err) return function(){ console.log("Error while retrieving newly added user from UserCredentials: " + err); };
-		    console.log(doc);
-		  });
-		});
+			obj.save(function (err) {
+				if (err) return function(){ console.log("Error while adding new user to UserCredentials: " + err); };
+				LoginDetail.findById(obj, function (err, doc) {
+					if (err) return function(){ console.log("Error while retrieving newly added user from UserCredentials: " + err); };
+					console.log(doc);
+					res.json(doc);
+				});
+			});
 		}
 		else{
 			res.json(getobj);
@@ -160,12 +162,16 @@ var mapUserObjToDbObj = function(user, body){
 	user.firstname = body.firstname;
 	user.lastname = body.lastname;
 	user.email = body.email;
-	user.address_1 = body.location.addressLine1;
-	user.address_2 =  body.location.addressLine2;
-	user.city = body.location.city;
-	user.state = body.location.state;
-	user.postal = body.location.postal;
-	user.country = body.location.country;
+	if (body.location) {
+		user.address_1 = body.location.addressLine1;
+		user.address_2 =  body.location.addressLine2;
+		user.city = body.location.city;
+		user.state = body.location.state;
+		user.postal = body.location.postal;
+		user.country = body.location.country;
+	}
+	user.gender = body.gender;
+	user.dob = body.dob;
 	user.liked_categories = body.liked_categories;
 	user.disliked_venues = body.disliked_venues; 
 	user.security_question = body.security_question;

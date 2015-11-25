@@ -12,7 +12,7 @@ app.factory("DbService", function ($http) {
 	};
 
 	var register = function(userDetails, responseHandler){
-		$http.post('/register', userDetails)
+		$http.post('/user/addNewDetails', userDetails)
 		.then(responseHandler,responseHandler);
 	};
 
@@ -38,7 +38,7 @@ app.factory("DbService", function ($http) {
 	
 	var addNewLoginCredentials = function(credentials, responseHandler){
 		$http.post('/user/addNewLogin', JSON.stringify(credentials))
-		.success(responseHandler);
+		.then(responseHandler, responseHandler);
 	};
 
 	return {	
