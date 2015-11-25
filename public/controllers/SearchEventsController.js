@@ -1,4 +1,4 @@
-app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService, MapService, DbService){	
+app.controller('SearchEventsController', function($anchorScroll,$rootScope, $scope,$http, $timeout, EventsService, MapService, DbService){	
 
 	var params = {};
 	$scope.eventResponse = 0;
@@ -34,7 +34,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		//$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		$rootScope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
@@ -105,8 +105,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					$scope.eventResponse = 0;
 				}
 
-				events = getEvents(events);
-				$scope.events = events;
+				events = getEvents(events,$rootScope.currentUser);
+				$scope.events = events; // $scope.events not used anywhere 
 
 				var mapOptions = {
 						zoom: 12,
@@ -130,7 +130,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					icon: image,
 					map: $scope.map,
 					optimized: true,
-					position: mapOptions.center,
+					position: $rootScope.userLoc,
 					title: 'You are here',
 					visible: true,
 					//labelClass: "userLoc",
@@ -170,9 +170,4 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 	// Initial call to display home page
 	$scope.searchEventsCurrentLoc();
 
-//	var user = new UserCredential();
-//	user.setCredentials('username','password2');
-//	DbService.updatePassword(user, function(obj, stat){		
-//		console.log("updatePass "+JSON.stringify(obj));
-//	});
 });

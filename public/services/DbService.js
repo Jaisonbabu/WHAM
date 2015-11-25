@@ -30,6 +30,16 @@ app.factory("DbService", function ($http) {
 		$http.post('/user/updatePassword', JSON.stringify(userCredentials))
 		.success(responseHandler);
 	};
+	
+	var addNewUserDetails = function(userObj, responseHandler){
+		$http.post('/user/addNewDetails', JSON.stringify(userObj))
+		.success(responseHandler);
+	};
+	
+	var addNewLoginCredentials = function(credentials, responseHandler){
+		$http.post('/user/addNewLogin', JSON.stringify(credentials))
+		.success(responseHandler);
+	};
 
 	return {	
 		login : login,
@@ -37,6 +47,8 @@ app.factory("DbService", function ($http) {
 		register : register,
 		getUserDetails : getUserDetails,
 		updateUserDetails : updateUserDetails,
-		updatePassword : updatePassword
+		updatePassword : updatePassword,
+		addNewUserDetails : addNewUserDetails,
+		addNewLoginCredentials : addNewLoginCredentials
 	};
 });

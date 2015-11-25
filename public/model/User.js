@@ -1,6 +1,8 @@
 function User() {
+	this.username = "";
 	this.firstname = "";
 	this.lastname = "";
+	this.email = "";
 	this.location = new Location();
 	this.liked_categories = "";
 	this.disliked_venues = "";
@@ -19,3 +21,4 @@ User.prototype.setUser = function(user) {
 	this.security_answer = user.security_answer;
 	
 }
+
