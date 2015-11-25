@@ -49,7 +49,7 @@ passport.use('login', new LocalStrategy(
 					return done(null, user);
 				}
 				return done(null, false, {message: 'Unable to login'});
-			})
+			});
 		}));
 
 passport.serializeUser(function(user, done) {
@@ -91,7 +91,7 @@ app.post('/user/details', function(req,res){
 
 app.put('/user/updateDetails', function(req,res){
 	UserDetail.findOne({username: req.body.username}, function(err,obj){
-		obj = mapUserInfoToObj(obj, req.body);
+		obj = mapUserObjToDbObj(obj, req.body);
 		obj.save(function(err, userObj){
 			if (err){
 				console.log("Error while saving data to UserDetails: " + err);
@@ -111,21 +111,61 @@ app.post('/user/updatePassword', function(req,res){
 	});	
 });
 
+app.post('/user/addNewDetails', function(req,res){
+	var obj = new UserDetail();
+	obj.username = req.body.username;
+	obj = mapUserObjToDbObj(obj, req.body);	
+	UserDetail.findOne({username: req.body.username}, function(err,getobj){
+		if(getobj == null || getobj == undefined){			
+		obj.save(function (err) {
+		  if (err) return function(){ console.log("Error while adding new user to UserDetails: " + err); };
+		  UserDetail.findById(obj, function (err, doc) {
+		    if (err) return function(){ console.log("Error while retrieving newly added user from UserDetails: " + err); };
+		    console.log(doc);
+		  });
+		});
+		}
+		else{
+			res.json(getobj);
+		}
+		});
+});
+
+app.post('/user/addNewLogin', function(req,res){
+	var obj = new LoginDetail();
+	obj.username = req.body.username;
+	obj.password = req.body.password;	
+	LoginDetail.findOne({username: req.body.username}, function(err,getobj){
+		if(getobj == null || getobj == undefined){
+		obj.save(function (err) {
+		  if (err) return function(){ console.log("Error while adding new user to UserCredentials: " + err); };
+		  LoginDetail.findById(obj, function (err, doc) {
+		    if (err) return function(){ console.log("Error while retrieving newly added user from UserCredentials: " + err); };
+		    console.log(doc);
+		  });
+		});
+		}
+		else{
+			res.json(getobj);
+		}
+	});
+});
+
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.listen(port,ip);
 
-var mapUserInfoToObj = function(user, body){
+var mapUserObjToDbObj = function(user, body){
 	user.firstname = body.firstname;
 	user.lastname = body.lastname;
 	user.email = body.email;
-	user.address_1 = body.address_1;
-	user.address_2 =  body.address_2;
-	user.city = body.city;
-	user.state = body.state;
-	user.postal = body.postal;
-	user.country = body.country;
+	user.address_1 = body.location.addressLine1;
+	user.address_2 =  body.location.addressLine2;
+	user.city = body.location.city;
+	user.state = body.location.state;
+	user.postal = body.location.postal;
+	user.country = body.location.country;
 	user.liked_categories = body.liked_categories;
 	user.disliked_venues = body.disliked_venues; 
 	user.security_question = body.security_question;
