@@ -43,47 +43,66 @@ var getMappedEventFromEventbriteResponse = function(event){
 	return eventObj;
 };
 
-var getEvents = function(apiEventResponse,username){
+var getEvents = function(apiEventResponse,username,userObj){
 	console.log(username);
+	console.log(userObj);
 	var eventsObj = [];
 	for(var i in apiEventResponse){
 		var event = getEvent(apiEventResponse[i]);		
 		eventsObj.push(event);
 	}
-
+	console.log(eventsObj);
 	if(username != null){
-		return getUserPrefEvents(eventsObj,username);
+		return getUserPrefEvents(eventsObj,userObj);
 	}
 	else{
 		return eventsObj;
 	}
 };
 
-var getUserPrefEvents = function(events,username){
-	var userDetails = null;
-	var userPrefcategory = [];
+var getUserPrefEvents = function(events,userDetails){
+
 	var userPrefEvents = [];
 	var userNonPrefEvents = [];
-	var userDislikedVenues = [];
+	
+	console.log(userDetails.liked_categories);
+	console.log(userDetails.disliked_venues);
 
-	userDetails = getUserDetails(username);
-	userPrefcategory = userDetails.liked_categories;
-	userDislikedVenues = userDetails.disliked_venues;
+	if(userDetails.liked_categories == ""){
+		var userPrefcategory = [];
+	}
+	else
+		var userPrefcategory = userDetails.liked_categories;
+
+	if(userDetails.disliked_venues == ""){
+		var userDislikedVenues = [];
+	}
+	else
+		userDislikedVenues = userDetails.disliked_venues;
 
 
-	for (var i in events){
-		for (var j in userPrefcategory){
-			for (var k in userDislikedVenues){
-				if(events.category_id == j || events.venue.venueId != k)
-					userPrefEvents.push(i);
-				else if(events.venue.venueId == k){
-					continue;
-				}
-				else
-					userNonPrefEvents.push(i);
+
+	console.log("userDislikedVenues"+ userDislikedVenues);
+	console.log(userPrefcategory);
+
+
+
+	for (var i in userPrefcategory){
+		for (var j in events){
+			//if(events.category_id == j || events.venue.venueId != k)
+			console.log(events[j].categoryId);
+			console.log(userPrefcategory[i]);
+			if(events[j].categoryId == userPrefcategory[i]){
+				userPrefEvents.push(events[j]);	
 			}
+			else{
+				userNonPrefEvents.push(events[j]);
+			}
+
 		}
 	}
-	
+	console.log(userPrefEvents);
+	console.log(userPrefEvents);
+
 	return userPrefEvents.concat(userNonPrefEvents);
 };

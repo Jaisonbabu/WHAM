@@ -105,7 +105,7 @@ app.controller('SearchEventsController', function($anchorScroll,$rootScope, $sco
 					$scope.eventResponse = 0;
 				}
 
-				events = getEvents(events,$rootScope.currentUser);
+				events = getEvents(events,$rootScope.currentUser,$rootScope.userDetails);
 				$scope.events = events; // $scope.events not used anywhere 
 
 				var mapOptions = {

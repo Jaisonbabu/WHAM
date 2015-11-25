@@ -33,7 +33,11 @@ var UserSchema = new mongoose.Schema(
 		{ 
 			firstname: String, lastname: String, email: String, address_1: String,
 			address_2: String, city: String, state: String, postal: String,
+<<<<<<< HEAD
 			country: String, liked_categories: [], disliked_venues: String, 
+=======
+			country: String, liked_categories: [Number], disliked_venues: [Number], 
+>>>>>>> origin/master
 			security_question: String, security_answer: String,
 			username: String, dob : Date, gender : String
 		},

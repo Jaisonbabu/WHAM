@@ -7,7 +7,7 @@ function User() {
 	this.gender = "";
 	this.dob = new Date();
 	this.liked_categories = [];
-	this.disliked_venues = "";
+	this.disliked_venues = [];
 	this.security_question = "";
 	this.security_answer = "";
 }
