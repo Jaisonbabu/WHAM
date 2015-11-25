@@ -4,8 +4,8 @@ function User() {
 	this.lastname = "";
 	this.email = "";
 	this.location = new Location();
-	this.liked_categories = "";
-	this.disliked_venues = "";
+	this.liked_categories = [];
+	this.disliked_venues = [];
 	this.security_question = "";
 	this.security_answer = "";
 }
