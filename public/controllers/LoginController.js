@@ -9,7 +9,7 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 				response = getObjectIfAvailable(response);
 				if(response && response.status == 200){
 					$rootScope.currentUser = userCredentials.username;
-					$location.url('/home');
+					DbService.getUserDetails($rootScope.currentUser,userDetailsResponseHandler);
 				}
 				else {
 					$scope.loginError = true;
@@ -18,4 +18,12 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 			})
 		}
 	}
+	
+	var userDetailsResponseHandler = function(response){
+		user = new User();
+		$rootScope.userDetails = mapDbObjToUserObj(user,response);
+		console.log(" inside login controller "+$rootScope.userDetails);
+		$location.url('/home');
+		
+	};
 })
