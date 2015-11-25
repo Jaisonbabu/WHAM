@@ -1,4 +1,4 @@
-app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $timeout, EventsService, MapService, DbService){	
+app.controller('SearchEventsController', function($anchorScroll,$rootScope, $scope,$http, $timeout, EventsService, MapService, DbService){	
 
 	var params = {};
 	$scope.eventResponse = 0;
@@ -34,7 +34,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		//$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
@@ -105,8 +105,8 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 					$scope.eventResponse = 0;
 				}
 
-				events = getEvents(events);
-				$scope.events = events;
+				events = getEvents(events,$rootScope.currentUser);
+				$scope.events = events; // $scope.events not used anywhere 
 
 				var mapOptions = {
 						zoom: 12,
