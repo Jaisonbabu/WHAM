@@ -34,7 +34,7 @@ app.controller('SearchEventsController', function($anchorScroll,$rootScope, $sco
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		$rootScope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
@@ -130,7 +130,7 @@ app.controller('SearchEventsController', function($anchorScroll,$rootScope, $sco
 					icon: image,
 					map: $scope.map,
 					optimized: true,
-					position: mapOptions.center,
+					position: $rootScope.userLoc,
 					title: 'You are here',
 					visible: true,
 					//labelClass: "userLoc",

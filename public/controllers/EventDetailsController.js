@@ -1,4 +1,4 @@
-app.controller('EventDetailsController', function($scope, $location, EventsService, $routeParams){
+app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams){
 
 	var searchEventsResponseHandler = function(response) {
 		$scope.event = getEvent(response);
@@ -22,7 +22,7 @@ app.controller('EventDetailsController', function($scope, $location, EventsServi
 			icon: image,
 			map: $scope.map,
 			optimized: true,
-			position: mapOptions.center,
+			position: $rootScope.userLoc,
 			title: 'You are here',
 			visible: true,
 		});
