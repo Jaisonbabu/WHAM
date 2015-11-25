@@ -33,7 +33,7 @@ var UserSchema = new mongoose.Schema(
 		{ 
 			firstname: String, lastname: String, email: String, address_1: String,
 			address_2: String, city: String, state: String, postal: String,
-			country: String, liked_categories: String, disliked_venues: String, 
+			country: String, liked_categories: [Number], disliked_venues: [Number], 
 			security_question: String, security_answer: String,
 			username: String 
 		},
