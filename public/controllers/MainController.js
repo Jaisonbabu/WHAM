@@ -167,3 +167,19 @@ var getObjectIfAvailable = function (obj){
 		return obj;
 	return null;
 };
+
+var mapDbObjToUserObj = function(user, body){
+	user.firstname = body.firstname;
+	user.lastname = body.lastname;
+	user.email = body.email;
+	user.location.addressLine1 = body.address_1;
+	user.location.addressLine2 = body.address_2;
+	user.location.city = body.city;
+	user.location.state = body.state;
+	user.location.postal = body.postal;
+	user.location.country = body.country;
+	user.liked_categories = body.liked_categories;
+	user.disliked_venues = body.disliked_venues; 
+	user.security_question = body.security_question;
+	user.security_answer = body.security_answer;
+};

@@ -170,9 +170,4 @@ app.controller('SearchEventsController', function($anchorScroll,$rootScope, $sco
 	// Initial call to display home page
 	$scope.searchEventsCurrentLoc();
 
-//	var user = new UserCredential();
-//	user.setCredentials('username','password2');
-//	DbService.updatePassword(user, function(obj, stat){		
-//		console.log("updatePass "+JSON.stringify(obj));
-//	});
 });
