@@ -1,5 +1,6 @@
-
 <div class="container" ng-app="AngularApp">
+	<!-- <form ng-app="AngularApp" class="form-horizontal" name="myForm"
+	novalidate ng-submit="register()">  -->
 	<div id="signupbox" style="margin-top: 50px"
 		class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 		<div class="panel panel-info">
@@ -13,12 +14,11 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<form class="form-horizontal" name="myForm">
+				<form class="form-horizontal" name="myForm" novalidate>
 
-					<!-- <div id="signupalert" style="display:none" class="alert alert-danger">
-                                    <p>Error:</p>
-                                    <span></span>
-                                </div> -->
+					<div style="margin-bottom: 8px; margin-left: 50px"
+						class="col-sm-12 error" ng-show="registrationError">Sorry
+						Registration failed. Please try again.</div>
 
 					<div class="form-group">
 						<label for="firstname" class="col-md-4 control-label">First
@@ -31,7 +31,6 @@
 								* First Name is required. </span>
 						</div>
 					</div>
-
 
 					<div class="form-group">
 						<label for="lastname" class="col-md-4 control-label">Last
@@ -57,18 +56,23 @@
 							Username *</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" name="username"
-								placeholder="Username" ng-model="user.username" required>
+								placeholder="Username" ng-model="user.username" required
+								unique-username ng-model-options="{ updateOn: 'blur'}">
 							<span class="error"
 								ng-show="myForm.username.$dirty && myForm.username.$error.required">
-								* Username is required. </span>
+								* Username is required. </span> <span ng-show="busy"
+								style="color: green">checking....</span> <span
+								ng-if="myForm.$error.isTaken" class="error">* Username
+								exists already</span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="password" class="col-md-4 control-label">Password *</label>
+						<label for="password" class="col-md-4 control-label">Password
+							*</label>
 						<div class="col-md-8">
 							<input type="password" class="form-control" name="password"
-								placeholder="Password" ng-model="user.password" required>
-							<span class="error"
+								placeholder="Password" ng-model="user.password"
+								match="user.password1" required> <span class="error"
 								ng-show="myForm.password.$dirty && myForm.password.$error.required">
 								* Password is required. </span>
 						</div>
@@ -77,11 +81,13 @@
 						<label for="confirm_password" class="col-md-4 control-label">Confirm
 							Password *</label>
 						<div class="col-md-8">
-							<input type="password" class="form-control"
-								name="confirm_password" placeholder="Confirm Password" ng-model="user.password1" required>
-							<span class="error"
+							<input type="password" class="form-control" name="password1"
+								placeholder="Confirm Password" ng-model="user.password1"
+								required match="user.password"> <span class="error"
 								ng-show="myForm.password1.$dirty && myForm.password1.$error.required">
-								* Confirm Password is required. </span>
+								* Confirm Password is required. </span> <span
+								ng-show="myForm.password1.$dirty && myForm.password1.$error.match && !myForm.password1.$error.required"
+								class="error"> Passwords don't match. </span>
 						</div>
 					</div>
 
@@ -111,9 +117,9 @@
 									</div>
 								</a>
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-									<datetimepicker data-ng-model="data.date"
-										data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }">
-									</datetimepicker>
+									<datepicker data-ng-model="data.date"
+										data-datepicker-config="{ dropdownSelector: '#dropdown2' }">
+									</datepicker>
 								</ul>
 							</div>
 						</div>
@@ -121,18 +127,13 @@
 					<div class="form-group">
 						<label for="preference" class="col-md-4 control-label">Preferences</label>
 						<div class="col-md-8">
-
-							<label><input type="checkbox" id="food_category"
-								value="food_category"> Food</label><br> <label><input
-								type="checkbox" id="filmandarts_category"
-								value="filmandarts_category"> Film and Arts</label><br> <label><input
-								type="checkbox" id="music_category" value="music_category">
-								Music</label><br> <label><input type="checkbox"
-								id="holidays_category" value="holidays_category">
-								Holidays</label><br> <label><input type="checkbox"
-								id="sports_category" value="sports_category"> Sports</label><br>
-							<label><input type="checkbox" id="sciandbus_category"
-								value="sciandbus_category"> Science and Business</label><br>
+							<div ng-repeat="category in categories">
+								<label> <input type="checkbox"
+									name="selectedcategories[]" value="{{category.value}}"
+									ng-checked="selection.indexOf(category) > -1"
+									ng-click="toggleSelection(category)"> {{category.name}}
+								</label>
+							</div>
 
 						</div>
 					</div>
@@ -141,37 +142,34 @@
 						<label for="security_question" class="col-md-4 control-label">Security
 							Question *</label>
 						<div class="col-md-8">
-
-							<select name="Security_question_menu">
-								<option value="0" selected style="display: none;">Choose
-									a Security Question</option>
-								<option value="question1">What is your pet's name?</option>
-								<option value="question2">Which city is/was your
-									college in?</option>
-								<option value="question3">Which city do your parents
-									live?</option>
+							<select id="securityQuestions" class="form-control"
+								ng-model="user.security_question">
 							</select>
 						</div>
 					</div>
-
 
 					<div class="form-group">
 						<label for="security_answer" class="col-md-4 control-label">Security
 							Answer *</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="security_answer"
-								placeholder="Answer the Security Question" required>
+							<input type="text" class="form-control" name="secAnswer"
+								placeholder="Answer the Security Question"
+								ng-model="user.security_answer" required ng-change="display()"> <span
+								class="error"
+								ng-show="myForm.secAnswer.$dirty && myForm.secAnswer.$error.required">
+								* Answer to the security question is required. </span>
 
 						</div>
 					</div>
+
 					<div class="form-group">
 						<!-- Button -->
-						<div class="col-md-offset-3 col-md-9">
-							<button id="btn-signup" type="button" class="btn btn-success"
-								ng-click="register()">&nbsp Sign Up</button>
+						<div class="col-md-offset-5 col-md-7">
+							<button id="btn-signup" name="signUp" type="button"
+								ng-disabled="myForm.$invalid" class="btn btn-success"
+								ng-click="register(user)">Sign Up</button>
 						</div>
 					</div>
-
 				</form>
 			</div>
 		</div>

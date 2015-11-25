@@ -84,7 +84,7 @@ app.post('/logout', function(req, res)
 		});
 
 app.post('/user/details', function(req,res){
-	UserDetail.findOne({username: req.body.username}, function(err,obj){
+	UserDetail.findOne({'username': req.body.username}, function(err,obj){
 		res.json(obj);		
 	});
 });

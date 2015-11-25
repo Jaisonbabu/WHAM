@@ -40,7 +40,7 @@ app.controller('SearchEventsController', function($anchorScroll, $scope,$http, $
 
 	select = document.getElementById( 'categories' );
 	for( category in $scope.categories ) {
-		select.add( new Option( category, $scope.categories[category]) );
+		select.add( new Option( ($scope.categories[category]).name, ($scope.categories[category]).value ));
 	};	
 
 	$("#btnSearch").on("click", function(){
