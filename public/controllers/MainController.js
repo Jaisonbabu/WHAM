@@ -182,4 +182,5 @@ var mapDbObjToUserObj = function(user, body){
 	user.disliked_venues = body.disliked_venues; 
 	user.security_question = body.security_question;
 	user.security_answer = body.security_answer;
+	return user;
 };
