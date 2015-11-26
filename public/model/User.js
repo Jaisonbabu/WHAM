@@ -11,14 +11,15 @@ function User() {
 }
 
 User.prototype.setUser = function(user) {
-	
+	this.username = user.username;
 	this.firstname = user.firstname;
 	this.lastname = user.lastname;
 	this.location = user.location;
+	this.email = user.email;
 	this.liked_categories = user.selection;
 	this.disliked_venues = user.disliked_venues;
 	this.security_question = user.security_question;
 	this.security_answer = user.security_answer;
 	
-}
+};
 
