@@ -18,12 +18,14 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 			})
 		}
 	}
-	
+
 	var userDetailsResponseHandler = function(response){
+		console.log(response.status)
 		user = new User();
+
 		$rootScope.userDetails = mapDbObjToUserObj(user,response);
 		console.log(" inside login controller "+$rootScope.userDetails);
 		$location.url('/home');
-		
+
 	};
 })

@@ -64,7 +64,7 @@ var getUserPrefEvents = function(events,userDetails){
 
 	var userPrefEvents = [];
 	var userNonPrefEvents = [];
-	
+
 	console.log(userDetails.liked_categories);
 	console.log(userDetails.disliked_venues);
 
@@ -102,8 +102,25 @@ var getUserPrefEvents = function(events,userDetails){
 
 		}
 	}
-	console.log(userPrefEvents);
+	console.log(userPrefEvents); // kept for reference, has to be removed
 	console.log(userPrefEvents);
 
-	return userPrefEvents.concat(userNonPrefEvents);
+	var userPref = [];
+
+	for (var i in userDislikedVenues){
+		for (var j in userPrefEvents){
+
+			if(userPrefEvents[j].venue.venueId == userDislikedVenues[i]){
+				continue;	
+			}
+			else{
+				userPref.push(userPrefEvents[j]);
+			}
+
+		}
+	}
+
+	return userPref.concat(userNonPrefEvents);
+
+
 };
