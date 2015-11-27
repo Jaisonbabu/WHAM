@@ -54,7 +54,7 @@
 				</div>
 				<div class="row">
 					<div style="margin-top: 25px; margin-left: 150px;" class="col-sm-4">
-						<a href="#" class="btn btn-primary">Directions to the event</a>
+						<a href="http://maps.google.com/maps?saddr={{userLoc.lat()}},{{userLoc.lng()}}&daddr={{event.venue.location.latitude}},{{event.venue.location.longitude}}" target="_blank" class="btn btn-primary">Directions to the event</a>
 					</div>
 					<div class="col-sm-4"></div>
 				</div>
@@ -68,11 +68,16 @@
 							</div>
 							<div style="padding-top: 10px;" class="panel-body">
 								<!-- <div style="margin-top: 25px; margin-left: 100px;">  -->
-								<a href="#"><img class="icon" style="float: right"
-									src="../images/facebook.png"
-									title="Share this event on facebook"> </a>&nbsp;&nbsp; <a
-									href="#"><img class="icon" src="../images/twitter.jpeg"
-									title="Share this event on twitter"> </a>
+								<a href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}}" target="_blank">
+								 Share on Facebook
+								</a>&nbsp;
+								<a href="https://twitter.com/share?url={{event.eventUrl}}" target="_blank">
+								 Share on Twitter
+								</a></br>
+								<a href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}} target="_blank""><img class="icon" style="float: right"
+								src="../images/facebook.png"
+								title="Share this event on facebook"> </a>&nbsp;&nbsp; 
+								<a href="https://twitter.com/share?url={{event.eventUrl}}"><img class="icon" src="../images/twitter.jpeg"></a>
 							</div>
 					</div>
 					</div>

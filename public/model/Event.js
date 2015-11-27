@@ -44,14 +44,12 @@ var getMappedEventFromEventbriteResponse = function(event){
 };
 
 var getEvents = function(apiEventResponse,username,userObj){
-	console.log(username);
-	console.log(userObj);
 	var eventsObj = [];
 	for(var i in apiEventResponse){
 		var event = getEvent(apiEventResponse[i]);		
 		eventsObj.push(event);
 	}
-	console.log(eventsObj);
+
 	if(username != null){
 		return getUserPrefEvents(eventsObj,userObj);
 	}
@@ -64,9 +62,6 @@ var getUserPrefEvents = function(events,userDetails){
 
 	var userPrefEvents = [];
 	var userNonPrefEvents = [];
-	
-	console.log(userDetails.liked_categories);
-	console.log(userDetails.disliked_venues);
 
 	if(userDetails.liked_categories.length == 0){
 		var userPrefcategory = [];
@@ -83,16 +78,9 @@ var getUserPrefEvents = function(events,userDetails){
 	if(userDetails.disliked_venues.length == 0 && userDetails.liked_categories.length == 0)
 		return events;
 
-	console.log("userDislikedVenues"+ userDislikedVenues);
-	console.log(userPrefcategory);
-
-
-
 	for (var i in userPrefcategory){
 		for (var j in events){
 			//if(events.category_id == j || events.venue.venueId != k)
-			console.log(events[j].categoryId);
-			console.log(userPrefcategory[i]);
 			if(events[j].categoryId == userPrefcategory[i]){
 				userPrefEvents.push(events[j]);	
 			}
@@ -102,8 +90,23 @@ var getUserPrefEvents = function(events,userDetails){
 
 		}
 	}
-	console.log(userPrefEvents);
-	console.log(userPrefEvents);
 
-	return userPrefEvents.concat(userNonPrefEvents);
+	var userPref = [];
+
+	for (var i in userDislikedVenues){
+		for (var j in userPrefEvents){
+
+			if(userPrefEvents[j].venue.venueId == userDislikedVenues[i]){
+				continue;	
+			}
+			else{
+				userPref.push(userPrefEvents[j]);
+			}
+
+		}
+	}
+
+	return userPref.concat(userNonPrefEvents);
+
+
 };

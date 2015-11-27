@@ -8,7 +8,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	                         {'name':'Music' , 'value':[103]},
 	                         {'name': 'Holidays', 'value':[116]},
 	                         {'name':'Sports', 'value': [107,108,109]},
-	                         {'name':'Science and business', 'value':[101,102,115]}];
+	                         {'name':'Science and Business', 'value':[101,102,115]}];
 
 	$rootScope.securityQuestions = {'ques1':'What is your pet\'s name?', 
 			'ques2':'Which city is/was your college in?',
@@ -36,7 +36,8 @@ app.directive('uniqueUsername', ['$http', 'DbService', function($http, DbService
 				}
 				scope.busy = true;
 				DbService.getUserDetails(value, function(response) {
-					if (response.status == 200 && getObjectIfAvailable(response.data)) {
+					if (response.status == 200 && getObjectIfAvailable(response.data)
+							&& response.data.username == value) {
 						ctrl.$setValidity('isTaken', false);
 					}
 					scope.busy = false;
@@ -157,6 +158,7 @@ var getObjectIfAvailable = function (obj){
 };
 
 var mapDbObjToUserObj = function(user, body){
+	user.username = body.username;
 	user.firstname = body.firstname;
 	user.lastname = body.lastname;
 	user.email = body.email;

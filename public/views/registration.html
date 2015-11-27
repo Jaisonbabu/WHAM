@@ -89,7 +89,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label for="gender" class="col-md-4 control-label">Gender</label>
 						<div class="col-md-8">
 							<label><input type="radio" name="gender" value="M" ng-model="user.gender">
@@ -101,6 +101,26 @@
 					<div class="form-group">
 						<label for="dob" class="col-md-4 control-label">Date of
 							Birth</label>
+
+						<div class="col-md-8"> -->
+
+							<!-- ui.bootstrap.datetimepicker (Dropdown Datetime with input box) -->
+							<!--  <div class="dropdown">
+								<a class="dropdown-toggle" id="dropdown2" role="button"
+									data-toggle="dropdown" data-target="#">
+									<div class="input-group">
+										<input type="text" class="form-control"
+											data-ng-model="data.date"> <span
+											class="input-group-addon"><i
+											class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+								</a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									<datepicker data-ng-model="data.date"
+										data-datepicker-config="{ dropdownSelector: '#dropdown2' }">
+									</datepicker>
+								</ul>
+							</div>
 						<div class="col-md-8">
 							<input type="date" class="form-control" uib-datepicker-popup
 								ng-model="user.dob" is-open="status.opened" min-date="minDate"
@@ -108,7 +128,7 @@
 								date-disabled="disabled(date, mode)"
 								close-text="Close" />
 						</div>
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="preference" class="col-md-4 control-label">Preferences</label>
 						<div class="col-md-8">
@@ -142,7 +162,6 @@
 							<span class="error"
 								ng-show="myForm.secAnswer.$dirty && myForm.secAnswer.$error.required">
 								* Answer to the security question is required. </span>
-
 						</div>
 					</div>
 

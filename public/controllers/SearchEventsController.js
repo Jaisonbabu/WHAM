@@ -1,5 +1,5 @@
 app.controller('SearchEventsController', function($anchorScroll,$rootScope, $scope,$http, $timeout, EventsService, MapService, DbService){	
-
+//TODO: handle no internet connection
 	var params = {};
 	$scope.eventResponse = 0;
 	$scope.apiResponse = 0;

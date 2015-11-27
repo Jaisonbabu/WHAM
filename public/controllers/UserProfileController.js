@@ -1,109 +1,67 @@
 //TODO: check user is logged in
-app.controller('UserProfileController', function ($scope, $routeParams, $rootScope, DbService, $location) {
+//TODO: add option to modify sec ques and answer
+//TODO: error handling in response handlers
+app.controller('UserProfileController', function($scope, $routeParams,
+		$rootScope, DbService, $location) {
 
 	$scope.showEdit = true;
-	
+	$scope.updProfile = false; 
+	$scope.profile = true; 
+	$scope.updPswd = false;
+
 	// user who is currently logged in
 	$scope.username = $rootScope.currentUser;
-	console.log( $rootScope);
+	$scope.user = $rootScope.userDetails;
+	$scope.newPassword = "";
+	$scope.oldPassword = "";
+
+	var select = document.getElementById('securityQuestions');
+	var count = 1;
+	var selectCount = 0;
+	for( question in $rootScope.securityQuestions ) {
+		select.add( new Option($rootScope.securityQuestions[question], question));
+		if (question == $scope.user.security_question){
+			selectCount = count;
+		}
+		count++;
+	};	
+	select.selectedIndex = selectCount;
+
+	$scope.categories = $rootScope.categories;
+	$scope.selection = $scope.user.liked_categories;	
+	// toggle selection for a given category
+	$scope.toggleSelection = function toggleSelection(category) {
+		var idx = $scope.selection.indexOf(category);
+		if (idx > -1) {
+			$scope.selection.splice(idx, 1);
+		}
+		else {
+			$scope.selection.push(category);
+		}
+	};
 	
-	DbService.getUserDetails($scope.username, function(userObj, status){
-		console.log("status "+status);
-		console.log("obj "+userObj);
-		console.log("username "+$scope.username);
-		$scope.user = userObj;
-		$scope.userId = userObj._id;
-		
-	$scope.updateLikedCategories = function (productId) {
-		UserService.checkLoggedIn(function(user)
-				{
-// User is Authenticated
-			if (user !== '0'){
-				$scope.userId = $rootScope.user._id;
-				var cart = {id:productId, count : 1};
-				ProductService.fetchLogin(function(response){
-					for(var i in response){
-						if(response[i]._id == $scope.userId){
-							$scope.user = response[i];
-
-							var alreadyPresent = false;	
-							for(var i in $scope.user.cart)	{
-								(function(i){
-									if($scope.user.cart[i].id == productId){
-										alreadyPresent = true;
-										$scope.user.cart[i].count +=1;
-										$rootScope.cartCount += 1;
-										ProductService.addToCart($scope.user);
-										$location.url('/profile/'+"cart");
-									}
-								})(i);
-							}
-							if(!alreadyPresent){
-								$scope.user.cart.push(cart);
-								$rootScope.cartCount += 1;
-								ProductService.addToCartFromFavorite($scope.user, function(response){
-									console.log(response);
-									$location.url('/profile/'+"cart");
-								});
-							}
-						}
-					}
-				});
-			}
-
-// User is Not Authenticated
-			else
-			{
-				$location.url('/login');
-			}
-				});
+	var updateProfileResponseHandler = function(resp) {
+		//TODO: handle both positive and negative cases and show msgs
+	};
+	
+	var updatePasswordResponseHandler = function(resp){
+		//TODO: handle both positive and negative cases and show msgs
 	};
 
-	$scope.updatePassword = function(pswd){
+	$scope.updatePassword = function(pswd) {
 		console.log(pswd);
-		UserService.checkLoggedIn(function(user)
-				{
-// User is Authenticated
-			if (user !== '0'){
-				$scope.userId = $rootScope.user._id;
-				UserService.getUserDetails($scope.username, function(response){
-					response.password = pswd;
-					console.log(response);
-					UserService.updateUser(response, function(resp){
-						UserService.logout(function(response)
-								{
-							$rootScope.currentuser = null;	
-							$rootScope.userId = null;
-							$rootScope.user = null;
-							$location.path('/login');
-								});
-					});
-				});
-			}
-				});
+		var userCredentials = new UserCredential();
+		userCredentials.setCredentials($scope.username, pswd);
+		DbService.updatePassword(userCredentials, updatePasswordResponseHandler);
 	};
 
-	$scope.updateProfile = function(){
-		UserService.checkLoggedIn(function(user)
-				{
-// User is Authenticated
-			if (user !== '0'){
-				$scope.userId = $rootScope.user._id;
-				UserService.getUserDetails($scope.username, function(response){
-					response.firstname = $scope.user.firstname;
-					response.lastname = $scope.user.lastname;
-					response.email = $scope.user.email;
-					response.address = $scope.user.address;
-					response.phone = $scope.user.phone;
-					console.log(response);
-					UserService.updateUser(response, function(resp){
-						$scope.user = resp;
-						$rootScope.user = resp;
-					});
-				});
-			}
-				});
+	$scope.updateProfile = function() {
+		if (getObjectIfAvailable($scope.user)) {
+			$scope.user.liked_categories = $scope.selection;
+			console.log($scope.user.security_question);
+			console.log($scope.user.security_answer);
+			console.log($scope.user.liked_categories);
+			//DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
+		}
 	};
-	
-	});
 });

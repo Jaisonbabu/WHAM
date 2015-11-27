@@ -17,7 +17,6 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 	};
 
 	$scope.register = function(user) {
-		$scope.registrationError = "";
 		var userDetails = new User();
 		var userCredentials = new UserCredential();
 		if (getStringObjectIfAvailable(user) && getStringObjectIfAvailable(user.username)) {
@@ -29,7 +28,7 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 			}
 			userDetails.setUser(user);
 			userCredentials.setCredentials(user.username, user.password);
-			DbService.register(userDetails, function(response){
+			DbService.addNewUserDetails(userDetails, function(response){
 				response = getObjectIfAvailable(response);
 				if(response && response.status==200){
 					DbService.addNewLoginCredentials(userCredentials, function(response){
@@ -38,11 +37,11 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 						} else {
 							$scope.registrationStatus = "Registration failed. Please try again.";
 						}
-					})
+					});
 				}
 				$location.url('/register');
-			})
+			});
 		}
-	}
+	};
 
 });
