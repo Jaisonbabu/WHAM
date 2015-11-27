@@ -24,5 +24,4 @@ User.prototype.setUser = function(user) {
 	this.security_answer = user.security_answer;
 //	this.gender = user.gender;
 //	this.dob = user.dob;
-	
 };
