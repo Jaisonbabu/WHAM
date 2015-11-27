@@ -36,8 +36,10 @@ app.directive('uniqueUsername', ['$http', 'DbService', function($http, DbService
 				}
 				scope.busy = true;
 				DbService.getUserDetails(value, function(response) {
-					if (response.status == 200 && response.data && response.data.username == value) 
+					if (response.status == 200 && getObjectIfAvailable(response.data)
+							&& response.data.username == value) {
 						ctrl.$setValidity('isTaken', false);
+					}
 					scope.busy = false;
 				})
 			});
@@ -113,6 +115,11 @@ app.config(function ($routeProvider, $httpProvider) {
 		templateUrl: '../views/UserProfile.html',
 		controller: 'UserProfileController'
 	})//TODO: check logged in
+
+	.when('/passwordReset', {
+		templateUrl: '../views/PasswordReset.html',
+		controller: 'PasswordResetController'
+	})
 
 	.otherwise({
 		redirectTo: '/home'

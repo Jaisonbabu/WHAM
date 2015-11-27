@@ -68,19 +68,20 @@ var getUserPrefEvents = function(events,userDetails){
 	console.log(userDetails.liked_categories);
 	console.log(userDetails.disliked_venues);
 
-	if(userDetails.liked_categories == ""){
+	if(userDetails.liked_categories.length == 0){
 		var userPrefcategory = [];
 	}
 	else
 		var userPrefcategory = userDetails.liked_categories;
 
-	if(userDetails.disliked_venues == ""){
+	if(userDetails.disliked_venues.length == 0){
 		var userDislikedVenues = [];
 	}
 	else
 		userDislikedVenues = userDetails.disliked_venues;
 
-
+	if(userDetails.disliked_venues.length == 0 && userDetails.liked_categories.length == 0)
+		return events;
 
 	console.log("userDislikedVenues"+ userDislikedVenues);
 	console.log(userPrefcategory);

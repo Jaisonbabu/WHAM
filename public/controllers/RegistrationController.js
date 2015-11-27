@@ -11,15 +11,14 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 		var idx = $scope.selection.indexOf(category);
 		if (idx > -1) {
 			$scope.selection.splice(idx, 1);
-		}
-		else {
+		} else {
 			$scope.selection.push(category);
 		}
 	};
 
 	$scope.register = function(user) {
-		$scope.registrationError = false;
 		var userDetails = new User();
+		var userCredentials = new UserCredential();
 		if (getStringObjectIfAvailable(user) && getStringObjectIfAvailable(user.username)) {
 			user.liked_categories = [];
 			for(i in $scope.selection){
@@ -28,19 +27,21 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 				}
 			}
 			userDetails.setUser(user);
-			console.log(user);
-			console.log(JSON.stringify(user));
-			DbService.register(userDetails, function(response){
+			userCredentials.setCredentials(user.username, user.password);
+			DbService.addNewUserDetails(userDetails, function(response){
 				response = getObjectIfAvailable(response);
 				if(response && response.status==200){
-					$scope.registrationError = false;
+					DbService.addNewLoginCredentials(userCredentials, function(response){
+						if(response && response.status==200) {
+							$scope.registrationStatus = "Registration was successful!!";
+						} else {
+							$scope.registrationStatus = "Registration failed. Please try again.";
+						}
+					});
 				}
-				else {
-					$scope.registrationError = true;
-				}	
 				$location.url('/register');
-			})
+			});
 		}
-	}
+	};
 
 });

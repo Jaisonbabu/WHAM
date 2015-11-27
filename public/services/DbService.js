@@ -33,9 +33,9 @@ app.factory("DbService", function ($http) {
 	
 	var addNewLoginCredentials = function(credentials, responseHandler){
 		$http.post('/user/addNewLogin', JSON.stringify(credentials))
-		.then(responseHandler,responseHandler);
+		.then(responseHandler, responseHandler);
 	};
-
+	
 	return {	
 		login : login,
 		logout : logout,
