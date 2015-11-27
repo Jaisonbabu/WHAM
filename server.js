@@ -107,6 +107,8 @@ app.post('/user/updatePassword', function(req,res){
 			if (err){
 				console.log("Error while updating password in UserCredentials: " + err);
 			}
+			else
+				res.json(userObj);
 		});		
 	});	
 });

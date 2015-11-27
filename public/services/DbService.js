@@ -28,7 +28,7 @@ app.factory("DbService", function ($http) {
 
 	var updatePassword = function(userCredentials, responseHandler){
 		$http.post('/user/updatePassword', JSON.stringify(userCredentials))
-		.success(responseHandler);
+		.then(responseHandler, responseHandler);
 	};
 	
 	var addNewUserDetails = function(userObj, responseHandler){
