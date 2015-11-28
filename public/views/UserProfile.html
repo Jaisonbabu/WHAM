@@ -230,9 +230,8 @@
 											Question *</label>
 										<div class="col-sm-8">
 											<select id="securityQuestions" class="form-control"
-												ng-model="user.security_question">
+												ng-model="selectedQues" ng-options="ques.value for ques in security_questions track by ques.name">
 											</select>
-													
 										</div>
 									</div>
 

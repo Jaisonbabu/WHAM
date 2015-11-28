@@ -15,18 +15,11 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	$scope.newPassword = "";
 	$scope.oldPassword = "";
 
-	var select = document.getElementById('securityQuestions');
-	var count = 1;
-	var selectCount = 0;
-	for( question in $rootScope.securityQuestions ) {
-		select.add( new Option($rootScope.securityQuestions[question], question));
-		if (question == $scope.user.security_question){
-			selectCount = count;
-		}
-		count++;
-	};	
-	select.selectedIndex = selectCount;
-
+	$scope.security_questions = $rootScope.securityQuestions;
+	for (i in $scope.security_questions){
+		if ($scope.security_questions[i].name == $scope.user.security_question)
+			$scope.selectedQues = $scope.security_questions[i];
+	}
 	$scope.categories = $rootScope.categories;
 	$scope.selection = $scope.user.liked_categories;	
 	// toggle selection for a given category
@@ -39,11 +32,11 @@ app.controller('UserProfileController', function($scope, $routeParams,
 			$scope.selection.push(category);
 		}
 	};
-	
+
 	var updateProfileResponseHandler = function(resp) {
 		//TODO: handle both positive and negative cases and show msgs
 	};
-	
+
 	var updatePasswordResponseHandler = function(resp){
 		//TODO: handle both positive and negative cases and show msgs
 	};
@@ -58,10 +51,8 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	$scope.updateProfile = function() {
 		if (getObjectIfAvailable($scope.user)) {
 			$scope.user.liked_categories = $scope.selection;
-			console.log($scope.user.security_question);
-			console.log($scope.user.security_answer);
-			console.log($scope.user.liked_categories);
-			//DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
+			$scope.user.security_question = $scope.selectedQues.name;
+			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
 	};
 });

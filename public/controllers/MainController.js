@@ -10,11 +10,11 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	                         {'name':'Sports', 'value': [107,108,109]},
 	                         {'name':'Science and Business', 'value':[101,102,115]}];
 
-	$rootScope.securityQuestions = {'ques1':'What is your pet\'s name?', 
-			'ques2':'Which city is/was your college in?',
-			'ques3':'Which city do your parents live?',
-			'ques4': 'Which city were you born?',
-			'ques5':'What is your favorite movie?'};
+	$rootScope.securityQuestions = [{'name':'ques1', 'value':'What is your pet\'s name?'}, 
+	                                {'name':'ques2','value':'Which city is/was your college in?'},
+	                                {'name':'ques3', 'value':'Which city do your parents live?'},
+	                                {'name':'ques4','value':'Which city were you born?'},
+	                                {'name':'ques5','value':'What is your favorite movie?'}];
 
 	$scope.logout = function() {
 		DbService.logout(function(response) {

@@ -1,9 +1,6 @@
 app.controller('RegistrationController',function($scope, $rootScope, $location, DbService){
-	var select = document.getElementById('securityQuestions');
-	for( question in $rootScope.securityQuestions ) {
-		select.add( new Option($rootScope.securityQuestions[question], question));
-	};	
 
+	$scope.security_questions = $rootScope.securityQuestions;
 	$scope.categories = $rootScope.categories;
 	$scope.selection=[];
 	// toggle selection for a given category
@@ -26,6 +23,7 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 					user.liked_categories.push($scope.selection[i].value[j]);
 				}
 			}
+			user.security_question = $scope.selectedQues.name;
 			userDetails.setUser(user);
 			userCredentials.setCredentials(user.username, user.password);
 			DbService.addNewUserDetails(userDetails, function(response){

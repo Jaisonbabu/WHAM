@@ -8,8 +8,7 @@
 				<div class="panel-title">Sign Up</div>
 				<div
 					style="float: right; font-size: 85%; position: relative; top: -10px">
-					<a id="signinlink" href="#/login">Sign
-						In</a>
+					<a id="signinlink" href="#/login">Sign In</a>
 				</div>
 			</div>
 			<div class="panel-body">
@@ -43,8 +42,8 @@
 							Id *</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" name="emailid"
-								ng-model="user.email" placeholder="Email Id" required>
-							<span class="error"
+								ng-model="user.email" placeholder="Email Id" required> <span
+								class="error"
 								ng-show="myForm.emailid.$dirty && myForm.emailid.$error.required">
 								* Email id is required. </span>
 						</div>
@@ -104,8 +103,8 @@
 
 						<div class="col-md-8"> -->
 
-							<!-- ui.bootstrap.datetimepicker (Dropdown Datetime with input box) -->
-							<!--  <div class="dropdown">
+					<!-- ui.bootstrap.datetimepicker (Dropdown Datetime with input box) -->
+					<!--  <div class="dropdown">
 								<a class="dropdown-toggle" id="dropdown2" role="button"
 									data-toggle="dropdown" data-target="#">
 									<div class="input-group">
@@ -147,7 +146,8 @@
 							Question *</label>
 						<div class="col-md-8">
 							<select id="securityQuestions" class="form-control"
-								ng-model="user.security_question">
+								ng-model="selectedQues"
+								ng-options="ques.value for ques in security_questions track by ques.name">
 							</select>
 						</div>
 					</div>
