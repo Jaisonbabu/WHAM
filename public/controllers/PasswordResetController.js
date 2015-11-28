@@ -20,10 +20,11 @@ app.controller('PasswordResetController', function($scope, $rootScope, $location
 
 	$scope.submitSecAnswer = function(secAns) {
 		if (getStringObjectIfAvailable(secAns) && (secAns==$scope.securityAnswer)) {
+			$scope.ansIncorrectMessage = '';
 			$scope.canResetPassword = true;
 		}
 		else {
-			$scope.ansIncorrect = true;
+			$scope.ansIncorrectMessage = "The answer to the security question is incorrect";
 			$scope.canResetPassword = false;
 		}
 	}
@@ -42,6 +43,7 @@ app.controller('PasswordResetController', function($scope, $rootScope, $location
 			})
 		}
 		else {
+			$scope.message = '';
 			$scope.ansIncorrect = true;
 			$scope.canResetPassword = false;
 		}
