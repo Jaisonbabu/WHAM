@@ -14,14 +14,27 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	$scope.user = $rootScope.userDetails;
 	$scope.newPassword = "";
 	$scope.oldPassword = "";
-
+	
+	var getCatObjsFromCatIds = function(cats){
+		var catObjs = [];
+		for (j in cats){
+			for (i in $scope.categories){
+				if ($scope.categories[i].value.indexOf(cats[j]) > -1){
+					catObjs.push($scope.categories[i]);
+					break;
+				}
+			}
+		}
+		return catObjs;
+	};
+	
 	$scope.security_questions = $rootScope.securityQuestions;
 	for (i in $scope.security_questions){
 		if ($scope.security_questions[i].name == $scope.user.security_question)
 			$scope.selectedQues = $scope.security_questions[i];
 	}
 	$scope.categories = $rootScope.categories;
-	$scope.selection = $scope.user.liked_categories;	
+	$scope.selection = getCatObjsFromCatIds($scope.user.liked_categories);	
 	// toggle selection for a given category
 	$scope.toggleSelection = function toggleSelection(category) {
 		var idx = $scope.selection.indexOf(category);
@@ -35,10 +48,12 @@ app.controller('UserProfileController', function($scope, $routeParams,
 
 	var updateProfileResponseHandler = function(resp) {
 		//TODO: handle both positive and negative cases and show msgs
+		console.log(resp.data);
 	};
 
 	var updatePasswordResponseHandler = function(resp){
 		//TODO: handle both positive and negative cases and show msgs
+		console.log(resp.data);
 	};
 
 	$scope.updatePassword = function(pswd) {
@@ -50,7 +65,12 @@ app.controller('UserProfileController', function($scope, $routeParams,
 
 	$scope.updateProfile = function() {
 		if (getObjectIfAvailable($scope.user)) {
-			$scope.user.liked_categories = $scope.selection;
+			$scope.user.liked_categories = [];
+			for(i in $scope.selection){
+				for (j in $scope.selection[i].value){
+					$scope.user.liked_categories.push($scope.selection[i].value[j]);
+				}
+			}
 			$scope.user.security_question = $scope.selectedQues.name;
 			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
