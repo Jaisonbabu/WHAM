@@ -51,6 +51,10 @@ app.controller('SearchEventsController', function($anchorScroll,$rootScope, $sco
 		// To delete old q from the params
 		if(query.val()=="")
 			delete params["q"];
+		
+		if(category.val()=="All Categories"){
+			delete params["categories"];
+		}
 
 		if (query!=null && query.val()!=""){
 			params["q"] = query.val();
