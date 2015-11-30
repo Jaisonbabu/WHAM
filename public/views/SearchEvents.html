@@ -15,7 +15,7 @@
 		</div>
 	</div>
 
-	<div ng-hide="events.length>0" class="tablediv row">
+	<div ng-hide="markers.length>0" class="tablediv row">
 		<div class="col-sm-4"></div>
 		<div class="col-sm-8">
 			<h3>
@@ -25,17 +25,17 @@
 		</div>
 	</div>
 
-	<div class="row topPadding pageMarginPadding" ng-show="markers.length>0">
-		<div class="col-sm-4">
+	<div class="row topPadding pageMarginPadding">
+		<div class="col-sm-4" ng-if="events.length>0">
 			<table
-				class="table table-striped table-hover table-bordered table-responsive linePadding">
+				class="table table-striped table-hover table-bordered table-responsive linePadding" ng-show="markers.length>0">
 				<thead>
 					<tr>
 						<th align="center">Events</th>
 					</tr>
 				</thead>
 			</table>
-			<div class="scrollit">
+			<div class="scrollit" ng-if="events.length>0">
 				<table
 					class="table table-striped table-hover table-bordered table-responsive linePadding">
 					<tbody>
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 
-		<div class="col-sm-8" style="padding-left:0px">
+		<div class="col-sm-8" style="padding-left:0px" ng-if="events.length>0">
 			<div id="map"></div>
 		</div>
 	</div>

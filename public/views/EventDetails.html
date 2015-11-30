@@ -1,89 +1,91 @@
-<body ng-controller="LoginController">
-	<div class="container">
-		<div class="tablediv row pageMarginPadding">
-			<div class="col-sm-7">
+<div class="container">
+	<div class="tablediv row pageMarginPadding">
+		<div class="col-sm-7">
 
-				<div class="tablediv row">
-					<div class="col-sm-12">
-						<h2>{{event.name}}</h2>
-						<hr>
-						<table class="table-responsive" style="width: 100%">
-							<tbody>
-								<tr>
-									<td width="20%" style="padding-top: 25px"><span> <img
-											style="width: 300px; height: 250px"
-											ng-src="{{event.imageUrl}}" alt="Image currently unavailable">
-									</span></td>
-									<td
-										style="vertical-align: top; padding-left: 40px; margin-top: 0px;">
-										<b><h3>{{event.venue.name}}</h3></b>
-										<h4>{{event.venue.location.addressLine1}}&nbsp;
-											{{event.venue.location.city}} &nbsp;
-											{{event.venue.location.state}}</h4> <br /> <b><h4>{{event.startTime
-												| date:'MMM d, yyyy'}}</h4> </b>
-										<h5>{{event.startTime | date:'EEE, h:mm a - '}}
-											{{event.endTime | date:'h:mm a'}}</h5> <a
-										ng-href="{{event.eventUrl}}" class="btn btn-success"
-										target="blank">Buy Tickets</a>
-										<div style="margin-top: 20px">
-											<a href="#"><img
-												style="width: 25px; height: 25px; margin-right: 30px;"
-												src="../images/like_img.png" title="Like this event">
-											</a> <a href="#"><img
-												style="width: 50px; height: 25px; margin-top: 15px;"
-												src="../images/dislike_img.jpeg" title="Unlike this event">
-											</a>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="col-sm-12" style="margin-top: 10px">
-						<h3>Event details</h3>
-						<hr>
-						<span>{{event.description}}</span>
-					</div>
+			<div class="tablediv row">
+				<div class="col-sm-12">
+					<h2>{{event.name}}</h2>
+					<hr>
+					<table class="table-responsive" style="width: 100%">
+						<tbody>
+							<tr>
+								<td width="20%" style="padding-top: 25px"><span> <img
+										style="width: 300px; height: 250px"
+										ng-src="{{event.imageUrl}}" alt="Image currently unavailable">
+								</span></td>
+								<td
+									style="vertical-align: top; padding-left: 40px; margin-top: 0px;">
+									<b><h3>{{event.venue.name}}</h3></b>
+									<h4>{{event.venue.location.addressLine1}}&nbsp;
+										{{event.venue.location.city}} &nbsp;
+										{{event.venue.location.state}}</h4> <br /> <b><h4>{{event.startTime
+											| date:'MMM d, yyyy'}}</h4> </b>
+									<h5>{{event.startTime | date:'EEE, h:mm a - '}}
+										{{event.endTime | date:'h:mm a'}}</h5> <a
+									ng-href="{{event.eventUrl}}" class="btn btn-success"
+									target="blank">Buy Tickets</a>
+									<div style="margin-top: 20px">
+										<a href="#"><img
+											style="width: 25px; height: 25px; margin-right: 30px;"
+											src="../images/like_img.png" title="Like this event"> </a>
+										<a href="#"><img
+											style="width: 50px; height: 25px; margin-top: 15px;"
+											src="../images/dislike_img.jpeg" title="Unlike this event">
+										</a>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-
+				<div class="col-sm-12" style="margin-top: 10px">
+					<h3>Event details</h3>
+					<hr>
+					<span>{{event.description}}</span>
+				</div>
 			</div>
-			<div class="col-sm-5">
-				<div class="row pageMarginPadding">
-					<div id="map" class="col-sm-12"
-						style="height: 300px; margin-top: 65px"></div>
+
+		</div>
+		<div class="col-sm-5">
+			<div class="row pageMarginPadding">
+				<div id="map" class="col-sm-12"
+					style="height: 300px; margin-top: 65px"></div>
+			</div>
+			<div class="row">
+				<div style="margin-top: 25px; margin-left: 150px;" class="col-sm-4">
+					<a
+						href="http://maps.google.com/maps?saddr={{userLoc.lat()}},{{userLoc.lng()}}&daddr={{event.venue.location.latitude}},{{event.venue.location.longitude}}"
+						target="_blank" class="btn btn-primary">Directions to the
+						event</a>
 				</div>
-				<div class="row">
-					<div style="margin-top: 25px; margin-left: 150px;" class="col-sm-4">
-						<a href="http://maps.google.com/maps?saddr={{userLoc.lat()}},{{userLoc.lng()}}&daddr={{event.venue.location.latitude}},{{event.venue.location.longitude}}" target="_blank" class="btn btn-primary">Directions to the event</a>
-					</div>
-					<div class="col-sm-4"></div>
-				</div>
-				<div class="row"
-					style="padding-top: 30px; margin-left: 0px; margin-right: 0px;">
-					<div class="col-sm-3"></div>
-					<div class="col-sm-5 ">
+				<div class="col-sm-4"></div>
+			</div>
+			<div class="row"
+				style="padding-top: 30px; margin-left: 0px; margin-right: 0px;">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-5 ">
 					<div class="panel panel-info">
-							<div class="panel-heading" style="padding-left:0px">
-								<div class="panel-title" style="text-align: center;">Share</div>
-							</div>
-							<div style="padding-top: 10px;" class="panel-body">
-								<!-- <div style="margin-top: 25px; margin-left: 100px;">  -->
-								<a href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}}" target="_blank">
-								 Share on Facebook
-								</a>&nbsp;
-								<a href="https://twitter.com/share?url={{event.eventUrl}}" target="_blank">
-								 Share on Twitter
-								</a></br>
-								<a href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}} target="_blank""><img class="icon" style="float: right"
-								src="../images/facebook.png"
-								title="Share this event on facebook"> </a>&nbsp;&nbsp; 
-								<a href="https://twitter.com/share?url={{event.eventUrl}}"><img class="icon" src="../images/twitter.jpeg"></a>
-							</div>
+						<div class="panel-heading" style="padding-left: 0px">
+							<div class="panel-title" style="text-align: center;">Share</div>
+						</div>
+						<div style="padding-top: 10px;" class="panel-body">
+							<!-- <div style="margin-top: 25px; margin-left: 100px;">  -->
+							<a
+								href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}}"
+								target="_blank"> Share on Facebook </a>&nbsp; <a
+								href="https://twitter.com/share?url={{event.eventUrl}}"
+								target="_blank"> Share on Twitter </a></br> <a
+								href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}} target="_blank""><img
+								class="icon" style="float: right" src="../images/facebook.png"
+								title="Share this event on facebook"> </a>&nbsp;&nbsp; <a
+								href="https://twitter.com/share?url={{event.eventUrl}}"><img
+								class="icon" src="../images/twitter.jpeg"></a>
+						</div>
 					</div>
-					</div>
-					<div class="col-sm-4"></div>
 				</div>
+				<div class="col-sm-4"></div>
 			</div>
 		</div>
 	</div>
-</body>
+</div>
+

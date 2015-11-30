@@ -66,10 +66,10 @@
 									</select> 
 							<li style="padding-right:8px"><input type="text" class ="form-control" placeholder="Write event type..." id="txtQuery" style="width:200px"/></li>
 							<li style="padding-right:8px"><input type="text" class ="form-control" placeholder="eg. Boston..." id="txtLocation"  style="width:250px"/></li>
-							<li><button class="btn btn-primary" type="button" id="btnSearch">Search</button></li>
+							<li><a style="padding-top:0px;" href="#/home"><button class="btn btn-primary" type="button" id="btnSearch" >Search</button></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="currentUser">
-							<li><a href="#/profile/user/{{currentUser}}"> <span class="welcome"> Hello {{currentUser}}</span></a></li>
+							<li><a href="#/profile/user"> <span class="welcome"> Hello {{currentUser}}</span></a></li>
 							<li><a href="#/logout" ng-click="logout()"> <span class="menucolor"> Logout </span></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="!currentUser">
