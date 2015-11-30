@@ -10,7 +10,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 
 		$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 		var image = new google.maps.MarkerImage(
-			    'http://plebeosaur.us/etc/map/bluedot_retina.png',
+				'http://plebeosaur.us/etc/map/bluedot_retina.png',
 				null, // size
 				null, // origin
 				new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
@@ -32,4 +32,27 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 	}
 
 	EventsService.fetchEventById($routeParams.eventId, searchEventsResponseHandler);
+
+	$scope.openDialog = function(){
+		if ($rootScope.currentUser == null || $rootScope.currentUser == undefined){
+			$("#dialog").dialog({
+				dialogClass: "no-close",
+				title:'oops! something went wrong',
+				width:400,
+				buttons: {
+					Login: function() {
+						$(this).dialog('close');
+						redirectToLogin();
+					},
+					Cancel: function() {
+						$(this).dialog('close');
+					}
+				}
+			});
+		}
+	}
+	
+	var redirectToLogin = function(){
+		$location.path('/login');
+	}
 })

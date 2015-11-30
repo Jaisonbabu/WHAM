@@ -25,10 +25,10 @@
 									ng-href="{{event.eventUrl}}" class="btn btn-success"
 									target="blank">Buy Tickets</a>
 									<div style="margin-top: 20px">
-										<a href="#"><img
+										<a href="" ng-click="openDialog()"> <img
 											style="width: 25px; height: 25px; margin-right: 30px;"
-											src="../images/like_img.png" title="Like this event"> </a>
-										<a href="#"><img
+											src="../images/like_img.png" title="Like this event">
+										</a> <a href="" ng-click="openDialog()"> <img
 											style="width: 50px; height: 25px; margin-top: 15px;"
 											src="../images/dislike_img.jpeg" title="Unlike this event">
 										</a>
@@ -85,6 +85,11 @@
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
+		</div>
+
+		<div id="dialog">
+			<p>You need to login to like or dislike events. Please click
+				login if you would like to login. Cancel otherwise.</p>
 		</div>
 	</div>
 </div>
