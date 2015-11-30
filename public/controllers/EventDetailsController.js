@@ -1,4 +1,4 @@
-app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams){
+app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams, $cookieStore){
 
 	var searchEventsResponseHandler = function(response) {
 		$scope.event = getEvent(response);
@@ -34,7 +34,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 	EventsService.fetchEventById($routeParams.eventId, searchEventsResponseHandler);
 
 	$scope.openDialog = function(){
-		if ($rootScope.currentUser == null || $rootScope.currentUser == undefined){
+		if ($cookieStore.get('username') == null || $cookieStore.get('username') == undefined){
 			$("#dialog").dialog({
 				dialogClass: "no-close",
 				title:'oops! something went wrong',

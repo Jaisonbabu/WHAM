@@ -2,7 +2,7 @@
 //TODO: add option to modify sec ques and answer
 //TODO: error handling in response handlers
 app.controller('UserProfileController', function($scope, $routeParams,
-		$rootScope, DbService, $location) {
+		$rootScope, DbService, $location, $cookieStore) {
 
 	$scope.showEdit = true;
 	$scope.updProfile = false; 
@@ -10,8 +10,8 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	$scope.updPswd = false;
 
 	// user who is currently logged in
-	$scope.username = $rootScope.currentUser;
-	$scope.user = $rootScope.userDetails;
+	$scope.username = $cookieStore.get('username');
+	$scope.user = $cookieStore.get('userDetails');
 	$scope.newPassword = "";
 	$scope.oldPassword = "";
 	

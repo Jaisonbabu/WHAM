@@ -20,7 +20,7 @@
 					<div class="input-group form-group" style="margin-bottom: 0px">
 						<span class="input-group-addon"><i
 							class="glyphicon glyphicon-user"></i></span> <input type="text"
-							class="form-control" name="username" ng-model="user.username"
+							id="username" class="form-control" name="username" ng-model="user.username"
 							placeholder="username" required ng-change="loginError=false" autofocus>
 					</div>
 					<span class="error"
@@ -31,7 +31,7 @@
 						style="margin-top: 20px; margin-bottom: 0px">
 						<span class="input-group-addon"><i
 							class="glyphicon glyphicon-lock"></i></span> <input type="password"
-							name="password" class="form-control" ng-model="user.password"
+							id="password" name="password" class="form-control" ng-model="user.password"
 							placeholder="password" required ng-change="loginError=false">
 					</div>
 
@@ -39,13 +39,13 @@
 						ng-show="myForm.password.$dirty && myForm.password.$error.required">
 						* Password is required. </span>
 
-					<div class="input-group">
+					<!-- <div class="input-group">
 						<div class="checkbox">
 							<label> <input id="login-remember" type="checkbox"
 								name="remember" value="1"> Remember me
 							</label>
 						</div>
-					</div>
+					</div>  -->
 
 
 					<div style="margin-top: 10px" class="form-group">

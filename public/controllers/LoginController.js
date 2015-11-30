@@ -1,11 +1,12 @@
-app.controller('LoginController', function($scope, $rootScope, $location, DbService){
+app.controller('LoginController', function($scope, $rootScope, $location, DbService, $cookieStore){
 	$scope.loginError = false;
 	
 	var userDetailsResponseHandler = function(response){
 		user = new User();
 		$rootScope.userDetails = mapDbObjToUserObj(user,response.data);
+		$cookieStore.put('username', $rootScope.currentUser);
+		$cookieStore.put('userDetails', $rootScope.userDetails);
 		$location.url('/home');
-		
 	};
 	
 	$scope.login = function(user) {
@@ -26,4 +27,16 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 			});
 		}
 	};
+	
+	$("#username").keypress(function(e){
+		if(e.which == 13){
+			$("#btn-login").click();
+		}
+	});
+
+	$("#password").keypress(function(e){
+		if(e.which == 13){
+			$("#btn-login").click();
+		}
+	});
 });

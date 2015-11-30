@@ -1,7 +1,7 @@
 
-var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker', 'ngMessages']);
+var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker', 'ngMessages','ngCookies']);
 
-app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams) {
+app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
 
 	$rootScope.categories = [{'name':'Food', 'value' : [110]}, 
 	                         {'name':'Film and Arts', 'value': [104,105]},
@@ -18,6 +18,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 
 	$scope.logout = function() {
 		DbService.logout(function(response) {
+			$cookieStore.remove('username');
 			$rootScope.currentUser = null;	
 			$location.path('/home');
 		});
@@ -27,7 +28,12 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	$scope.eventResponse = 0;
 	$scope.apiResponse = 0;
 	$scope.locationResponse = 0;
-	$scope.search = 'search';
+	if ($cookieStore.get('username')){
+		$rootScope.userDetails = $cookieStore.get('userDetails');
+		$rootScope.currentUser = $cookieStore.get('username');
+	}
+
+	//$scope.search = 'search';
 
 	var getLocationResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
@@ -92,7 +98,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 						$scope.events.push(events[i]);
 					}
 				}
-				
+
 				var mapOptions = {
 						zoom: 12,
 						center: new google.maps.LatLng(lt, lg),
@@ -136,7 +142,6 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 					$scope.markers.push(marker);
 					//$scope.events.push(marker);
 				}
-				console.log('length ='+ $scope.events.length);
 				$scope.openInfoWindow = function(event, selectedMarker) {
 					event.preventDefault();
 					google.maps.event.trigger(selectedMarker, 'mouseover');
@@ -180,7 +185,6 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	else{
 		$scope.searchEventsCurrentLoc();
 	}	
-//	});
 
 	$("#txtQuery").keypress(function(e){
 		if(e.which == 13){
@@ -268,11 +272,6 @@ app.config(function ($routeProvider, $httpProvider) {
 		controller: 'MainController'
 	})
 
-	.when('/home/:search', {
-		templateUrl: '../views/SearchEvents.html',
-		controller: 'MainController'
-	})
-
 	.when('/register', {
 		templateUrl: '../views/registration.html',
 		controller: 'RegistrationController'
@@ -299,7 +298,7 @@ app.config(function ($routeProvider, $httpProvider) {
 	})
 
 	.otherwise({
-		redirectTo: '/home'
+		redirectTo: '/home/'
 	});
 
 	$httpProvider
@@ -314,7 +313,7 @@ app.config(function ($routeProvider, $httpProvider) {
 			responseError: function(response)
 			{
 				if (response.status === 401)
-					$location.url('/home');
+					$location.url('/home/');
 				return $q.reject(response);
 			}
 		};
