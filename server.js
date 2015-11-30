@@ -96,6 +96,8 @@ app.put('/user/updateDetails', function(req,res){
 			if (err){
 				console.log("Error while saving data to UserDetails: " + err);
 			}
+			else
+				res.json(userObj);
 		});		
 	});	
 });
@@ -164,7 +166,7 @@ var mapUserObjToDbObj = function(user, body){
 	user.firstname = body.firstname;
 	user.lastname = body.lastname;
 	user.email = body.email;
-	if (body.location) {
+	if (getObjectIfAvailable(body.location)) {
 		user.address_1 = body.location.addressLine1;
 		user.address_2 =  body.location.addressLine2;
 		user.city = body.location.city;
