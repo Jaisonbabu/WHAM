@@ -1,17 +1,20 @@
 describe("searchEventsService mocks", function (service) {
-    beforeEach(function(){module('AngularApp')});
-
-    var service, $httpBackend;
-    beforeEach(function () {
-        angular.mock.inject(function ($injector) {
-            service = $injector.get('EventsService');
-            $httpBackend = $injector.get('$httpBackend');
-        });
+    beforeEach(function(){
+    	module('AngularApp');
     });
 
+    var service, $httpBackend;
+    
     describe('searchEventsService mocks', function () {
     	var resp = window.getJSONFixture('../../../../response.json');
-        
+    
+    	beforeEach(function () {
+            angular.mock.inject(function ($injector) {
+                service = $injector.get('EventsService');
+                $httpBackend = $injector.get('$httpBackend');
+            });
+        });
+    	
     	it("fetchEvents calls api", inject(function () {
         	var map = {};        	
 
@@ -19,7 +22,7 @@ describe("searchEventsService mocks", function (service) {
                 resp
             );
             service.fetchEvents(map, function (result) {
-                expect(result).toEqual(resp);
+                expect(result.data).toEqual(resp);
             });
             $httpBackend.flush();
         }));
@@ -31,7 +34,7 @@ describe("searchEventsService mocks", function (service) {
                 resp
             );
             service.fetchEvents(map, function (result) {
-                expect(result).toEqual(resp);
+                expect(result.data).toEqual(resp);
             });
             $httpBackend.flush();
         }));
@@ -43,7 +46,7 @@ describe("searchEventsService mocks", function (service) {
                 resp
             );
             service.fetchEvents(map, function (result) {
-                expect(result).toEqual(resp);
+                expect(result.data).toEqual(resp);
             });
             $httpBackend.flush();
         }));
@@ -55,7 +58,7 @@ describe("searchEventsService mocks", function (service) {
                 resp
             );
             service.fetchEvents(map, function (result) {
-                expect(result).toEqual(resp);
+                expect(result.data).toEqual(resp);
             });
             $httpBackend.flush();
         }));
@@ -63,7 +66,15 @@ describe("searchEventsService mocks", function (service) {
 
     
     /*describe('searchEventsService api calls', function () {
-    	it("fetchEvents calls api", inject(function () {
+    	
+    	beforeEach(function () {
+            
+    		angular.mock.inject(function ($injector) {
+                service = $injector.get('EventsService');
+                $httpBackend = $injector.get('$httpBackend');
+            });
+        });
+    	/*it("fetchEvents calls api", inject(function () {
         	var map = {};        	
 
         	$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue').passThrough();
