@@ -12,17 +12,90 @@ describe("userEventsService mocks", function (service) {
     describe('userDbService mocks', function () {
     	var resp = window.getJSONFixture('../../../../userResponse.json');
         
-    	it("fetchEvents calls api", inject(function () {
+    	it("login calls dbMethod successfully", inject(function () {
         	var userCredentials = {};        	
 
-            $httpBackend.whenGET('/login').respond(
+            $httpBackend.whenPOST('/login').respond(
                 resp
             );
             service.login(userCredentials, function (result) {
-                expect(result).toEqual(resp);
+                expect(result.data).toEqual(resp);
             });
             $httpBackend.flush();
         }));
+    	
+    	it("logout calls dbMethod successfully", inject(function () {
+        	var userCredentials = {};        	
+
+            $httpBackend.whenPOST('/logout').respond(
+                resp
+            );
+            service.logout(function (result) {
+                expect(result.data).toEqual(resp);
+            });
+            $httpBackend.flush();
+        }));
+    	
+    	it("getUserDetails calls dbMethod successfully", inject(function () {
+        	var username = {};        	
+
+            $httpBackend.whenPOST('/user/details').respond(
+                resp
+            );
+            service.getUserDetails(username, function (result) {
+                expect(result.data).toEqual(resp);
+            });
+            $httpBackend.flush();
+        }));
+    	
+    	it("updateUserDetails calls dbMethod successfully", inject(function () {
+        	var userObj = {};        	
+
+            $httpBackend.whenPUT('/user/updateDetails').respond(
+                resp
+            );
+            service.updateUserDetails(userObj, function (result) {
+                expect(result.data).toEqual(resp);
+            });
+            $httpBackend.flush();
+        }));
+    	
+    	it("updatePassword calls dbMethod successfully", inject(function () {
+        	var userCredentials = {};        	
+
+            $httpBackend.whenPOST('/user/updatePassword').respond(
+                resp
+            );
+            service.updatePassword(userCredentials, function (result) {
+                expect(result.data).toEqual(resp);
+            });
+            $httpBackend.flush();
+        }));
+    	
+    	it("addNewUserDetails calls dbMethod successfully", inject(function () {
+        	var userObj = {};        	
+
+            $httpBackend.whenPOST('/user/addNewDetails').respond(
+                resp
+            );
+            service.addNewUserDetails(userObj, function (result) {
+                expect(result.data).toEqual(resp);
+            });
+            $httpBackend.flush();
+        }));
+    	
+    	it("addNewLoginCredentials calls dbMethod successfully", inject(function () {
+        	var userCredentials = {};        	
+
+            $httpBackend.whenPOST('/user/addNewLogin').respond(
+                resp
+            );
+            service.addNewLoginCredentials(userCredentials, function (result) {
+                expect(result.data).toEqual(resp);
+            });
+            $httpBackend.flush();
+        }));
+    	
     })
     
 })
