@@ -3,7 +3,8 @@ var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui
 
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
 
-	$rootScope.categories = [{'name':'Food', 'value' : [110]}, 
+	$rootScope.categories = [{'name':'All categories', 'value' : 'All Categories'},
+	                         {'name':'Food', 'value' : [110]}, 
 	                         {'name':'Film and Arts', 'value': [104,105]},
 	                         {'name':'Music' , 'value':[103]},
 	                         {'name': 'Holidays', 'value':[116]},
@@ -28,12 +29,13 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	$scope.eventResponse = 0;
 	$scope.apiResponse = 0;
 	$scope.locationResponse = 0;
+	$scope.categories = $rootScope.categories;
+	if ($scope.selectedCategory == undefined)
+		$scope.selectedCategory = $scope.categories[0];
 	if ($cookieStore.get('username')){
 		$rootScope.userDetails = $cookieStore.get('userDetails');
 		$rootScope.currentUser = $cookieStore.get('username');
 	}
-
-	//$scope.search = 'search';
 
 	var getLocationResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
@@ -67,11 +69,6 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 		$rootScope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
-
-	select = document.getElementById( 'categories' );
-	for( category in $scope.categories ) {
-		select.add( new Option( ($scope.categories[category]).name, ($scope.categories[category]).value ));
-	};	
 
 	var searchEventsResponseHandler = function(lt, lg) {
 		return function(response){
@@ -162,7 +159,6 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	$scope.showContent = false;
 	var query = $("#txtQuery");
 	var location = $("#txtLocation");
-	var category  = $("#categories");
 
 	// To delete old q from the params
 	if(query.val()=="")
@@ -172,11 +168,11 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 		params["q"] = query.val();
 	}
 
-	if (category!=null && category.val()!="" && category.val()!="All Categories"){
-		params["categories"] = category.val();
+	if ($scope.selectedCategory!=null && $scope.selectedCategory.value!="" && $scope.selectedCategory.value!="All Categories"){
+		params["categories"] = $scope.selectedCategory.value;
 	}
 	// To delete old categories from the params
-	if(category.val()=="")
+	if($scope.selectedCategory && $scope.selectedCategory.value=="")
 		delete params["categories"];
 
 	if (location!=null && location.val()!=""){

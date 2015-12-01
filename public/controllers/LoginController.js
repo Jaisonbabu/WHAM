@@ -4,6 +4,7 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 	var userDetailsResponseHandler = function(response){
 		user = new User();
 		$rootScope.userDetails = mapDbObjToUserObj(user,response.data);
+		console.log(response);
 		$cookieStore.put('username', $rootScope.currentUser);
 		$cookieStore.put('userDetails', $rootScope.userDetails);
 		$location.url('/home');
