@@ -4,22 +4,32 @@
 <title>What's happening around me!</title>
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/bootstrap-theme.css" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="https://rawgit.com/dalelotts/angular-bootstrap-datetimepicker/master/src/css/datetimepicker.css" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://rawgit.com/dalelotts/angular-bootstrap-datetimepicker/master/src/css/datetimepicker.css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-route.min.js"></script>
 <script type="text/javascript" src="js/ui-bootstrap-tpls-0.12.1.js"></script>
-<script src="https://rawgit.com/dalelotts/angular-bootstrap-datetimepicker/master/src/js/datetimepicker.js"></script>
-<script src ="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-messages.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB0eGNKkBPEecOYLT_WJXPZdr4tqWwn0Ho&libraries=places"></script>
-<script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn-history/r391/trunk/markerwithlabel/src/markerwithlabel.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+<script
+	src="https://rawgit.com/dalelotts/angular-bootstrap-datetimepicker/master/src/js/datetimepicker.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-messages.js"></script>
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB0eGNKkBPEecOYLT_WJXPZdr4tqWwn0Ho&libraries=places"></script>
+<script type="text/javascript"
+	src="https://google-maps-utility-library-v3.googlecode.com/svn-history/r391/trunk/markerwithlabel/src/markerwithlabel.js"></script>
+<script type="text/javascript"
+	src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="js/angular-cookies.js"></script>
 <script type="text/javascript" src="js/DateFormatter.js"></script>
 <script type="text/javascript" src="controllers/MainController.js"></script>
@@ -32,10 +42,14 @@
 <script type="text/javascript" src="model/UserCredential.js"></script>
 <script type="text/javascript" src="model/User.js"></script>
 <script type="text/javascript" src="controllers/LoginController.js"></script>
-<script type="text/javascript" src="controllers/RegistrationController.js"></script>
-<script type="text/javascript" src="controllers/EventDetailsController.js"></script>
-<script type="text/javascript" src="controllers/UserProfileController.js"></script>
-<script type="text/javascript" src="controllers/PasswordResetController.js"></script>
+<script type="text/javascript"
+	src="controllers/RegistrationController.js"></script>
+<script type="text/javascript"
+	src="controllers/EventDetailsController.js"></script>
+<script type="text/javascript"
+	src="controllers/UserProfileController.js"></script>
+<script type="text/javascript"
+	src="controllers/PasswordResetController.js"></script>
 <script type="text/javascript" src="services/EventsService.js"></script>
 <script type="text/javascript" src="services/DbService.js"></script>
 <script type="text/javascript" src="services/MapService.js"></script>
@@ -46,39 +60,53 @@
 			<nav class="navbar navbar-default noMargin">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-							aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span> 
-							<span class="icon-bar"></span> 
-							<span class="icon-bar"></span> 
-							<span class="icon-bar"></span>
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar"
+							aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
 						</button>
 						<ul class="navbar-brand">
-							<li id="homelink"><a href="#/home"> <span class="menucolor"> <span class="glyphicon glyphicon-home"></span>
-										&nbsp; Events around
+							<li id="homelink"><a href="#/home"> <span
+									class="menucolor"> <span
+										class="glyphicon glyphicon-home"></span> &nbsp; Events around
 								</span> <span class="sr-only">(current)</span></a></li>
 						</ul>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav" style="padding-top:15px; padding-left:100px">
-									<li style="padding-right:8px"><select class="form-control" id ="categories" style="width:200px"  >	
-									<option selected="true">All Categories</option>
-									</select> 
-							<li style="padding-right:8px"><input type="text" class ="form-control" placeholder="Write event type..." id="txtQuery" style="width:200px"/></li>
-							<li style="padding-right:8px"><input type="text" class ="form-control" placeholder="eg. Boston..." id="txtLocation"  style="width:250px"/></li>
-							<li><a style="padding-top:0px;" href="#/home"><button class="btn btn-primary" type="button" id="btnSearch" >Search</button></a></li>
+						<ul class="nav navbar-nav"
+							style="padding-top: 15px; padding-left: 100px">
+							<li style="padding-right: 8px"><select
+								id="categories" class="form-control"
+								ng-model="selectedCategory"
+								ng-options="category.name for category in categories track by category.value">
+							</select>
+							<li style="padding-right: 8px"><input type="text"
+								class="form-control" placeholder="Write event type..."
+								id="txtQuery" style="width: 200px" /></li>
+							<li style="padding-right: 8px"><input type="text"
+								class="form-control" placeholder="eg. Boston..."
+								id="txtLocation" style="width: 250px" /></li>
+							<li><a style="padding-top: 0px;" href="#/home"><button
+										class="btn btn-primary" type="button" id="btnSearch">Search</button></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="currentUser">
-							<li><a href="#/profile/user"> <span class="welcome"> Hello {{currentUser}}</span></a></li>
-							<li><a href="#/logout" ng-click="logout()"> <span class="menucolor"> Logout </span></a></li>
+							<li><a href="#/profile/user"> <span class="welcome">
+										Hello {{currentUser}}</span></a></li>
+							<li><a href="#/logout" ng-click="logout()"> <span
+									class="menucolor"> Logout </span></a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right" ng-show="!currentUser">
-							<li id="registerlink"><a href="#/register"><span class="menucolor">Sign up</span></a></li>
-							<li id="loginlink"><a href="#/login"><span class="menucolor"><span class="glyphicon glyphicon-user"> </span>&nbsp;Login</span></a></li>
+							<li id="registerlink"><a href="#/register"><span
+									class="menucolor">Sign up</span></a></li>
+							<li id="loginlink"><a href="#/login"><span
+									class="menucolor"><span class="glyphicon glyphicon-user">
+									</span>&nbsp;Login</span></a></li>
 						</ul>
 					</div>
 					<!--/.navbar-collapse -->
-					</div>
+				</div>
 			</nav>
 			<div ng-view></div>
 		</div>

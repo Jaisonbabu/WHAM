@@ -1,0 +1,24 @@
+{
+	data :{
+		_id: "5655ed96d5b2f1138de625a3"
+			address_1: "360 Huntington Ave",
+			address_2: "",
+			city: "Boston",
+			country: "USA",
+			disliked_venues: Array[1],
+			dob: null,
+			email: "john@doe.com",
+			firstname: "john",
+			gender: "F",
+			lastname: "doe",
+			liked_categories: Array[1],
+			postal: "02115",
+			security_answer: "",
+			security_question: "",
+			state: "MA",
+			username: "123"
+	},
+	status: 200,
+	statusText : "OK",
+	config :{}	
+}
