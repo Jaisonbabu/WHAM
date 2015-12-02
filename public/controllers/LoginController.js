@@ -2,12 +2,19 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 	$scope.loginError = false;
 	
 	var userDetailsResponseHandler = function(response){
-		user = new User();
-		$rootScope.userDetails = mapDbObjToUserObj(user,response.data);
-		console.log(response);
-		$cookieStore.put('username', $rootScope.currentUser);
-		$cookieStore.put('userDetails', $rootScope.userDetails);
-		$location.url('/home');
+		response = getObjectIfAvailable(response);
+		if(response && response.status == 200){
+			user = new User();
+			$rootScope.userDetails = mapDbObjToUserObj(user,response.data);
+			console.log(response);
+			$cookieStore.put('username', $rootScope.currentUser);
+			$cookieStore.put('userDetails', $rootScope.userDetails);
+			$location.url('/home');
+		}
+		else{
+			$scope.loginError = true;
+			$location.url('/login');
+		};
 	};
 	
 	$scope.login = function(user) {

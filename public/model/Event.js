@@ -71,9 +71,13 @@ var getUserPrefEvents = function(events,userDetails){
 
 	if(userDetails.disliked_venues.length == 0){
 		var userDislikedVenues = [];
+		var userPref = userPrefEvents;
 	}
-	else
+	else{
+		var userPref = [];
 		userDislikedVenues = userDetails.disliked_venues;
+
+	}
 
 	if(userDetails.disliked_venues.length == 0 && userDetails.liked_categories.length == 0)
 		return events;
@@ -91,7 +95,6 @@ var getUserPrefEvents = function(events,userDetails){
 		}
 	}
 
-	var userPref = [];
 
 	for (var i in userDislikedVenues){
 		for (var j in userPrefEvents){
