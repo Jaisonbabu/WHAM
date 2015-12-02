@@ -77,7 +77,6 @@ var getUserPrefEvents = function(events,userDetails){
 		userDislikedVenues = userDetails.disliked_venues;
 
 	}
-
 	if(userDetails.disliked_venues.length == 0 && userDetails.liked_categories.length == 0)
 		return events;
 
@@ -93,10 +92,8 @@ var getUserPrefEvents = function(events,userDetails){
 		}
 	}
 
-
 	for (var i in userDislikedVenues){
 		for (var j in userPrefEvents){
-
 			if(userPrefEvents[j].venue.venueId == userDislikedVenues[i]){
 				continue;	
 			}
