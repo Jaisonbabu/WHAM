@@ -2,11 +2,11 @@
 var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker','ngMessages','ngCookies']);
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
 	console.log('inside main controller');
-	$rootScope.categories = [{'name':'All categories', 'value' : 'All Categories'},
+	$rootScope.categories = [{'name':'All Categories', 'value' : 'All Categories'},
 	                         {'name':'Food', 'value' : [110]}, 
 	                         {'name':'Film and Arts', 'value': [104,105]},
 	                         {'name':'Music' , 'value':[103]},
-	                         {'name': 'Holidays', 'value':[116]},
+	                         {'name':'Holidays', 'value':[116]},
 	                         {'name':'Sports', 'value': [107,108,109]},
 	                         {'name':'Science and Business', 'value':[101,102,115]}];
 
