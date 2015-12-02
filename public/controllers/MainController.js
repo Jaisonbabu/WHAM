@@ -20,7 +20,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 		DbService.logout(function(response) {
 			$cookieStore.remove('username');
 			$rootScope.currentUser = null;	
-			$location.path('/home');
+			$window.location.href = '/#/home';
 		});
 	};
 

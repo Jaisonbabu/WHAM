@@ -62,9 +62,5 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 				          ]
 			});
 		}
-	}
-
-	var redirectToLogin = function(){
-		$location.path('/login');
-	}
+	}	
 })
