@@ -1,6 +1,7 @@
 app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams, $cookieStore, $window){
 	$scope.username = $cookieStore.get('username');
-	$rootScope.userLoc = $cookieStore.get('userLoc');
+	$scope.userLoc = $cookieStore.get('userLoc');
+	console.log($scope.userLoc);
 	$scope.showDialog = false;
 	var searchEventsResponseHandler = function(response) {
 		$scope.event = getEvent(response.data);
@@ -24,7 +25,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			icon: image,
 			map: $scope.map,
 			optimized: true,
-			position: $rootScope.userLoc,
+			position: $scope.userLoc,
 			title: 'You are here',
 			visible: true,
 		});
