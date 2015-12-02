@@ -1,7 +1,7 @@
 
 var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker','ngMessages','ngCookies']);
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
-	console.log('inside main controller');
+
 	$rootScope.categories = [{'name':'All categories', 'value' : 'All Categories'},
 	                         {'name':'Food', 'value' : [110]}, 
 	                         {'name':'Film and Arts', 'value': [104,105]},
@@ -65,8 +65,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		var userLoc = new google.maps.LatLng(location.latitude, location.longitude);
-		$cookieStore.put('userLoc', userLoc);
+		$rootScope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
@@ -126,18 +125,16 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 
 				var locationInput = document.getElementById('txtLocation');
 				autocomplete = new google.maps.places.Autocomplete(locationInput);
-				autocomplete.bindTo('bounds', $scope.map);
+				//autocomplete.bindTo('bounds', $scope.map);
 
 				autocomplete.addListener('place_changed', function() {
 					var place = autocomplete.getPlace();
 				});
 
 				$scope.markers = [];
-				//$scope.events = [];
 				for (var i = 0; i < events.length; i++) {
 					var marker = new Marker(events[i], $scope.map).marker;
 					$scope.markers.push(marker);
-					//$scope.events.push(marker);
 				}
 				$scope.openInfoWindow = function(event, selectedMarker) {
 					event.preventDefault();
@@ -152,11 +149,9 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	};
 
 	$scope.searchEventsCurrentLoc = function(){		
-		MapService.getUserLocation(getUserLocationResponseHandler);		
-		console.log('MainController searchEventsCurrentLoc');
+		MapService.getUserLocation(getUserLocationResponseHandler);
 	};
 
-	$scope.markers = [];
 	$scope.showContent = false;
 	var query = $("#txtQuery");
 	var location = $("#txtLocation");
