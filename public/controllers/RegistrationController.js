@@ -18,11 +18,13 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 		var userCredentials = new UserCredential();
 		if (getStringObjectIfAvailable(user) && getStringObjectIfAvailable(user.username)) {
 			user.liked_categories = [];
+			console.log($scope.selection);
 			for(i in $scope.selection){
 				for (j in $scope.selection[i].value){
 					user.liked_categories.push($scope.selection[i].value[j]);
 				}
 			}
+			console.log(user.liked_categories);
 			user.security_question = $scope.selectedQues.name;
 			userDetails.setUser(user);
 			userCredentials.setCredentials(user.username, user.password);

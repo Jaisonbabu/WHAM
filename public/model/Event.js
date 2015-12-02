@@ -43,14 +43,13 @@ var getMappedEventFromEventbriteResponse = function(event){
 	return eventObj;
 };
 
-var getEvents = function(apiEventResponse,username,userObj){
+var getEvents = function(apiEventResponse,username,userObj, queryKeyword, queryCategory){
 	var eventsObj = [];
 	for(var i in apiEventResponse){
 		var event = getEvent(apiEventResponse[i]);		
 		eventsObj.push(event);
 	}
-
-	if(username != null){
+	if(username != null && queryKeyword == "" && queryCategory == ""){
 		return getUserPrefEvents(eventsObj,userObj);
 	}
 	else{
@@ -91,7 +90,6 @@ var getUserPrefEvents = function(events,userDetails){
 			else{
 				userNonPrefEvents.push(events[j]);
 			}
-
 		}
 	}
 

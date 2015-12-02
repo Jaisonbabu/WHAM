@@ -1,7 +1,7 @@
 
 var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker','ngMessages','ngCookies']);
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
-
+	console.log('inside main controller');
 	$rootScope.categories = [{'name':'All Categories', 'value' : 'All Categories'},
 	                         {'name':'Food', 'value' : [110]}, 
 	                         {'name':'Film and Arts', 'value': [104,105]},
@@ -35,7 +35,9 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 		$rootScope.userDetails = $cookieStore.get('userDetails');
 		$rootScope.currentUser = $cookieStore.get('username');
 	}
-
+	$scope.queryKeyword = "";
+	$scope.queryCategory = "";
+	
 	var getLocationResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
 		if(response && response.status == 200){
@@ -90,7 +92,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				}
 				else{
 					$scope.eventResponse = 0;
-					events = getEvents(events,$rootScope.currentUser,$rootScope.userDetails);
+					events = getEvents(events,$rootScope.currentUser,$rootScope.userDetails, $scope.queryKeyword, $scope.queryCategory);
 					for(var i in events){
 						$scope.events.push(events[i]);
 					}
@@ -162,10 +164,12 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 		delete params["q"];
 
 	if (query!=null && query.val()!=""){
+		$scope.queryKeyword = query.val();
 		params["q"] = query.val();
 	}
 
 	if ($scope.selectedCategory!=null && $scope.selectedCategory.value!="" && $scope.selectedCategory.value!="All Categories"){
+		$scope.queryCategory = $scope.selectedCategory.value;
 		params["categories"] = $scope.selectedCategory.value;
 	}
 	// To delete old categories from the params

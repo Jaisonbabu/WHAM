@@ -8,7 +8,11 @@ app.controller('PasswordResetController', function($scope, $rootScope, $location
 					$scope.showSecQues = true;
 					$scope.canResetPassword = false;
 					$scope.username = response.data.username;
-					$scope.securityQuestion = $rootScope.securityQuestions[response.data.security_question];
+					for(var i in $rootScope.securityQuestions){
+						if($rootScope.securityQuestions[i].name == response.data.security_question)
+							$scope.securityQuestion = $rootScope.securityQuestions[i].value;	
+					}
+
 					$scope.securityAnswer = response.data.security_answer;
 				}
 				else {

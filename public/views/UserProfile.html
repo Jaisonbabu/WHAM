@@ -201,7 +201,8 @@
 												<label> <input type="checkbox"
 													name="selectedcategories[]" value="{{category.value}}"
 													ng-checked="selection.indexOf(category) > -1"
-													ng-click="toggleSelection(category)">
+													ng-click="toggleSelection(category)"
+													ng-model="selection">
 													{{category.name}}
 												</label>
 												</span>
