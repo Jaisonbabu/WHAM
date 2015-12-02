@@ -153,6 +153,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 
 	$scope.searchEventsCurrentLoc = function(){		
 		MapService.getUserLocation(getUserLocationResponseHandler);		
+		console.log('MainController searchEventsCurrentLoc');
 	};
 
 	$scope.markers = [];
@@ -319,7 +320,7 @@ app.config(function ($routeProvider, $httpProvider) {
 
 var getStringObjectIfAvailable = function (obj){
 	if (obj != null && obj != undefined)
-		return obj;
+		return "" + obj;
 	return "";
 };
 

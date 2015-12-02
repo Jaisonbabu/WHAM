@@ -1,5 +1,5 @@
-describe("userEventsService mocks", function (service) {
-    beforeEach(function(){module('AngularApp')});
+describe("Unit tests for DbService", function (service) {
+    beforeEach(function(){module('AngularApp');});
 
     var service, $httpBackend;
     beforeEach(function () {
@@ -9,8 +9,8 @@ describe("userEventsService mocks", function (service) {
         });
     });
     
-    describe('userDbService mocks', function () {
-    	var resp = window.getJSONFixture('../../../../userResponse.json');
+    describe('Unit tests for user related db methods', function () {
+    	var resp = window.getJSONFixture('../../../../responses/userResponse.json');
         
     	it("login calls dbMethod successfully", inject(function () {
         	var userCredentials = {};        	
@@ -94,8 +94,6 @@ describe("userEventsService mocks", function (service) {
                 expect(result.data).toEqual(resp);
             });
             $httpBackend.flush();
-        }));
-    	
-    })
-    
+        }));    	
+    });    
 })

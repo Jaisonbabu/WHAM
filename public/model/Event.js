@@ -105,11 +105,8 @@ var getUserPrefEvents = function(events,userDetails){
 			else{
 				userPref.push(userPrefEvents[j]);
 			}
-
 		}
 	}
 
 	return userPref.concat(userNonPrefEvents);
-
-
 };
