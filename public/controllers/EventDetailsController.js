@@ -1,7 +1,7 @@
 app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams, $cookieStore){
 
 	var searchEventsResponseHandler = function(response) {
-		$scope.event = getEvent(response);
+		$scope.event = getEvent(response.data);
 		var mapOptions = {
 				zoom: 12,
 				center: new google.maps.LatLng($scope.event.venue.location.latitude, $scope.event.venue.location.longitude),

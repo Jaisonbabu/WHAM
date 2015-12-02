@@ -11,7 +11,7 @@
 	
 	var fetchEventById = function(eventId, responseHandler){
 		var url = "https://www.eventbriteapi.com/v3/events/"+eventId+"/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue";
-		$http.get(url).success(responseHandler);
+		$http.get(url).then(responseHandler, responseHandler);
 	};
 	
 	return {	
