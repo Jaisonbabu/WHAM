@@ -166,14 +166,6 @@ var mapUserObjToDbObj = function(user, body){
 	user.firstname = body.firstname;
 	user.lastname = body.lastname;
 	user.email = body.email;
-	if (getObjectIfAvailable(body.location)) {
-		user.address_1 = body.location.addressLine1;
-		user.address_2 =  body.location.addressLine2;
-		user.city = body.location.city;
-		user.state = body.location.state;
-		user.postal = body.location.postal;
-		user.country = body.location.country;
-	}
 	user.gender = body.gender;
 	user.dob = body.dob;
 	user.liked_categories = body.liked_categories;

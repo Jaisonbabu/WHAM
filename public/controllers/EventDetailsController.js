@@ -1,5 +1,7 @@
-app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams, $cookieStore){
-
+app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams, $cookieStore, $window){
+	$scope.username = $cookieStore.get('username');
+	$rootScope.userLoc = $cookieStore.get('userLoc');
+	$scope.showDialog = false;
 	var searchEventsResponseHandler = function(response) {
 		$scope.event = getEvent(response.data);
 		var mapOptions = {
@@ -8,7 +10,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
-		$scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		$scope.map = new google.maps.Map(document.getElementById('eventMap'), mapOptions);
 		var image = new google.maps.MarkerImage(
 				'http://plebeosaur.us/etc/map/bluedot_retina.png',
 				null, // size
@@ -32,26 +34,35 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 	}
 
 	EventsService.fetchEventById($routeParams.eventId, searchEventsResponseHandler);
-
 	$scope.openDialog = function(){
+
 		if ($cookieStore.get('username') == null || $cookieStore.get('username') == undefined){
+			$("#dialogContent").html('You need to login to like or dislike events. Please click login if you would like to login. Cancel otherwise.');
 			$("#dialog").dialog({
 				dialogClass: "no-close",
 				title:'oops! something went wrong',
 				width:400,
-				buttons: {
-					Login: function() {
-						$(this).dialog('close');
-						redirectToLogin();
-					},
-					Cancel: function() {
-						$(this).dialog('close');
-					}
-				}
+				buttons: [
+				          {
+
+				        	  text : "Login",
+				        	  click: function(){
+				        		  $(this).dialog('close');
+				        		  $window.location.href = '/#/login';
+				        	  }
+
+				          },
+				          {
+				        	  text : "Cancel",
+				        	  click: function(){
+				        		  $(this).dialog('close')
+				        	  }
+				          }
+				          ]
 			});
 		}
 	}
-	
+
 	var redirectToLogin = function(){
 		$location.path('/login');
 	}

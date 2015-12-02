@@ -1,7 +1,7 @@
 
 var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker','ngMessages','ngCookies']);
 app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
-
+	console.log('inside main controller');
 	$rootScope.categories = [{'name':'All categories', 'value' : 'All Categories'},
 	                         {'name':'Food', 'value' : [110]}, 
 	                         {'name':'Film and Arts', 'value': [104,105]},
@@ -65,7 +65,8 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		$rootScope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		var userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		$cookieStore.put('userLoc', userLoc);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
