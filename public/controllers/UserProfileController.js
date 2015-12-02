@@ -48,6 +48,7 @@ app.controller('UserProfileController', function($scope, $routeParams,
 
 	var updateProfileResponseHandler = function(resp) {
 		//TODO: handle both positive and negative cases and show msgs
+		$cookieStore.put('userDetails', resp.data);
 		console.log(resp.data);
 	};
 
