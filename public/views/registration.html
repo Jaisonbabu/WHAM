@@ -135,11 +135,13 @@
 						<label for="preference" class="col-md-4 control-label">Preferences</label>
 						<div class="col-md-8">
 							<div ng-repeat="category in categories">
+								<span ng-if="category.name != 'All Categories'" >
 								<label> <input type="checkbox"
 									name="selectedcategories[]" value="{{category.value}}"
 									ng-checked="selection.indexOf(category) > -1"
 									ng-click="toggleSelection(category)"> {{category.name}}
 								</label>
+								</span>
 							</div>
 						</div>
 					</div>

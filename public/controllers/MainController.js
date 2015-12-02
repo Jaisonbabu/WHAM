@@ -65,8 +65,8 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				position.coords.latitude,
 				position.coords.longitude);
 		params = location.getParamsForSearch(params);
-		var userLoc = new google.maps.LatLng(location.latitude, location.longitude);
-		$cookieStore.put('userLoc', userLoc);
+		$scope.userLoc = new google.maps.LatLng(location.latitude, location.longitude);
+		$cookieStore.put('userLoc', $scope.userLoc);
 		EventsService.fetchEvents(params, searchEventsResponseHandler(location.latitude, location.longitude));
 	};
 
