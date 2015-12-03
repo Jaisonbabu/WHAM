@@ -92,15 +92,16 @@ var getUserPrefEvents = function(events,userDetails){
 		}
 	}
 
-	for (var i in userDislikedVenues){
-		for (var j in userPrefEvents){
-			if(userPrefEvents[j].venue.venueId == userDislikedVenues[i]){
-				continue;	
-			}
-			else{
-				userPref.push(userPrefEvents[j]);
-			}
+	
+	for (var i in userPrefEvents){
+		var idx = userDislikedVenues.indexOf(Number(userPrefEvents[i].venue.venueId));
+		if (idx > -1){
+			continue;
 		}
+		else {
+			userPref.push(userPrefEvents[i]);
+		}
+			
 	}
 
 	return userPref.concat(userNonPrefEvents);
