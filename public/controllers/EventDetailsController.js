@@ -3,6 +3,8 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 	$scope.userLoc = $cookieStore.get('userLoc');
 	console.log($scope.userLoc);
 	$scope.showDialog = false;
+	$scope.user = $cookieStore.get('userDetails');
+	
 	var searchEventsResponseHandler = function(response) {
 		$scope.event = getEvent(response.data);
 		var mapOptions = {
@@ -39,43 +41,45 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 		$cookieStore.put('userDetails', resp.data);
 		console.log(resp.data);
 	};
+	
+	var notLoggedDialog = function(){
+		$("#dialogContent").html('You need to login to like or dislike events. Please click login if you would like to login. Cancel otherwise.');
+		$("#dialog").dialog({
+			dialogClass: "no-close",
+			title:'oops! something went wrong',
+			width:400,
+			buttons: [
+			          {
+
+			        	  text : "Login",
+			        	  click: function(){
+			        		  $(this).dialog('close');
+			        		  $window.location.href = '/#/login';
+			        	  }
+
+			          },
+			          {
+			        	  text : "Cancel",
+			        	  click: function(){
+			        		  $(this).dialog('close')
+			        	  }
+			          }
+			          ]
+		});	
+	}
 
 	EventsService.fetchEventById($routeParams.eventId, searchEventsResponseHandler);
-	$scope.openDialog = function(){
+	
+	$scope.likedEvent = function(){
 
 		if ($cookieStore.get('username') == null || $cookieStore.get('username') == undefined){
-			$("#dialogContent").html('You need to login to like or dislike events. Please click login if you would like to login. Cancel otherwise.');
-			$("#dialog").dialog({
-				dialogClass: "no-close",
-				title:'oops! something went wrong',
-				width:400,
-				buttons: [
-				          {
-
-				        	  text : "Login",
-				        	  click: function(){
-				        		  $(this).dialog('close');
-				        		  $window.location.href = '/#/login';
-				        	  }
-
-				          },
-				          {
-				        	  text : "Cancel",
-				        	  click: function(){
-				        		  $(this).dialog('close')
-				        	  }
-				          }
-				          ]
-			});
+			notLoggedDialog();
 		}
 		else {
 			var category = Number($scope.event.categoryId);
-			console.log(category);
-			
 			var userCategory = [];
-			$scope.user = $cookieStore.get('userDetails');
 			userCategory = $scope.user.liked_categories;
-			
+	
 			console.log(userCategory);
 			console.log(userCategory.indexOf(category));
 			console.log($.inArray(category, userCategory));
@@ -88,5 +92,30 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			
 			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
-	}	
+	}
+	
+	
+	$scope.dislikeVenue = function(){
+
+		if ($cookieStore.get('username') == null || $cookieStore.get('username') == undefined){
+			notLoggedDialog();
+		}
+		else {
+			var venueId = Number($scope.event.venue.venueId);
+			console.log(venueId + " venue id");
+			var dislikedVenues = [];
+			dislikedVenues = $scope.user.disliked_venues;
+			
+			console.log(dislikedVenues);
+			console.log(dislikedVenues.indexOf($scope.event.venue.venueId));
+			
+			var idx = dislikedVenues.indexOf(venueId);
+			if (idx < 0){
+				$scope.user.disliked_venues.push(venueId);
+			}
+			console.log($scope.user.dislikedVenues);
+			
+			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
+		}
+	}
 })
