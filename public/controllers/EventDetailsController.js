@@ -1,4 +1,4 @@
-app.controller('EventDetailsController', function($scope, $rootScope,$location, EventsService, $routeParams, $cookieStore, $window){
+app.controller('EventDetailsController', function($scope, $rootScope,$location, DbService, EventsService, $routeParams, $cookieStore, $window){
 	$scope.username = $cookieStore.get('username');
 	$scope.userLoc = $cookieStore.get('userLoc');
 	console.log($scope.userLoc);
@@ -33,6 +33,12 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 		userMarker.setAnimation(google.maps.Animation.BOUNCE);
 		var marker = new Marker($scope.event, $scope.map).marker;
 	}
+	
+	var updateProfileResponseHandler = function(resp) {
+		//TODO: handle both positive and negative cases and show msgs
+		$cookieStore.put('userDetails', resp.data);
+		console.log(resp.data);
+	};
 
 	EventsService.fetchEventById($routeParams.eventId, searchEventsResponseHandler);
 	$scope.openDialog = function(){
@@ -61,6 +67,26 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 				          }
 				          ]
 			});
+		}
+		else {
+			var category = Number($scope.event.categoryId);
+			console.log(category);
+			
+			var userCategory = [];
+			$scope.user = $cookieStore.get('userDetails');
+			userCategory = $scope.user.liked_categories;
+			
+			console.log(userCategory);
+			console.log(userCategory.indexOf(category));
+			console.log($.inArray(category, userCategory));
+			
+			var idx = userCategory.indexOf(category);
+			if (idx < 0){
+				$scope.user.liked_categories.push(category);
+			}
+			console.log($scope.user.liked_categories);
+			
+			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
 	}	
 })
