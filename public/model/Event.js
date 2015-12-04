@@ -103,6 +103,8 @@ var getUserPrefEvents = function(events,userDetails){
 		}
 			
 	}
-
+	
+	userNonPrefEvents.reverse();
+	
 	return userPref.concat(userNonPrefEvents);
 };
