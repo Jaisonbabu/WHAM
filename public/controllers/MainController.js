@@ -1,6 +1,6 @@
 
 var app = angular.module('AngularApp', ['ngRoute','ui.bootstrap.transition', 'ui.bootstrap', 'ui.bootstrap.datepicker','ngMessages','ngCookies']);
-app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $location, DbService, MapService, $routeParams, $cookieStore) {
+app.controller('MainController', function ($scope,$route, EventsService, $rootScope, $window, DbService, MapService, $routeParams, $cookieStore) {
 
 	$rootScope.categories = [{'name':'All Categories', 'value' : 'All Categories'},
 	                         {'name':'Food', 'value' : [110]}, 
@@ -19,12 +19,14 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	$scope.logout = function() {
 		DbService.logout(function(response) {
 			$cookieStore.remove('username');
-			$rootScope.currentUser = null;	
+			$rootScope.currentUser = null;
+			$cookieStore.remove('userDetails');
+			$rootScope.userDetails = null;
 			$window.location.href = '/#/home';
 		});
 	};
 
-	var params = {};
+	var params = {};	
 	$scope.eventResponse = 0;
 	$scope.apiResponse = 0;
 	$scope.locationResponse = 0;
@@ -296,7 +298,7 @@ app.config(function ($routeProvider, $httpProvider) {
 
 	$httpProvider
 	.interceptors
-	.push(function($q, $location)
+	.push(function($q, $window)
 			{
 		return {
 			response: function(response)
@@ -306,7 +308,7 @@ app.config(function ($routeProvider, $httpProvider) {
 			responseError: function(response)
 			{
 				if (response.status === 401)
-					$location.url('/home/');
+					$window.location.href = '/#/home';
 				return $q.reject(response);
 			}
 		};
