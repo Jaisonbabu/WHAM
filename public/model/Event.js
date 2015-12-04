@@ -43,14 +43,13 @@ var getMappedEventFromEventbriteResponse = function(event){
 	return eventObj;
 };
 
-var getEvents = function(apiEventResponse,username,userObj){
+var getEvents = function(apiEventResponse,username,userObj, queryKeyword, queryCategory){
 	var eventsObj = [];
 	for(var i in apiEventResponse){
 		var event = getEvent(apiEventResponse[i]);		
 		eventsObj.push(event);
 	}
-
-	if(username != null){
+	if(username != null && queryKeyword == "" && queryCategory == ""){
 		return getUserPrefEvents(eventsObj,userObj);
 	}
 	else{
@@ -78,7 +77,6 @@ var getUserPrefEvents = function(events,userDetails){
 		userDislikedVenues = userDetails.disliked_venues;
 
 	}
-
 	if(userDetails.disliked_venues.length == 0 && userDetails.liked_categories.length == 0)
 		return events;
 
@@ -91,22 +89,22 @@ var getUserPrefEvents = function(events,userDetails){
 			else{
 				userNonPrefEvents.push(events[j]);
 			}
-
 		}
 	}
 
-
-	for (var i in userDislikedVenues){
-		for (var j in userPrefEvents){
-
-			if(userPrefEvents[j].venue.venueId == userDislikedVenues[i]){
-				continue;	
-			}
-			else{
-				userPref.push(userPrefEvents[j]);
-			}
+	
+	for (var i in userPrefEvents){
+		var idx = userDislikedVenues.indexOf(Number(userPrefEvents[i].venue.venueId));
+		if (idx > -1){
+			continue;
 		}
+		else {
+			userPref.push(userPrefEvents[i]);
+		}
+			
 	}
-
+	
+	userNonPrefEvents.reverse();
+	
 	return userPref.concat(userNonPrefEvents);
 };

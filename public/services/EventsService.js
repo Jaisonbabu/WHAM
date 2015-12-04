@@ -5,7 +5,7 @@
 		for(key in param_map){
 			query += "&" + key + "=" + param_map[key];
 		}
-		var url = "https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue";
+		var url = "https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&sort_by=date";
 		$http.get(url + query).then(responseHandler,responseHandler);
 	};
 	
