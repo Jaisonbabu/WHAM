@@ -120,7 +120,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 					icon: image,
 					map: $scope.map,
 					optimized: true,
-					position: $rootScope.userLoc,
+					position: $scope.userLoc,
 					title: 'You are here',
 					visible: true,
 					//labelClass: "userLoc",
