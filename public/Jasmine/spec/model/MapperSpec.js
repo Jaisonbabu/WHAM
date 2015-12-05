@@ -38,9 +38,9 @@ describe("Unit tests for Mapper methods", function () {
 		});
     });
 	
-	describe('Unit tests for Event mappers', function () {
+	describe('Unit tests for Event and Venue mappers', function () {
 		
-		it("Events from API are mapped to event objects", function () {
+		it("Events with venue info from API are mapped to event objects", function () {
 			var resp = window.getJSONFixture('../../../../responses/search_events_response.json');
 			var events = getEvents(resp.events);
 			expect(events.length).toEqual(50);
@@ -95,7 +95,7 @@ describe("Unit tests for Mapper methods", function () {
 
 	describe('Unit tests for Marker mappers', function () {
 		
-		it("Event from API is mapped to marker objects", function () {
+		it("Event with venue info from API is mapped to marker objects", function () {
 			var resp = window.getJSONFixture('../../../../responses/search_events_response.json');
 			var events = getEvents(resp.events);
 			expect(events.length).toEqual(50);	
@@ -165,6 +165,4 @@ describe("Unit tests for Mapper methods", function () {
 			expect(marker.map).toEqual(null);
 		});
     });
-	
-	
 });
