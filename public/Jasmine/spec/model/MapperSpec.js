@@ -1,27 +1,19 @@
-describe("Unit tests for Mapper methods", function (service) {
-
-	beforeEach(function(){module('AngularApp');});
-
-	beforeEach(function () {
-		angular.mock.inject(function ($injector) {
-			service = $injector.get('Location');
-			$httpBackend = $injector.get('$httpBackend');
-		});
-	});
+describe("Unit tests for Mapper methods", function () {
 
 	describe('Unit tests for Location mappers', function () {
 		
-		it("Address from API is mapped to location object", inject(function () {
+		it("Address from API is mapped to location object", function () {
 			var resp = window.getJSONFixture('../../../../responses/event_by_id_response.json');
 			var address = resp.venue.address;
 			var location = getLocation(address);
 			expect(location.addressLine1).toEqual(address.address_1);
-			expect(location.addressLine2).toEqual(address.address_2);
+			expect(location.addressLine2).toEqual('');
 			expect(location.city).toEqual(address.city);
 			expect(location.state).toEqual(address.region);
 			expect(location.country).toEqual(address.country);
 			expect(location.postal).toEqual(address.postal_code);
-		}));
+			expect(location.addressLine1).toEqual(address.address_1);
+		});
 		
 		it("Method handles invalid input", function(){
 			var location = getLocation(null);
@@ -42,7 +34,7 @@ describe("Unit tests for Mapper methods", function (service) {
 			expect(location.city).toEqual("");
 			expect(location.state).toEqual("");
 			expect(location.country).toEqual("");
-			expect(location.postal).toEqual("02115");
+			expect(location.postal).toEqual(02115);
 		});
     });
 	

@@ -15,7 +15,7 @@ describe("Unit tests for EventsService", function (service) {
 		
 		it("Unit test for search event api call", inject(function () {
 			var map = {};        	
-			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue').respond(
+			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&sort_by=date').respond(
 					resp
 			);
 			service.fetchEvents(map, function (result) {
@@ -27,7 +27,7 @@ describe("Unit tests for EventsService", function (service) {
 		it("Unit test for search event api call with keyword", inject(function () {
 			var map = {"q": "food"};        	
 
-			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&q=food').respond(
+			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&sort_by=date&q=food').respond(
 					resp
 			);
 			service.fetchEvents(map, function (result) {
@@ -39,7 +39,7 @@ describe("Unit tests for EventsService", function (service) {
 		it("Unit test for search event api call with location", inject(function () {
 			var map = {"location.latitude" : "51.5", "location.longitude" : "-0.12"};        	
 
-			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&location.latitude=51.5&location.longitude=-0.12').respond(
+			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&sort_by=date&location.latitude=51.5&location.longitude=-0.12').respond(
 					resp
 			);
 			service.fetchEvents(map, function (result) {
@@ -51,7 +51,7 @@ describe("Unit tests for EventsService", function (service) {
 		it("Unit test for search event api call with keyword & location", inject(function () {
 			var map = {"q" : "food" , "location.latitude" : "51.5", "location.longitude" : "-0.12"};        	
 
-			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&q=food&location.latitude=51.5&location.longitude=-0.12').respond(
+			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/search/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue&sort_by=date&q=food&location.latitude=51.5&location.longitude=-0.12').respond(
 					resp
 			);
 			service.fetchEvents(map, function (result) {

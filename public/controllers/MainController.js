@@ -322,7 +322,7 @@ app.config(function ($routeProvider, $httpProvider) {
 
 var getStringObjectIfAvailable = function (obj){
 	if (obj != null && obj != undefined)
-		return "" + obj;
+		return obj;
 	return "";
 };
 
