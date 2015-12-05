@@ -10,7 +10,7 @@ function Marker(event, mapObj){
 		address : event.venue.location.addressLine1,
 		city : event.venue.location.city,
 		fullPostalCode : event.venue.location.postal,
-		state : event.state,
+		state : event.venue.location.state,
 		startTimestamp : event.startTime,
 		endTimeStamp : event.endTime,
 		imageUrl : event.imageUrl,

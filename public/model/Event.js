@@ -1,14 +1,14 @@
 function Event(){
-	this.id;
-	this.name;
-	this.imageUrl;
-	this.description;
-	this.startTime;
-	this.endTime;
-	this.eventUrl;
-	this.liked;
-	this.capacity;
-	this.categoryId;
+	this.id="";
+	this.name="";
+	this.imageUrl="";
+	this.description="";
+	this.startTime="";
+	this.endTime="";
+	this.eventUrl="";
+	this.liked=false;
+	this.capacity="";
+	this.categoryId="";
 	this.venue = new Venue();	
 }
 
@@ -17,7 +17,8 @@ var getEvent = function(apiEvent){
 };
 
 var getMappedEventFromEventbriteResponse = function(event){
-	var eventObj = new Event();
+	var eventObj = new Event();	
+		
 	if(getObjectIfAvailable(event.logo)){
 		eventObj.imageUrl = getStringObjectIfAvailable(event.logo.url);
 	}
@@ -39,20 +40,25 @@ var getMappedEventFromEventbriteResponse = function(event){
 	eventObj.eventUrl = getStringObjectIfAvailable(event.url);
 	eventObj.capacity = getStringObjectIfAvailable(event.capacity);
 	eventObj.categoryId = getStringObjectIfAvailable(event.category_id);
-	eventObj.venue = getVenue(event.venue); 
+	eventObj.venue = getVenue(event.venue);
+	if (eventObj.venue.venueId == ""){
+		eventObj.venue.venueId = getStringObjectIfAvailable(event.venue_id);
+	}
+	eventObj.liked = false;
 	return eventObj;
 };
 
 var getEvents = function(apiEventResponse,username,userObj, queryKeyword, queryCategory){
-	var eventsObj = [];
+	var eventsObj = [];	
 	for(var i in apiEventResponse){
 		var event = getEvent(apiEventResponse[i]);		
 		eventsObj.push(event);
 	}
+	
 	if(username != null && queryKeyword == "" && queryCategory == ""){
 		return getUserPrefEvents(eventsObj,userObj);
 	}
-	else{
+	else{		
 		return eventsObj;
 	}
 };
@@ -92,7 +98,6 @@ var getUserPrefEvents = function(events,userDetails){
 		}
 	}
 
-	
 	for (var i in userPrefEvents){
 		var idx = userDislikedVenues.indexOf(Number(userPrefEvents[i].venue.venueId));
 		if (idx > -1){
@@ -101,10 +106,7 @@ var getUserPrefEvents = function(events,userDetails){
 		else {
 			userPref.push(userPrefEvents[i]);
 		}
-			
 	}
-	
 	userNonPrefEvents.reverse();
-	
 	return userPref.concat(userNonPrefEvents);
 };

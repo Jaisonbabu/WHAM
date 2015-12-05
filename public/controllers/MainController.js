@@ -88,7 +88,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				}
 
 				var events = getObjectIfAvailable(data.events); 
-				if(events.length == 0){
+				if(events == null || events.length == 0){
 					$scope.eventResponse = 1;
 					return;
 				}

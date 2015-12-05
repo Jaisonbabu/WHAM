@@ -6,6 +6,9 @@ function Venue()  {
 }
 
 var getVenue = function(venue){
+	venue = getObjectIfAvailable(venue);
+	if (venue == null)
+		return new Venue();
 	return getVenueFromEventbriteResponse(venue);
 };
 
