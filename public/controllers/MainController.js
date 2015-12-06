@@ -333,21 +333,24 @@ var getObjectIfAvailable = function (obj){
 };
 
 var mapDbObjToUserObj = function(user, body){
-	user.username = body.username;
-	user.firstname = body.firstname;
-	user.lastname = body.lastname;
-	user.email = body.email;
-	user.dob = body.dob;
-	user.gender = body.gender;
-	user.location.addressLine1 = body.address_1;
-	user.location.addressLine2 = body.address_2;
-	user.location.city = body.city;
-	user.location.state = body.state;
-	user.location.postal = body.postal;
-	user.location.country = body.country;
-	user.liked_categories = body.liked_categories;
-	user.disliked_venues = body.disliked_venues; 
-	user.security_question = body.security_question;
-	user.security_answer = body.security_answer;
+	body = getObjectIfAvailable(body);
+	if(!body)
+		return user;
+	user.username = getStringObjectIfAvailable(body.username);
+	user.firstname = getStringObjectIfAvailable(body.firstname);
+	user.lastname = getStringObjectIfAvailable(body.lastname);
+	user.email = getStringObjectIfAvailable(body.email);
+	user.dob = getStringObjectIfAvailable(body.dob);
+	user.gender = getStringObjectIfAvailable(body.gender);
+	user.liked_categories = getObjectIfAvailable(body.liked_categories);
+	user.disliked_venues = getObjectIfAvailable(body.disliked_venues); 
+	user.security_question = getStringObjectIfAvailable(body.security_question);
+	user.security_answer = getStringObjectIfAvailable(body.security_answer);
+	user.location.addressLine1 = getStringObjectIfAvailable(body.address_1);
+	user.location.addressLine2 = getStringObjectIfAvailable(body.address_2);
+	user.location.city = getStringObjectIfAvailable(body.city);
+	user.location.state = getStringObjectIfAvailable(body.state);
+	user.location.postal = getStringObjectIfAvailable(body.postal);
+	user.location.country = getStringObjectIfAvailable(body.country);	
 	return user;
 };

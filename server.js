@@ -163,14 +163,17 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.listen(port,ip);
 
 var mapUserObjToDbObj = function(user, body){
-	user.firstname = body.firstname;
-	user.lastname = body.lastname;
-	user.email = body.email;
-	user.gender = body.gender;
-	user.dob = body.dob;
-	user.liked_categories = body.liked_categories;
-	user.disliked_venues = body.disliked_venues; 
-	user.security_question = body.security_question;
-	user.security_answer = body.security_answer;
+	body = getObjectIfAvailable(body);
+	if (!body)
+		return user;
+	user.firstname = getStringObjectIfAvailable(body.firstname);
+	user.lastname = getStringObjectIfAvailable(body.lastname);
+	user.email = getStringObjectIfAvailable(body.email);
+	user.gender = getStringObjectIfAvailable(body.gender);
+	user.dob = getStringObjectIfAvailable(body.dob);
+	user.liked_categories = getObjectIfAvailable(body.liked_categories);
+	user.disliked_venues = getObjectIfAvailable(body.disliked_venues); 
+	user.security_question = getStringObjectIfAvailable(body.security_question);
+	user.security_answer = getStringObjectIfAvailable(body.security_answer);
 	return user;
 };
