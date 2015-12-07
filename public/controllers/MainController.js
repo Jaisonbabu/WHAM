@@ -17,6 +17,8 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	                                {'name':'ques5','value':'What is your favorite movie?'}];
 
 	$scope.logout = function() {
+		$("#txtLocation").val("");
+		$("#txtQuery").val("");
 		DbService.logout(function(response) {
 			$cookieStore.remove('username');
 			$rootScope.currentUser = null;
@@ -40,6 +42,12 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	$scope.queryKeyword = "";
 	$scope.queryCategory = "";
 	
+	if($routeParams.shouldReset){
+		var shouldReset = $routeParams.shouldReset;
+		$("#txtLocation").val("");
+		$("#txtQuery").val("");
+	}
+
 	var getLocationResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
 		if(response && response.status == 200){
@@ -294,6 +302,11 @@ app.config(function ($routeProvider, $httpProvider) {
 	.when('/passwordReset', {
 		templateUrl: '../views/PasswordReset.html',
 		controller: 'PasswordResetController'
+	})
+
+	.when('/home/:shouldReset', {
+		templateUrl: '../views/SearchEvents.html',
+		controller: 'MainController'
 	})
 
 	.otherwise({

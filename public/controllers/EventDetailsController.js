@@ -4,7 +4,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 	console.log($scope.userLoc);
 	$scope.showDialog = false;
 	$scope.user = $cookieStore.get('userDetails');
-	
+
 	var searchEventsResponseHandler = function(response) {
 		$scope.event = getEvent(response.data);
 		var mapOptions = {

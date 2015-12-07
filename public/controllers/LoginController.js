@@ -1,6 +1,7 @@
 app.controller('LoginController', function($scope, $rootScope, $location, DbService, $cookieStore){
 	$scope.loginError = false;
-	
+	$("#txtLocation").val("");
+	$("#txtQuery").val("");
 	var userDetailsResponseHandler = function(response){
 		response = getObjectIfAvailable(response);
 		if(response && response.status == 200){
@@ -18,6 +19,8 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 	};
 	
 	$scope.login = function(user) {
+		$("#txtLocation").val("");
+		$("#txtQuery").val("");
 		$scope.loginError = false;
 		var userCredentials = new UserCredential();
 		if (getObjectIfAvailable(user) && getStringObjectIfAvailable(user.username) && getStringObjectIfAvailable(user.password)) {
