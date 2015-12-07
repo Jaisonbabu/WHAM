@@ -207,6 +207,10 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 			$("#btnSearch").click();
 		}
 	});
+	
+	$("#btnSearch").on('click', function(){
+		$scope.markers = [];
+	});
 
 });
 
