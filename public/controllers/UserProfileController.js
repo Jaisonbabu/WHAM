@@ -8,7 +8,9 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	$scope.updProfile = false; 
 	$scope.profile = true; 
 	$scope.updPswd = false;
-
+	$("#txtLocation").val("");
+	$("#txtQuery").val("");
+	$("#categories").val("All Categories");
 	// user who is currently logged in
 	$scope.username = $cookieStore.get('username');
 	$scope.user = $cookieStore.get('userDetails');
