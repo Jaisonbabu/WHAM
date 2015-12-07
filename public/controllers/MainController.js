@@ -30,7 +30,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 
 	var params = {};	
 	$scope.eventResponse = 0;
-	$scope.apiResponse = 0;
+	$rootScope.apiResponse = 0;
 	$scope.locationResponse = 0;
 	$scope.categories = $rootScope.categories;
 	if ($scope.selectedCategory == undefined)
@@ -67,7 +67,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 			}
 		}
 		else{
-			$scope.apiResponse = 1;
+			$rootScope.apiResponse = 1;
 		}
 	};
 
@@ -102,6 +102,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				}
 				else{
 					$scope.eventResponse = 0;
+					$rootScope.apiResponse = 0;
 					events = getEvents(events,$rootScope.currentUser,$rootScope.userDetails, $scope.queryKeyword, $scope.queryCategory);
 					for(var i in events){
 						$scope.events.push(events[i]);
@@ -156,7 +157,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 				$scope.showContent = true;
 			}
 			else{
-				$scope.apiResponse = 1;
+				$rootScope.apiResponse = 1;
 			};
 		};
 	};
