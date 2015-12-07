@@ -8,7 +8,6 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 		if(response && response.status == 200){
 			user = new User();
 			$rootScope.userDetails = mapDbObjToUserObj(user,response.data);
-			console.log(response);
 			$cookieStore.put('username', $rootScope.currentUser);
 			$cookieStore.put('userDetails', $rootScope.userDetails);
 			$location.url('/home');

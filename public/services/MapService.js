@@ -4,10 +4,12 @@ app.factory("MapService", function ($http, $rootScope) {
 		if (navigator.geolocation) {
 		    navigator.geolocation.getCurrentPosition(successResponseHandler, function() {
 		    	$rootScope.apiResponse = 1;
+		    	$rootScope.$apply();
 		    });
 		  } else {
 		    // Browser doesn't support Geolocation
 			  $rootScope.apiResponse = 1;
+			  $rootScope.$apply();
 		  }
 	};
 

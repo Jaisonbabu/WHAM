@@ -33,8 +33,8 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 		});
 
 		userMarker.setAnimation(google.maps.Animation.BOUNCE);
-		var marker = new Marker($scope.event, $scope.map).marker;
-	}
+		new Marker($scope.event, $scope.map).marker;
+	};
 	
 	var updateProfileResponseHandler = function(resp) {
 		//TODO: handle both positive and negative cases and show msgs
@@ -50,7 +50,6 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			width:400,
 			buttons: [
 			          {
-
 			        	  text : "Login",
 			        	  click: function(){
 			        		  $(this).dialog('close');
@@ -61,12 +60,12 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			          {
 			        	  text : "Cancel",
 			        	  click: function(){
-			        		  $(this).dialog('close')
+			        		  $(this).dialog('close');
 			        	  }
 			          }
 			          ]
 		});	
-	}
+	};
 
 	EventsService.fetchEventById($routeParams.eventId, searchEventsResponseHandler);
 	
@@ -92,7 +91,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			
 			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
-	}
+	};
 	
 	
 	$scope.dislikeVenue = function(){
@@ -117,5 +116,5 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			
 			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
-	}
-})
+	};
+});
