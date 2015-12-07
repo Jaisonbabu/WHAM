@@ -19,6 +19,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 	$scope.logout = function() {
 		$("#txtLocation").val("");
 		$("#txtQuery").val("");
+		$("#categories").val("All Categories");
 		DbService.logout(function(response) {
 			$cookieStore.remove('username');
 			$rootScope.currentUser = null;
@@ -46,6 +47,7 @@ app.controller('MainController', function ($scope,$route, EventsService, $rootSc
 		var shouldReset = $routeParams.shouldReset;
 		$("#txtLocation").val("");
 		$("#txtQuery").val("");
+		$("#categories").val("All Categories");
 	}
 
 	var getLocationResponseHandler = function(response){

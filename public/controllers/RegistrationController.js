@@ -1,5 +1,8 @@
 app.controller('RegistrationController',function($scope, $rootScope, $location, DbService){
 
+	$("#txtLocation").val("");
+	$("#txtQuery").val("");
+	$("#categories").val("All Categories");
 	$scope.security_questions = $rootScope.securityQuestions;
 	$scope.categories = $rootScope.categories;
 	$scope.selection=[];
