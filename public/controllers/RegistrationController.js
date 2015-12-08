@@ -42,6 +42,9 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 						}
 					});
 				}
+				else {
+					$scope.registrationStatus = "Registration failed. Please try again.";
+				}
 				$location.url('/register');
 			});
 		}
