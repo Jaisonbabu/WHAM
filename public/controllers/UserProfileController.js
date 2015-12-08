@@ -60,7 +60,6 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	};
 
 	$scope.updatePassword = function(pswd) {
-		console.log(pswd);
 		var userCredentials = new UserCredential();
 		userCredentials.setCredentials($scope.username, pswd);
 		DbService.updatePassword(userCredentials, updatePasswordResponseHandler);

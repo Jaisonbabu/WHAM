@@ -26,18 +26,6 @@
 	color: #575757;
 }
 
-/*.container a:link {
-    color: blue;
-    text-decoration: underline;
-}
-
-.container a:hover {
-    color: blue;
-}
-
-.container a:active {
-    color: green;
-}*/
 .header_text {
 	text-shadow: 5px 6px pink;
 	color: black;
@@ -64,10 +52,6 @@
 	margin: auto;
 	background: linear-gradient(to right, lightgray, white);
 	font-weight: bold;
-}
-
-.prdtTable {
-	padding-left: 15%;
 }
 
 .pageMarginPadding {

@@ -56,6 +56,4 @@ app.controller('PasswordResetController', function($scope, $rootScope, $location
 	$scope.cancel = function() {
 		$location.path('/login');
 	}
-
-
 })
