@@ -45,7 +45,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 		$("#dialogContent").html('You need to login to like or dislike events. Please click login if you would like to login. Cancel otherwise.');
 		$("#dialog").dialog({
 			dialogClass: "no-close",
-			title:'oops! something went wrong',
+			title:'Please login',
 			width:400,
 			buttons: [
 			          {

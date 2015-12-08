@@ -1,5 +1,4 @@
-app.controller('LoginController', function($scope, $rootScope, $location, DbService, $cookieStore){
-	$scope.loginError = false;
+app.controller('LoginController', function($scope, $rootScope, DbService, $cookieStore, $window, $location){
 	$("#txtLocation").val("");
 	$("#txtQuery").val("");
 	$("#categories").val("All Categories");
@@ -13,7 +12,7 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 			$location.url('/home');
 		}
 		else{
-			$scope.loginError = true;
+			$scope.loginError = "Username or Password is incorrect";
 			$location.url('/login');
 		};
 	};
@@ -22,7 +21,6 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 		$("#txtLocation").val("");
 		$("#txtQuery").val("");
 		$("#categories").val("All Categories");
-		$scope.loginError = false;
 		var userCredentials = new UserCredential();
 		if (getObjectIfAvailable(user) && getStringObjectIfAvailable(user.username) && getStringObjectIfAvailable(user.password)) {
 			userCredentials.setCredentials(user.username, user.password);
@@ -33,7 +31,7 @@ app.controller('LoginController', function($scope, $rootScope, $location, DbServ
 					DbService.getUserDetails($rootScope.currentUser, userDetailsResponseHandler);
 				}
 				else {
-					$scope.loginError = true;
+					$scope.loginError = "Username or Password is incorrect";
 					$location.url('/login');
 				}	
 			});

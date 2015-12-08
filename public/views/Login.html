@@ -1,4 +1,4 @@
-
+<div class="container" ng-app="AngularApp">
 <div id="loginbox" style="margin-top: 50px;"
 	class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 	<div class="panel panel-info">
@@ -11,18 +11,15 @@
 		</div>
 
 		<div style="padding-top: 30px" class="panel-body">
-
-			<div id="login-alert" class="col-sm-12 error" ng-show="loginError">
-				Username or password is incorrect</div>
-
 			<form class="form-horizontal" name="myForm">
+			<div style="margin-bottom: 8px; margin-left: 50px" class="col-sm-12 errorMsg">
+				{{loginError}}</div>
 
 				<div class="input-group form-group" style="margin-bottom: 0px">
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-user"></i></span> <input type="text"
 						id="username" class="form-control" name="username"
-						ng-model="user.username" placeholder="username" required autofocus
-						ng-change="loginError=false" autofocus>
+						ng-model="user.username" placeholder="username" required autofocus>
 				</div>
 				<span class="error"
 					ng-show="myForm.username.$dirty && myForm.username.$error.required">
@@ -33,8 +30,7 @@
 					<span class="input-group-addon"><i
 						class="glyphicon glyphicon-lock"></i></span> <input type="password"
 						id="password" name="password" class="form-control"
-						ng-model="user.password" placeholder="password" required
-						ng-change="loginError=false">
+						ng-model="user.password" placeholder="password" required>
 				</div>
 
 				<span class="error"
@@ -71,4 +67,4 @@
 		</div>
 	</div>
 </div>
-
+</div>
