@@ -22,7 +22,7 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 				new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
 		);
 
-		userMarker = new MarkerWithLabel({
+		$scope.userMarker = new MarkerWithLabel({
 			flat: true,
 			icon: image,
 			map: $scope.map,
@@ -32,8 +32,8 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			visible: true,
 		});
 
-		userMarker.setAnimation(google.maps.Animation.BOUNCE);
-		new Marker($scope.event, $scope.map).marker;
+		$scope.userMarker.setAnimation(google.maps.Animation.BOUNCE);
+		$scope.eventMarker = new Marker($scope.event, $scope.map).marker;
 	};
 	
 	var updateProfileResponseHandler = function(resp) {

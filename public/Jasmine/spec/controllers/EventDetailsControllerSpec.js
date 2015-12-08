@@ -33,33 +33,24 @@ describe("Unit tests for EventDetailsController", function (service) {
         });
     }));
 
-	describe('Unit tests for login', function () {
+	describe('Unit tests for search events by Id', function () {
 		
 		beforeEach(function(){						
-			//$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/'+ eventId +'/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue').respond(resp);
-			//$httpBackend.whenPOST('/user/details').respond(resp);
-			//scope.login({"username": "username", "password": "password"});
-			//$httpBackend.flush();
 			$httpBackend.whenGET('https://www.eventbriteapi.com/v3/events/'+ eventId +'/?token=SVLBJRZ4G7ATSPI77JQ3&format=json&expand=logo,venue').respond(eventRes);
 			$httpBackend.flush(); 
 		});
 		
 		it("test if valid response is handled", function () {
-			  
-		    expect(scope.username).toEqual('username');			
+			var eventById = getEvent(eventRes); 
+		    expect(scope.event).toEqual(eventById);
+		    var mapOptions = {
+					zoom: 12,
+					center: new google.maps.LatLng(eventById.venue.location.latitude, eventById.venue.location.longitude),
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+		    var map = new google.maps.Map(document.getElementById('eventMap'), mapOptions);
+		    var mark = new Marker(eventById, map).marker;
+		    expect(scope.eventMarker, mark);
 		});
 	});
-	
-	/*describe('Unit tests for login handling invalid credentials', function () {
-		var resp = window.getJSONFixture('../../../../responses/userResponse.json');
-		beforeEach(function(){						
-			$httpBackend.whenPOST('/login').respond(1,null);
-			scope.login({"username": "1", "password": "password"});
-			$httpBackend.flush();
-		});
-		
-		it("test if valid response is handled", function () {
-			expect(scope.loginError).toEqual(true);			
-		});
-	});*/
 });
