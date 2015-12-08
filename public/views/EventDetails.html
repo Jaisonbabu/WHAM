@@ -47,44 +47,36 @@
 			</div>
 
 		</div>
-		<div class="col-sm-5">
+		<div class="col-sm-5" >
 			<div class="row pageMarginPadding">
 				<div id="eventMap" class="col-sm-12"
 					style="height: 300px; margin-top: 65px"></div>
 			</div>
-			<div class="row">
-				<div style="margin-top: 25px; margin-left: 150px;" class="col-sm-4">
+			<div class="row  pageMarginPadding col-sm-12" style="margin: 10%">
+				<div class="col-sm-4" style="margin-left:-10%">
 					<a
 						href="http://maps.google.com/maps?saddr={{userLoc.lat}},{{userLoc.lng}}&daddr={{event.venue.location.latitude}},{{event.venue.location.longitude}}"
 						target="_blank" class="btn btn-primary">Directions to the
 						event</a>
 				</div>
-				<div class="col-sm-4"></div>
-			</div>
-			<div class="row"
-				style="padding-top: 30px; margin-left: 0px; margin-right: 0px;">
-				<div class="col-sm-3"></div>
-				<div class="col-sm-5 ">
+				<div class="col-sm-4"  style="margin-left:10%">
 					<div class="panel panel-info">
 						<div class="panel-heading" style="padding-left: 0px">
 							<div class="panel-title" style="text-align: center;">Share</div>
 						</div>
 						<div style="padding-top: 10px;" class="panel-body">
 							<!-- <div style="margin-top: 25px; margin-left: 100px;">  -->
-							<a
-								href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}}"
-								target="_blank"> Share on Facebook </a>&nbsp; <a
-								href="https://twitter.com/share?url={{event.eventUrl}}"
-								target="_blank"> Share on Twitter </a></br> <a
-								href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}} target="_blank""><img
-								class="icon" style="float: right" src="../images/facebook.png"
-								title="Share this event on facebook"> </a>&nbsp;&nbsp; <a
-								href="https://twitter.com/share?url={{event.eventUrl}}"><img
-								class="icon" src="../images/twitter.jpeg"></a>
+							 <a href="https://www.facebook.com/sharer/sharer.php?u={{event.eventUrl}} target="_blank"">
+							 <img class="icon" style="float: right" src="../images/facebook.png"
+								title="Share this event on facebook"/>
+							 </a>&nbsp;&nbsp; 
+							<a href="https://twitter.com/share?url={{event.eventUrl}}">
+								<img class="icon" src="../images/twitter.jpeg"
+								title="Share this event on twitter"/>
+							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-4"></div>
 			</div>
 		</div>
 
