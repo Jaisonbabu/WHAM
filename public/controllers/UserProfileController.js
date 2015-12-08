@@ -51,12 +51,12 @@ app.controller('UserProfileController', function($scope, $routeParams,
 	var updateProfileResponseHandler = function(resp) {
 		//TODO: handle both positive and negative cases and show msgs
 		$cookieStore.put('userDetails', resp.data);
-		console.log(resp.data);
+		//console.log(resp.data);
 	};
 
 	var updatePasswordResponseHandler = function(resp){
 		//TODO: handle both positive and negative cases and show msgs
-		console.log(resp.data);
+		//console.log(resp.data);
 	};
 
 	$scope.updatePassword = function(pswd) {

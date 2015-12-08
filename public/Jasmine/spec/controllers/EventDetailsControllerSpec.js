@@ -26,7 +26,7 @@ describe("Unit tests for EventDetailsController", function (service) {
 	    $("body").append(compile(html)(scope));
         controller = $controller('EventDetailsController', {
             '$scope': scope,
-            'DbService': service,
+            'DbService': dbService,
             'EventsService': eventsService,
             '$cookieStore': cookie,
             '$routeParams': { "eventId": eventId}
@@ -51,6 +51,11 @@ describe("Unit tests for EventDetailsController", function (service) {
 		    var map = new google.maps.Map(document.getElementById('eventMap'), mapOptions);
 		    var mark = new Marker(eventById, map).marker;
 		    expect(scope.eventMarker, mark);
+		});
+		
+		it("test if venue is disliked successfully", function(){
+			scope.dislikeVenue();
+			expect(scope.user.disliked_venues).toEqual([10101, Number(scope.event.venue.venueId)]);
 		});
 	});
 });

@@ -1,7 +1,6 @@
 app.controller('EventDetailsController', function($scope, $rootScope,$location, DbService, EventsService, $routeParams, $cookieStore, $window){
 	$scope.username = $cookieStore.get('username');
-	$scope.userLoc = $cookieStore.get('userLoc');
-	console.log($scope.userLoc);
+	$scope.userLoc = $cookieStore.get('userLoc');	
 	$scope.showDialog = false;
 	$scope.user = $cookieStore.get('userDetails');
 
@@ -78,17 +77,10 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 			var category = Number($scope.event.categoryId);
 			var userCategory = [];
 			userCategory = $scope.user.liked_categories;
-	
-			console.log(userCategory);
-			console.log(userCategory.indexOf(category));
-			console.log($.inArray(category, userCategory));
-			
 			var idx = userCategory.indexOf(category);
 			if (idx < 0){
 				$scope.user.liked_categories.push(category);
 			}
-			console.log($scope.user.liked_categories);
-			
 			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
 	};
@@ -101,19 +93,13 @@ app.controller('EventDetailsController', function($scope, $rootScope,$location, 
 		}
 		else {
 			var venueId = Number($scope.event.venue.venueId);
-			console.log(venueId + " venue id");
 			var dislikedVenues = [];
 			dislikedVenues = $scope.user.disliked_venues;
-			
-			console.log(dislikedVenues);
-			console.log(dislikedVenues.indexOf($scope.event.venue.venueId));
 			
 			var idx = dislikedVenues.indexOf(venueId);
 			if (idx < 0){
 				$scope.user.disliked_venues.push(venueId);
 			}
-			console.log($scope.user.dislikedVenues);
-			
 			DbService.updateUserDetails($scope.user, updateProfileResponseHandler);
 		}
 	};
