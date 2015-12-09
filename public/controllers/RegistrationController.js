@@ -27,6 +27,7 @@ app.controller('RegistrationController',function($scope, $rootScope, $location, 
 				}
 			}
 			user.security_question = $scope.selectedQues.name;
+			user.disliked_venues = [];
 			userDetails.setUser(user);
 			userCredentials.setCredentials(user.username, user.password);
 			DbService.addNewUserDetails(userDetails, function(response){

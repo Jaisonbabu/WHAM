@@ -18,7 +18,7 @@ var getEvent = function(apiEvent){
 
 var getMappedEventFromEventbriteResponse = function(event){
 	var eventObj = new Event();	
-		
+
 	if(getObjectIfAvailable(event.logo)){
 		eventObj.imageUrl = getStringObjectIfAvailable(event.logo.url);
 	}
@@ -54,7 +54,7 @@ var getEvents = function(apiEventResponse,username,userObj, queryKeyword, queryC
 		var event = getEvent(apiEventResponse[i]);		
 		eventsObj.push(event);
 	}
-	
+
 	if(username != null && queryKeyword == "" && queryCategory == ""){
 		return getUserPrefEvents(eventsObj,userObj);
 	}
@@ -85,28 +85,27 @@ var getUserPrefEvents = function(events,userDetails){
 	}
 	if(userDetails.disliked_venues.length == 0 && userDetails.liked_categories.length == 0)
 		return events;
-
-	for (var i in userPrefcategory){
-		for (var j in events){
-			//if(events.category_id == j || events.venue.venueId != k)
-			if(events[j].categoryId == userPrefcategory[i]){
-				userPrefEvents.push(events[j]);	
+		for (var i in userPrefcategory){
+			for (var j in events){
+				//if(events.category_id == j || events.venue.venueId != k)
+				if(events[j].categoryId == userPrefcategory[i]){
+					userPrefEvents.push(events[j]);	
+				}
+				else{
+					userNonPrefEvents.push(events[j]);
+				}
 			}
-			else{
-				userNonPrefEvents.push(events[j]);
+		}
+	
+		for (var i in userPrefEvents){
+			var idx = userDislikedVenues.indexOf(Number(userPrefEvents[i].venue.venueId));
+			if (idx > -1){
+				continue;
+			}
+			else {
+				userPref.push(userPrefEvents[i]);
 			}
 		}
-	}
-
-	for (var i in userPrefEvents){
-		var idx = userDislikedVenues.indexOf(Number(userPrefEvents[i].venue.venueId));
-		if (idx > -1){
-			continue;
-		}
-		else {
-			userPref.push(userPrefEvents[i]);
-		}
-	}
 	userNonPrefEvents.reverse();
 	return userPref.concat(userNonPrefEvents);
 };

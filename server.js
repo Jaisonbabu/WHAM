@@ -162,6 +162,18 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.listen(port,ip);
 
+var getStringObjectIfAvailable = function (obj){
+	if (obj != null && obj != undefined)
+		return obj;
+	return "";
+};
+
+var getObjectIfAvailable = function (obj){
+	if (obj != null && obj != undefined)
+		return obj;
+	return null;
+};
+
 var mapUserObjToDbObj = function(user, body){
 	if (body == null || body == undefined)
 		return user;
